@@ -1,0 +1,582 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DDAA6E6E2C4F680500764617 /* TalkALotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E6D2C4F680500764617 /* TalkALotApp.swift */; };
+		DDAA6E702C4F680500764617 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E6F2C4F680500764617 /* ContentView.swift */; };
+		DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E712C4F680700764617 /* Assets.xcassets */; };
+		DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E742C4F680700764617 /* Preview Assets.xcassets */; };
+		DDAA6E7F2C4F680800764617 /* TalkALotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E7E2C4F680800764617 /* TalkALotTests.swift */; };
+		DDAA6E892C4F680800764617 /* TalkALotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E882C4F680800764617 /* TalkALotUITests.swift */; };
+		DDAA6E8B2C4F680800764617 /* TalkALotUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E8A2C4F680800764617 /* TalkALotUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DDAA6E7B2C4F680800764617 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DDAA6E622C4F680500764617 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DDAA6E692C4F680500764617;
+			remoteInfo = TalkALot;
+		};
+		DDAA6E852C4F680800764617 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DDAA6E622C4F680500764617 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DDAA6E692C4F680500764617;
+			remoteInfo = TalkALot;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DDAA6E6A2C4F680500764617 /* TalkALot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalkALot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDAA6E6D2C4F680500764617 /* TalkALotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkALotApp.swift; sourceTree = "<group>"; };
+		DDAA6E6F2C4F680500764617 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DDAA6E712C4F680700764617 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DDAA6E742C4F680700764617 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DDAA6E7A2C4F680800764617 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDAA6E7E2C4F680800764617 /* TalkALotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkALotTests.swift; sourceTree = "<group>"; };
+		DDAA6E842C4F680800764617 /* TalkALotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDAA6E882C4F680800764617 /* TalkALotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkALotUITests.swift; sourceTree = "<group>"; };
+		DDAA6E8A2C4F680800764617 /* TalkALotUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkALotUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DDAA6E672C4F680500764617 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDAA6E772C4F680800764617 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDAA6E812C4F680800764617 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DDAA6E612C4F680500764617 = {
+			isa = PBXGroup;
+			children = (
+				DDAA6E6C2C4F680500764617 /* TalkALot */,
+				DDAA6E7D2C4F680800764617 /* TalkALotTests */,
+				DDAA6E872C4F680800764617 /* TalkALotUITests */,
+				DDAA6E6B2C4F680500764617 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DDAA6E6B2C4F680500764617 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DDAA6E6A2C4F680500764617 /* TalkALot.app */,
+				DDAA6E7A2C4F680800764617 /* TalkALotTests.xctest */,
+				DDAA6E842C4F680800764617 /* TalkALotUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DDAA6E6C2C4F680500764617 /* TalkALot */ = {
+			isa = PBXGroup;
+			children = (
+				DDAA6E6D2C4F680500764617 /* TalkALotApp.swift */,
+				DDAA6E6F2C4F680500764617 /* ContentView.swift */,
+				DDAA6E712C4F680700764617 /* Assets.xcassets */,
+				DDAA6E732C4F680700764617 /* Preview Content */,
+			);
+			path = TalkALot;
+			sourceTree = "<group>";
+		};
+		DDAA6E732C4F680700764617 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DDAA6E742C4F680700764617 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DDAA6E7D2C4F680800764617 /* TalkALotTests */ = {
+			isa = PBXGroup;
+			children = (
+				DDAA6E7E2C4F680800764617 /* TalkALotTests.swift */,
+			);
+			path = TalkALotTests;
+			sourceTree = "<group>";
+		};
+		DDAA6E872C4F680800764617 /* TalkALotUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DDAA6E882C4F680800764617 /* TalkALotUITests.swift */,
+				DDAA6E8A2C4F680800764617 /* TalkALotUITestsLaunchTests.swift */,
+			);
+			path = TalkALotUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DDAA6E692C4F680500764617 /* TalkALot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDAA6E8E2C4F680800764617 /* Build configuration list for PBXNativeTarget "TalkALot" */;
+			buildPhases = (
+				DDAA6E662C4F680500764617 /* Sources */,
+				DDAA6E672C4F680500764617 /* Frameworks */,
+				DDAA6E682C4F680500764617 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TalkALot;
+			productName = TalkALot;
+			productReference = DDAA6E6A2C4F680500764617 /* TalkALot.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DDAA6E792C4F680800764617 /* TalkALotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDAA6E912C4F680800764617 /* Build configuration list for PBXNativeTarget "TalkALotTests" */;
+			buildPhases = (
+				DDAA6E762C4F680800764617 /* Sources */,
+				DDAA6E772C4F680800764617 /* Frameworks */,
+				DDAA6E782C4F680800764617 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DDAA6E7C2C4F680800764617 /* PBXTargetDependency */,
+			);
+			name = TalkALotTests;
+			productName = TalkALotTests;
+			productReference = DDAA6E7A2C4F680800764617 /* TalkALotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DDAA6E832C4F680800764617 /* TalkALotUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDAA6E942C4F680800764617 /* Build configuration list for PBXNativeTarget "TalkALotUITests" */;
+			buildPhases = (
+				DDAA6E802C4F680800764617 /* Sources */,
+				DDAA6E812C4F680800764617 /* Frameworks */,
+				DDAA6E822C4F680800764617 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DDAA6E862C4F680800764617 /* PBXTargetDependency */,
+			);
+			name = TalkALotUITests;
+			productName = TalkALotUITests;
+			productReference = DDAA6E842C4F680800764617 /* TalkALotUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DDAA6E622C4F680500764617 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					DDAA6E692C4F680500764617 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					DDAA6E792C4F680800764617 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = DDAA6E692C4F680500764617;
+					};
+					DDAA6E832C4F680800764617 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = DDAA6E692C4F680500764617;
+					};
+				};
+			};
+			buildConfigurationList = DDAA6E652C4F680500764617 /* Build configuration list for PBXProject "TalkALot" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DDAA6E612C4F680500764617;
+			productRefGroup = DDAA6E6B2C4F680500764617 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DDAA6E692C4F680500764617 /* TalkALot */,
+				DDAA6E792C4F680800764617 /* TalkALotTests */,
+				DDAA6E832C4F680800764617 /* TalkALotUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DDAA6E682C4F680500764617 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */,
+				DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDAA6E782C4F680800764617 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDAA6E822C4F680800764617 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DDAA6E662C4F680500764617 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDAA6E702C4F680500764617 /* ContentView.swift in Sources */,
+				DDAA6E6E2C4F680500764617 /* TalkALotApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDAA6E762C4F680800764617 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDAA6E7F2C4F680800764617 /* TalkALotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDAA6E802C4F680800764617 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDAA6E8B2C4F680800764617 /* TalkALotUITestsLaunchTests.swift in Sources */,
+				DDAA6E892C4F680800764617 /* TalkALotUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DDAA6E7C2C4F680800764617 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DDAA6E692C4F680500764617 /* TalkALot */;
+			targetProxy = DDAA6E7B2C4F680800764617 /* PBXContainerItemProxy */;
+		};
+		DDAA6E862C4F680800764617 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DDAA6E692C4F680500764617 /* TalkALot */;
+			targetProxy = DDAA6E852C4F680800764617 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		DDAA6E8C2C4F680800764617 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DDAA6E8D2C4F680800764617 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DDAA6E8F2C4F680800764617 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TalkALot/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = otto.TalkALot;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DDAA6E902C4F680800764617 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TalkALot/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = otto.TalkALot;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DDAA6E922C4F680800764617 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = otto.TalkALotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TalkALot.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TalkALot";
+			};
+			name = Debug;
+		};
+		DDAA6E932C4F680800764617 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = otto.TalkALotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TalkALot.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TalkALot";
+			};
+			name = Release;
+		};
+		DDAA6E952C4F680800764617 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = otto.TalkALotUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TalkALot;
+			};
+			name = Debug;
+		};
+		DDAA6E962C4F680800764617 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = otto.TalkALotUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TalkALot;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DDAA6E652C4F680500764617 /* Build configuration list for PBXProject "TalkALot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDAA6E8C2C4F680800764617 /* Debug */,
+				DDAA6E8D2C4F680800764617 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DDAA6E8E2C4F680800764617 /* Build configuration list for PBXNativeTarget "TalkALot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDAA6E8F2C4F680800764617 /* Debug */,
+				DDAA6E902C4F680800764617 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DDAA6E912C4F680800764617 /* Build configuration list for PBXNativeTarget "TalkALotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDAA6E922C4F680800764617 /* Debug */,
+				DDAA6E932C4F680800764617 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DDAA6E942C4F680800764617 /* Build configuration list for PBXNativeTarget "TalkALotUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDAA6E952C4F680800764617 /* Debug */,
+				DDAA6E962C4F680800764617 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DDAA6E622C4F680500764617 /* Project object */;
+}
