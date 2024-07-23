@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E712C4F680700764617 /* Assets.xcassets */; };
 		DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E742C4F680700764617 /* Preview Assets.xcassets */; };
-		DDAA6E7F2C4F680800764617 /* TalkALotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E7E2C4F680800764617 /* TalkALotTests.swift */; };
-		DDAA6E892C4F680800764617 /* TalkALotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E882C4F680800764617 /* TalkALotUITests.swift */; };
-		DDAA6E8B2C4F680800764617 /* TalkALotUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E8A2C4F680800764617 /* TalkALotUITestsLaunchTests.swift */; };
 		DDAA6E992C4F683100764617 /* +View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E982C4F683100764617 /* +View.swift */; };
 		DDAA6E9B2C4F684300764617 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E9A2C4F684300764617 /* AppDelegate.swift */; };
 		DDAA6E9D2C4F685900764617 /* SignInUsingGoogle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E9C2C4F685900764617 /* SignInUsingGoogle.swift */; };
@@ -35,6 +32,8 @@
 		DDAA6EF12C4F799A00764617 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6EF02C4F799A00764617 /* FirebaseRemoteConfigSwift */; };
 		DDAA6EF32C4F799A00764617 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6EF22C4F799A00764617 /* FirebaseStorage */; };
 		DDAA6EF52C4F799A00764617 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6EF42C4F799A00764617 /* FirebaseStorageCombine-Community */; };
+		DDAA6EF72C4F81A100764617 /* GoogleSignInHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6EF62C4F81A100764617 /* GoogleSignInHandler.swift */; };
+		DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6EF82C4F845A00764617 /* SignUpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,16 +58,15 @@
 		DDAA6E712C4F680700764617 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDAA6E742C4F680700764617 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DDAA6E7A2C4F680800764617 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DDAA6E7E2C4F680800764617 /* TalkALotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkALotTests.swift; sourceTree = "<group>"; };
 		DDAA6E842C4F680800764617 /* TalkALotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DDAA6E882C4F680800764617 /* TalkALotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkALotUITests.swift; sourceTree = "<group>"; };
-		DDAA6E8A2C4F680800764617 /* TalkALotUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkALotUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DDAA6E982C4F683100764617 /* +View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+View.swift"; sourceTree = "<group>"; };
 		DDAA6E9A2C4F684300764617 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DDAA6E9C2C4F685900764617 /* SignInUsingGoogle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUsingGoogle.swift; sourceTree = "<group>"; };
 		DDAA6E9E2C4F689C00764617 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DDAA6EA02C4F68CE00764617 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DDAA6ED02C4F78C100764617 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DDAA6EF62C4F81A100764617 /* GoogleSignInHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInHandler.swift; sourceTree = "<group>"; };
+		DDAA6EF82C4F845A00764617 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +136,7 @@
 			children = (
 				DDAA6ED02C4F78C100764617 /* GoogleService-Info.plist */,
 				DDAA6EA02C4F68CE00764617 /* LoginView.swift */,
+				DDAA6EF82C4F845A00764617 /* SignUpView.swift */,
 				DDAA6E9E2C4F689C00764617 /* HomeView.swift */,
 				DDAA6E972C4F682100764617 /* Helpers */,
 				DDAA6E712C4F680700764617 /* Assets.xcassets */,
@@ -157,7 +156,6 @@
 		DDAA6E7D2C4F680800764617 /* TalkALotTests */ = {
 			isa = PBXGroup;
 			children = (
-				DDAA6E7E2C4F680800764617 /* TalkALotTests.swift */,
 			);
 			path = TalkALotTests;
 			sourceTree = "<group>";
@@ -165,8 +163,6 @@
 		DDAA6E872C4F680800764617 /* TalkALotUITests */ = {
 			isa = PBXGroup;
 			children = (
-				DDAA6E882C4F680800764617 /* TalkALotUITests.swift */,
-				DDAA6E8A2C4F680800764617 /* TalkALotUITestsLaunchTests.swift */,
 			);
 			path = TalkALotUITests;
 			sourceTree = "<group>";
@@ -177,6 +173,7 @@
 				DDAA6E982C4F683100764617 /* +View.swift */,
 				DDAA6E9A2C4F684300764617 /* AppDelegate.swift */,
 				DDAA6E9C2C4F685900764617 /* SignInUsingGoogle.swift */,
+				DDAA6EF62C4F81A100764617 /* GoogleSignInHandler.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -271,6 +268,7 @@
 					};
 					DDAA6E792C4F680800764617 = {
 						CreatedOnToolsVersion = 14.2;
+						LastSwiftMigration = 1420;
 						TestTargetID = DDAA6E692C4F680500764617;
 					};
 					DDAA6E832C4F680800764617 = {
@@ -338,6 +336,8 @@
 				DDAA6EA12C4F68CE00764617 /* LoginView.swift in Sources */,
 				DDAA6E9B2C4F684300764617 /* AppDelegate.swift in Sources */,
 				DDAA6E9F2C4F689C00764617 /* HomeView.swift in Sources */,
+				DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */,
+				DDAA6EF72C4F81A100764617 /* GoogleSignInHandler.swift in Sources */,
 				DDAA6E9D2C4F685900764617 /* SignInUsingGoogle.swift in Sources */,
 				DDAA6E992C4F683100764617 /* +View.swift in Sources */,
 			);
@@ -347,7 +347,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDAA6E7F2C4F680800764617 /* TalkALotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,8 +354,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDAA6E8B2C4F680800764617 /* TalkALotUITestsLaunchTests.swift in Sources */,
-				DDAA6E892C4F680800764617 /* TalkALotUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,14 +550,22 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = otto.TalkALotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "TalkALot/TalkALotTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TalkALot.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TalkALot";
@@ -572,14 +577,21 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = otto.TalkALotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "TalkALot/TalkALotTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TalkALot.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TalkALot";

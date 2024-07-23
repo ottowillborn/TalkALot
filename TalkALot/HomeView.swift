@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 struct HomeView: View {
+    @State private var userEmail = Auth.auth().currentUser?.email
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Welcome " + (userEmail ?? ""))
         
         Button(action: {
             UserDefaults.standard.set(false, forKey: "signIn")
