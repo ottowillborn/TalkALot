@@ -34,6 +34,7 @@
 		DDAA6EF52C4F799A00764617 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6EF42C4F799A00764617 /* FirebaseStorageCombine-Community */; };
 		DDAA6EF72C4F81A100764617 /* GoogleSignInHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6EF62C4F81A100764617 /* GoogleSignInHandler.swift */; };
 		DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6EF82C4F845A00764617 /* SignUpView.swift */; };
+		DDAA6F052C50443E00764617 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6F042C50443E00764617 /* SignUpValidator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		DDAA6ED02C4F78C100764617 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DDAA6EF62C4F81A100764617 /* GoogleSignInHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInHandler.swift; sourceTree = "<group>"; };
 		DDAA6EF82C4F845A00764617 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		DDAA6F042C50443E00764617 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 				DDAA6E9A2C4F684300764617 /* AppDelegate.swift */,
 				DDAA6E9C2C4F685900764617 /* SignInUsingGoogle.swift */,
 				DDAA6EF62C4F81A100764617 /* GoogleSignInHandler.swift */,
+				DDAA6F042C50443E00764617 /* SignUpValidator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				DDAA6E9B2C4F684300764617 /* AppDelegate.swift in Sources */,
 				DDAA6E9F2C4F689C00764617 /* HomeView.swift in Sources */,
 				DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */,
+				DDAA6F052C50443E00764617 /* SignUpValidator.swift in Sources */,
 				DDAA6EF72C4F81A100764617 /* GoogleSignInHandler.swift in Sources */,
 				DDAA6E9D2C4F685900764617 /* SignInUsingGoogle.swift in Sources */,
 				DDAA6E992C4F683100764617 /* +View.swift in Sources */,

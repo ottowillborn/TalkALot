@@ -15,6 +15,7 @@ struct SignUpView: View {
     @State private var confirmPassword = ""
     @State private var errorMessage: String = ""
     @State private var isShowingError: Bool = false
+    let validator = SignUpValidator()
 
 
     var body: some View {
@@ -67,26 +68,11 @@ struct SignUpView: View {
                         }
                         .padding()
                         Button(action: {
-                            if password.count < 8 {
-                                // Show error message
-                                errorMessage = "Password must be at least 8 characters long"
-                                isShowingError = true
-                            } else if password != confirmPassword {
-                                // Show error message
-                                errorMessage = "Passwords do not match"
-                                isShowingError = true
-                            } else {
-                                // Proceed with further actions (e.g., sign up the user)
-                                print("Passwords match, proceed with sign up.")
-                                isShowingError = false
-                                Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                                    guard error == nil else {
-                                        print("Error during account creation: \(error!.localizedDescription)")
-                                        return
-                                    }
-                                    UserDefaults.standard.set(true, forKey: "signIn")
-                                }
-                            }
+                            //REFACTOR TO SEPERATE FUNC
+                            let valid = validator.validate(email: email, password: password, confirmPassword: confirmPassword)
+                            isShowingError = valid.isShowingError
+                            errorMessage = valid.errorMessage
+                            
                         }) {
                             Text("Sign Up")
                                 .font(.headline)
@@ -96,6 +82,11 @@ struct SignUpView: View {
                                 .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
                                 .cornerRadius(25)
                                 .shadow(color: .gray, radius: 10, x: 0, y: 10)
+                        }
+                        if isShowingError {
+                            Text(errorMessage)
+                                .foregroundColor(.red)
+                                .padding(.bottom, 20)
                         }
                         
                         Spacer()
