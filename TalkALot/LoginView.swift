@@ -20,7 +20,7 @@ struct LoginView: View {
                         Spacer()
                         
                         HStack {
-                            Text("Welcome")
+                            Text("FUCK OFF")
                                 .font(.system(size: 40,weight: .bold,design: .rounded))
                             Spacer()
                         }
