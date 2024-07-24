@@ -7,7 +7,6 @@
 
 import SwiftUI
 import FirebaseAuth
-import GoogleSignIn
 import Firebase
 
 struct LoginView: View {
@@ -83,13 +82,6 @@ struct LoginView: View {
                             .padding(.bottom, 20)
                     }
                     Spacer()
-                    
-                    Button(action:{
-                        GoogleSignInHandler.shared.handleGoogleSignIn()
-                    }){
-                        Text("Sign in with google")
-                    }
-                    .padding(20)
                     
                     NavigationLink(destination: SignUpView()){
                         Text("Dont have an account? Click to sign up")
