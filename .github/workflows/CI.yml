@@ -22,9 +22,6 @@ jobs:
           sudo xcode-select --switch /Applications/Xcode_14.3.app
           xcodebuild -version
 
-      - name: Create GoogleService-Info.plist
-        run: echo "${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}" > ${{ github.workspace }}/GoogleService-Info.plist
-
       - name: Build and Test
         run: |
           xcodebuild clean build test \
