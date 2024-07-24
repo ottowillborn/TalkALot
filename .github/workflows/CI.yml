@@ -25,9 +25,7 @@ jobs:
       - name: Load Google Service file
         env:
           DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
-        run: |
-          mkdir -p TalkALot
-          echo "$DATA" | > TalkALot/GoogleService-Info.plist
+        run: echo $DATA > TalkALot/GoogleService-Info.plist
 
       - name: Build and Test
         run: |
