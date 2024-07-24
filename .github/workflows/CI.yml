@@ -9,24 +9,33 @@ on:
       - main
 
 jobs:
-  test:
-    name: Run Tests
+  build_and_test:
+    name: Build and Test
     runs-on: macos-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Xcode command-line tools
-        run: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-
-      - name: Build and test
+      - name: Set up Xcode
         run: |
-          xcodebuild clean test \
-          -project TalkALot.xcodeproj \
-          -scheme TalkALot \
-          -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
-          ONLY_ACTIVE_ARCH=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+          sudo xcode-select --switch /Applications/Xcode_14.3.app
+          xcodebuild -version
+
+      - name: Build and Test
+        run: |
+          xcodebuild clean build test \
+            -project TalkALot.xcodeproj \
+            -scheme TalkALot \
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
+            -configuration Debug \
+            -enableCodeCoverage YES \
+            ONLY_ACTIVE_ARCH=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+
+
+
+
 
 
 
