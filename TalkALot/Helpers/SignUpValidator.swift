@@ -11,7 +11,7 @@ import Firebase
 
 class SignUpValidator {
     
-     func validate(email: String, password: String, confirmPassword: String) -> (isShowingError: Bool, errorMessage: String){
+    func validate(email: String, password: String, confirmPassword: String) -> (isShowingError: Bool, errorMessage: String){
         if !email.contains("@") {
             return (true, "Email is poorly formatted")
         }

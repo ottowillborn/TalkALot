@@ -11,7 +11,7 @@ import Firebase
 
 final class SignUpViewTest: XCTestCase {
     var signUpValidator: SignUpValidator!
-
+    
     override func setUp() {
         super.setUp()
         signUpValidator = SignUpValidator()
@@ -19,12 +19,12 @@ final class SignUpViewTest: XCTestCase {
         // Clear UserDefaults for a clean test environment
         UserDefaults.standard.removeObject(forKey: "signIn")
     }
-
+    
     override func tearDown() {
         signUpValidator = nil
         super.tearDown()
     }
-
+    
     func testInvalidEmail() {
         let result = signUpValidator.validate(email: "invalidemail", password: "password123", confirmPassword: "password123")
         XCTAssertTrue(result.isShowingError)
@@ -36,7 +36,7 @@ final class SignUpViewTest: XCTestCase {
         XCTAssertTrue(result.isShowingError)
         XCTAssertEqual(result.errorMessage, "Password must be at least 8 characters long")
     }
-
+    
     func testPasswordsNotMatching() {
         let result = signUpValidator.validate(email: "test@example.com", password: "password123", confirmPassword: "differentPassword")
         XCTAssertTrue(result.isShowingError)
