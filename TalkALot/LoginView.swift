@@ -24,7 +24,7 @@ struct LoginView: View {
                     Spacer()
                     
                     HStack {
-                        Text("FUCK OFF")
+                        Text("TalkALot")
                             .font(.system(size: 40,weight: .bold,design: .rounded))
                         Spacer()
                     }
