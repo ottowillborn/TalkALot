@@ -11,7 +11,7 @@ import Firebase
 
 struct HomeView: View {
     @State private var userEmail = Auth.auth().currentUser?.email
-
+    
     var body: some View {
         Text("Welcome " + (userEmail ?? ""))
         
