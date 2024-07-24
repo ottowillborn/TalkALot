@@ -18,11 +18,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Xcode
-        uses: apple/setup-xcode@v3
-        with:
-          xcode-version: '14.3'  # Specify the version of Xcode you need
+        run: |
+          sudo xcode-select --switch /Applications/Xcode_14.3.app
+          xcodebuild -version
 
-      - name: Build and test
+      - name: Build and Test
         run: |
           xcodebuild clean build test \
             -project YourProject.xcodeproj \
@@ -31,6 +31,14 @@ jobs:
             -configuration Debug \
             -enableCodeCoverage YES \
             ONLY_ACTIVE_ARCH=YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: xcodebuild-results
+          path: |
+            **/Logs/Test/*.xcresult
+
 
 
 
