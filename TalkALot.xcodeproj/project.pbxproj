@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DDA67E112C507C34001DD7A8 /* SignUpViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */; };
 		DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */; };
+		DDA67E912C50E2E9001DD7A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDA67E902C50E2E9001DD7A8 /* GoogleService-Info.plist */; };
+		DDA67E922C50E304001DD7A8 /* GoogleService-Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = DDA67E902C50E2E9001DD7A8 /* GoogleService-Info.plist */; };
 		DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E712C4F680700764617 /* Assets.xcassets */; };
 		DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E742C4F680700764617 /* Preview Assets.xcassets */; };
 		DDAA6E992C4F683100764617 /* +View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E982C4F683100764617 /* +View.swift */; };
@@ -16,7 +18,6 @@
 		DDAA6E9D2C4F685900764617 /* TalkALotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E9C2C4F685900764617 /* TalkALotApp.swift */; };
 		DDAA6E9F2C4F689C00764617 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E9E2C4F689C00764617 /* HomeView.swift */; };
 		DDAA6EA12C4F68CE00764617 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6EA02C4F68CE00764617 /* LoginView.swift */; };
-		DDAA6ED12C4F78C200764617 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6ED02C4F78C100764617 /* GoogleService-Info.plist */; };
 		DDAA6ED92C4F799A00764617 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6ED82C4F799A00764617 /* FirebaseAuth */; };
 		DDAA6EDD2C4F799A00764617 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6EDC2C4F799A00764617 /* FirebaseDatabase */; };
 		DDAA6EE72C4F799A00764617 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6EE62C4F799A00764617 /* FirebaseInAppMessaging-Beta */; };
@@ -39,6 +40,7 @@
 		DDA67E082C507917001DD7A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewTest.swift; sourceTree = "<group>"; };
+		DDA67E902C50E2E9001DD7A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DDAA6E6A2C4F680500764617 /* TalkALot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalkALot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDAA6E712C4F680700764617 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDAA6E742C4F680700764617 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -47,7 +49,6 @@
 		DDAA6E9C2C4F685900764617 /* TalkALotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkALotApp.swift; sourceTree = "<group>"; };
 		DDAA6E9E2C4F689C00764617 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DDAA6EA02C4F68CE00764617 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		DDAA6ED02C4F78C100764617 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DDAA6EF82C4F845A00764617 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DDAA6F042C50443E00764617 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,7 +114,7 @@
 		DDAA6E6C2C4F680500764617 /* TalkALot */ = {
 			isa = PBXGroup;
 			children = (
-				DDAA6ED02C4F78C100764617 /* GoogleService-Info.plist */,
+				DDA67E902C50E2E9001DD7A8 /* GoogleService-Info.plist */,
 				DDAA6EA02C4F68CE00764617 /* LoginView.swift */,
 				DDAA6EF82C4F845A00764617 /* SignUpView.swift */,
 				DDAA6E9E2C4F689C00764617 /* HomeView.swift */,
@@ -246,8 +247,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */,
-				DDAA6ED12C4F78C200764617 /* GoogleService-Info.plist in Resources */,
 				DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */,
+				DDA67E912C50E2E9001DD7A8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDA67E922C50E304001DD7A8 /* GoogleService-Info.plist in Sources */,
 				DDAA6EA12C4F68CE00764617 /* LoginView.swift in Sources */,
 				DDAA6E9B2C4F684300764617 /* AppDelegate.swift in Sources */,
 				DDAA6E9F2C4F689C00764617 /* HomeView.swift in Sources */,
