@@ -21,6 +21,11 @@ jobs:
         run: |
           sudo xcode-select --switch /Applications/Xcode_14.3.app
           xcodebuild -version
+          
+      - name: Load Google Service file
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+          run: echo $DATA > TalkALot/TalkALot/google-services.json
 
       - name: Build and Test
         run: |
