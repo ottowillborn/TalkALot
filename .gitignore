@@ -1,6 +1,6 @@
 # Ignore GoogleService-Info.plist
-GoogleService-Info.plist
-TalkALot/GoogleService-Info.plist
+#GoogleService-Info.plist
+#TalkALot/GoogleService-Info.plist
 
 ## User settings
 xcuserdata/
