@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v2
+        with:
+          xcode-version: '14.3' # Specify the version of Xcode you want to use
+
+      - name: Build and test
+        run: |
+          xcodebuild clean test \
+          -workspace TalkALot.xcworkspace \
+          -scheme TalkALot \
+          -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
+          -enableCodeCoverage YES \
+          ONLY_ACTIVE_ARCH=YES
