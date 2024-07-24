@@ -25,7 +25,7 @@ jobs:
       - name: Load Google Service file
         env:
           DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
-        run: echo $DATA | > TalkALot/TalkALot/google-services.json
+        run: echo $DATA | -di > TalkALot/TalkALot/google-services.json
 
       - name: Build and Test
         run: |
