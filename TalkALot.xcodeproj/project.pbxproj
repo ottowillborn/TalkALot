@@ -11,6 +11,8 @@
 		DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */; };
 		DDA67E982C50F25A001DD7A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDA67E972C50F259001DD7A8 /* GoogleService-Info.plist */; };
 		DDA67E992C50F25A001DD7A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDA67E972C50F259001DD7A8 /* GoogleService-Info.plist */; };
+		DDA67E9B2C5104A9001DD7A8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DDA67E9A2C5104A9001DD7A8 /* .gitignore */; };
+		DDA67E9C2C5104A9001DD7A8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DDA67E9A2C5104A9001DD7A8 /* .gitignore */; };
 		DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E712C4F680700764617 /* Assets.xcassets */; };
 		DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E742C4F680700764617 /* Preview Assets.xcassets */; };
 		DDAA6E992C4F683100764617 /* +View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E982C4F683100764617 /* +View.swift */; };
@@ -38,6 +40,7 @@
 		DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewTest.swift; sourceTree = "<group>"; };
 		DDA67E972C50F259001DD7A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "TalkALot/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DDA67E9A2C5104A9001DD7A8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		DDAA6E6A2C4F680500764617 /* TalkALot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalkALot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDAA6E712C4F680700764617 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDAA6E742C4F680700764617 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 		DDAA6E612C4F680500764617 = {
 			isa = PBXGroup;
 			children = (
+				DDA67E9A2C5104A9001DD7A8 /* .gitignore */,
 				DDA67E972C50F259001DD7A8 /* GoogleService-Info.plist */,
 				DDAA6E6C2C4F680500764617 /* TalkALot */,
 				DDA67E0F2C507C34001DD7A8 /* TalkALotTests */,
@@ -230,6 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDA67E9C2C5104A9001DD7A8 /* .gitignore in Resources */,
 				DDA67E992C50F25A001DD7A8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDA67E9B2C5104A9001DD7A8 /* .gitignore in Resources */,
 				DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */,
 				DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */,
 				DDA67E982C50F25A001DD7A8 /* GoogleService-Info.plist in Resources */,
