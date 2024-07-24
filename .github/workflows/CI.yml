@@ -20,9 +20,6 @@ jobs:
       - name: Install Xcode command-line tools
         run: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 
-      - name: Resolve Swift Package Manager dependencies
-        run: swift package resolve
-
       - name: Build and test
         run: |
           xcodebuild clean test \
