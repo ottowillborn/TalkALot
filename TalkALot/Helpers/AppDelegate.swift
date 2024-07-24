@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import Firebase
-import GoogleSignIn
 import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
