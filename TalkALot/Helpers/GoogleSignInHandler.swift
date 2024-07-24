@@ -44,7 +44,7 @@ class GoogleSignInHandler {
                 UserDefaults.standard.set(true, forKey: "signIn")
             }
         }
-         func getRootViewController() -> UIViewController {
+        func getRootViewController() -> UIViewController {
             guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
                 fatalError("Unable to get the window scene")
             }

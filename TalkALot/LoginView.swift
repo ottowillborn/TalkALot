@@ -14,11 +14,13 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var isShowingError: Bool = false
-
-
+    
+    
     var body: some View {
         NavigationView {
+            
             GeometryReader { geometry in
+                
                 VStack {
                     Spacer()
                     
@@ -28,6 +30,7 @@ struct LoginView: View {
                         Spacer()
                     }
                     .padding()
+                    
                     HStack {
                         TextField("Email", text: $email)
                             .font(.system(size: 25, weight: .bold, design: .rounded))
@@ -42,6 +45,7 @@ struct LoginView: View {
                         Spacer()
                     }
                     .padding()
+                    
                     HStack {
                         SecureField("Password", text: $password)
                             .font(.system(size: 25, weight: .bold, design: .rounded))
@@ -54,6 +58,7 @@ struct LoginView: View {
                         Spacer()
                     }
                     .padding()
+                    
                     Button(action: {
                         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                             guard error == nil else {
@@ -61,7 +66,6 @@ struct LoginView: View {
                                 isShowingError = true
                                 return }
                             UserDefaults.standard.set(true, forKey: "signIn")
-
                         }
                     }) {
                         Text("Login")
@@ -82,20 +86,17 @@ struct LoginView: View {
                     
                     Button(action:{
                         GoogleSignInHandler.shared.handleGoogleSignIn()
-                    })
-                    {
+                    }){
                         Text("Sign in with google")
                     }
                     .padding(20)
-                    
- 
                     
                     NavigationLink(destination: SignUpView()){
                         Text("Dont have an account? Click to sign up")
                     }
                     
                     Spacer()
-
+                    
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
             }
