@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct SignInUsingGoogleApp: App {
+struct TalkALotApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @AppStorage("signIn") var isSignIn = false
     
