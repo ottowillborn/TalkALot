@@ -26,7 +26,7 @@ final class LogInViewTest: XCTestCase {
     }
     
     func testInvalidEmail() {
-        let result = logInValidator.validate(email: "invalid@email", password: "password123")
+        let result = logInValidator.validate(email: "invalidemail", password: "password123")
         XCTAssertTrue(result)
     }
     
