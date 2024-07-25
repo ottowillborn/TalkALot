@@ -7,6 +7,7 @@
 
 import XCTest
 import Firebase
+import GoogleSignIn
 @testable import TalkALot
 
 final class LogInViewTest: XCTestCase {

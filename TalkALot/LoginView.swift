@@ -75,7 +75,18 @@ struct LoginView: View {
                     }
                     .frame(height: 30) // Fixed height so spacing isn't affected
                     
- 
+                    Button(action:{
+                        GoogleSignInHandler.shared.handleGoogleSignIn()
+                    })
+                    {
+                        Image("GoogleLogo")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.white)
+                        Text("Sign in with Google")
+                    }
+                    .padding(20)
                     
                     NavigationLink(destination: SignUpView()){
                         Text("Dont have an account? Click to sign up")
