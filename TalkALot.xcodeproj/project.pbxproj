@@ -166,8 +166,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				DDA67EB52C530F30001DD7A8 /* PBXTargetDependency */,
 				DDA67E132C507C34001DD7A8 /* PBXTargetDependency */,
-				DDA67E882C50AA95001DD7A8 /* PBXTargetDependency */,
 				DDA67E182C50AA43001DD7A8 /* PBXTargetDependency */,
 			);
 			name = TalkALotTests;
@@ -302,9 +302,9 @@
 			isa = PBXTargetDependency;
 			productRef = DDA67E172C50AA43001DD7A8 /* FirebaseAuth */;
 		};
-		DDA67E882C50AA95001DD7A8 /* PBXTargetDependency */ = {
+		DDA67EB52C530F30001DD7A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = DDA67E872C50AA95001DD7A8 /* FirebaseStorage */;
+			productRef = DDA67EB42C530F30001DD7A8 /* GoogleSignIn */;
 		};
 /* End PBXTargetDependency section */
 
@@ -590,17 +590,17 @@
 			package = DDAA6ED72C4F799A00764617 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		DDA67E872C50AA95001DD7A8 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DDAA6ED72C4F799A00764617 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
-		};
 		DDA67EAC2C530824001DD7A8 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DDA67EAB2C530824001DD7A8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
 		};
 		DDA67EB22C530EF8001DD7A8 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDA67EAB2C530824001DD7A8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		DDA67EB42C530F30001DD7A8 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DDA67EAB2C530824001DD7A8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
