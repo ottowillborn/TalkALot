@@ -11,6 +11,9 @@
 		DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */; };
 		DDA67EA42C520D02001DD7A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDA67EA32C520D02001DD7A8 /* GoogleService-Info.plist */; };
 		DDA67EA52C520D02001DD7A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDA67EA32C520D02001DD7A8 /* GoogleService-Info.plist */; };
+		DDA67EA72C5211C9001DD7A8 /* LogInValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */; };
+		DDA67EA82C5211C9001DD7A8 /* LogInValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */; };
+		DDA67EAA2C52146F001DD7A8 /* LogInViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA92C52146F001DD7A8 /* LogInViewTest.swift */; };
 		DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E712C4F680700764617 /* Assets.xcassets */; };
 		DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E742C4F680700764617 /* Preview Assets.xcassets */; };
 		DDAA6E992C4F683100764617 /* +View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E982C4F683100764617 /* +View.swift */; };
@@ -38,6 +41,8 @@
 		DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewTest.swift; sourceTree = "<group>"; };
 		DDA67EA32C520D02001DD7A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInValidator.swift; sourceTree = "<group>"; };
+		DDA67EA92C52146F001DD7A8 /* LogInViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewTest.swift; sourceTree = "<group>"; };
 		DDAA6E6A2C4F680500764617 /* TalkALot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalkALot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDAA6E712C4F680700764617 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDAA6E742C4F680700764617 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -82,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */,
+				DDA67EA92C52146F001DD7A8 /* LogInViewTest.swift */,
 			);
 			path = TalkALotTests;
 			sourceTree = "<group>";
@@ -134,6 +140,7 @@
 				DDAA6E9A2C4F684300764617 /* AppDelegate.swift */,
 				DDAA6E9C2C4F685900764617 /* TalkALotApp.swift */,
 				DDAA6F042C50443E00764617 /* SignUpValidator.swift */,
+				DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -251,6 +258,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDA67EA82C5211C9001DD7A8 /* LogInValidator.swift in Sources */,
+				DDA67EAA2C52146F001DD7A8 /* LogInViewTest.swift in Sources */,
 				DDA67E112C507C34001DD7A8 /* SignUpViewTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +274,7 @@
 				DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */,
 				DDAA6F052C50443E00764617 /* SignUpValidator.swift in Sources */,
 				DDAA6E9D2C4F685900764617 /* TalkALotApp.swift in Sources */,
+				DDA67EA72C5211C9001DD7A8 /* LogInValidator.swift in Sources */,
 				DDAA6E992C4F683100764617 /* +View.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

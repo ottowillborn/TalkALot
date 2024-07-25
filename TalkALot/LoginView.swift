@@ -13,7 +13,7 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var isShowingError: Bool = false
-    
+    let validator = LogInValidator()
     
     var body: some View {
         NavigationView {
@@ -59,13 +59,7 @@ struct LoginView: View {
                     .padding()
                     
                     Button(action: {
-                        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                            guard error == nil else {
-                                print("Error during login: \(error!.localizedDescription)")
-                                isShowingError = true
-                                return }
-                            UserDefaults.standard.set(true, forKey: "signIn")
-                        }
+                        isShowingError = validator.validate(email: email, password: password)
                     }) {
                         Text("Login")
                             .font(.headline)
@@ -77,7 +71,7 @@ struct LoginView: View {
                             .shadow(color: .gray, radius: 10, x: 0, y: 10)
                     }
                     if isShowingError {
-                        Text("Invalid login credentials")
+                        Text("Invalid login information")
                             .foregroundColor(.red)
                             .padding(.bottom, 20)
                     }
