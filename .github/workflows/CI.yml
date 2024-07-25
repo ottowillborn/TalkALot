@@ -32,7 +32,7 @@ jobs:
 
       - name: Build and Test
         run: |
-          xcodebuild clean build test \
+          set -o pipefail && xcodebuild clean build test \
             -project TalkALot.xcodeproj \
             -scheme TalkALot \
             -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
