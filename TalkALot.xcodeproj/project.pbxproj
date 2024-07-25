@@ -16,6 +16,7 @@
 		DDA67EAA2C52146F001DD7A8 /* LogInViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA92C52146F001DD7A8 /* LogInViewTest.swift */; };
 		DDA67EAD2C530824001DD7A8 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67EAC2C530824001DD7A8 /* GoogleSignIn */; };
 		DDA67EAF2C5308C1001DD7A8 /* GoogleSignInHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EAE2C5308C1001DD7A8 /* GoogleSignInHandler.swift */; };
+		DDA67EB32C530EF8001DD7A8 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67EB22C530EF8001DD7A8 /* GoogleSignIn */; };
 		DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E712C4F680700764617 /* Assets.xcassets */; };
 		DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDAA6E742C4F680700764617 /* Preview Assets.xcassets */; };
 		DDAA6E992C4F683100764617 /* +View.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6E982C4F683100764617 /* +View.swift */; };
@@ -64,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */,
+				DDA67EB32C530EF8001DD7A8 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +173,7 @@
 			name = TalkALotTests;
 			packageProductDependencies = (
 				DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */,
+				DDA67EB22C530EF8001DD7A8 /* GoogleSignIn */,
 			);
 			productName = TalkALotTests;
 			productReference = DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */;
@@ -593,6 +596,11 @@
 			productName = FirebaseStorage;
 		};
 		DDA67EAC2C530824001DD7A8 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDA67EAB2C530824001DD7A8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		DDA67EB22C530EF8001DD7A8 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DDA67EAB2C530824001DD7A8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
