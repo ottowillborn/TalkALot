@@ -37,10 +37,8 @@ struct LoginView: View {
                             .frame(width: geometry.size.width * 0.8)
                             .autocapitalization(.none)
                             .keyboardType(.emailAddress)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(isShowingError ? Color.red : Color.clear, lineWidth: 2)
-                            )
+                            .border(isShowingError ? Color.red : Color.clear, width: 2)
+                            
                         Spacer()
                     }
                     .padding()
@@ -50,10 +48,8 @@ struct LoginView: View {
                             .font(.system(size: 25, weight: .bold, design: .rounded))
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .frame(width: geometry.size.width * 0.8)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(isShowingError ? Color.red : Color.clear, lineWidth: 2)
-                            )
+                            .border(isShowingError ? Color.red : Color.clear, width: 2)
+                        
                         Spacer()
                     }
                     .padding()
@@ -70,12 +66,16 @@ struct LoginView: View {
                             .cornerRadius(25)
                             .shadow(color: .gray, radius: 10, x: 0, y: 10)
                     }
-                    if isShowingError {
-                        Text("Invalid login information")
-                            .foregroundColor(.red)
-                            .padding(.bottom, 20)
+                    
+                    VStack{
+                        if isShowingError {
+                            Text("Invalid login information")
+                                .foregroundColor(.red)
+                        }
                     }
-                    Spacer()
+                    .frame(height: 30) // Fixed height so spacing isn't affected
+                    
+ 
                     
                     NavigationLink(destination: SignUpView()){
                         Text("Dont have an account? Click to sign up")
