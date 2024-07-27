@@ -12,10 +12,14 @@ import Firebase
 class SignUpValidator {
     
     func validate(email: String, password: String, confirmPassword: String) -> (isShowingError: Bool, errorMessage: String){
-        if !email.contains("@") {
+        if email.isEmpty {
+            return (true, "Please provide an email address")
+        } else if !email.contains("@") {
             return (true, "Email is poorly formatted")
-        }
-        else if password.count < 8 {
+        } else if password.isEmpty {
+            // Show error message
+            return (true, "Please provide a password")
+        } else if password.count < 8 {
             // Show error message
             return (true, "Password must be at least 8 characters long")
         } else if password != confirmPassword {

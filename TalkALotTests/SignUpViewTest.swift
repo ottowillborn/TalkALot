@@ -25,10 +25,22 @@ final class SignUpViewTest: XCTestCase {
         super.tearDown()
     }
     
+    func testEmptyEmail() {
+        let result = signUpValidator.validate(email: "", password: "password123", confirmPassword: "password123")
+        XCTAssertTrue(result.isShowingError)
+        XCTAssertEqual(result.errorMessage, "Please provide an email address")
+    }
+    
     func testInvalidEmail() {
         let result = signUpValidator.validate(email: "invalidemail", password: "password123", confirmPassword: "password123")
         XCTAssertTrue(result.isShowingError)
         XCTAssertEqual(result.errorMessage, "Email is poorly formatted")
+    }
+    
+    func testEmptyPassword() {
+        let result = signUpValidator.validate(email: "test@example.com", password: "", confirmPassword: "short")
+        XCTAssertTrue(result.isShowingError)
+        XCTAssertEqual(result.errorMessage, "Please provide a password")
     }
     
     func testShortPassword() {
