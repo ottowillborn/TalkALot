@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		DDA67E112C507C34001DD7A8 /* SignUpViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */; };
 		DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */; };
-		DDA67EA42C520D02001DD7A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDA67EA32C520D02001DD7A8 /* GoogleService-Info.plist */; };
-		DDA67EA52C520D02001DD7A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDA67EA32C520D02001DD7A8 /* GoogleService-Info.plist */; };
 		DDA67EA72C5211C9001DD7A8 /* LogInValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */; };
 		DDA67EA82C5211C9001DD7A8 /* LogInValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */; };
 		DDA67EAA2C52146F001DD7A8 /* LogInViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA92C52146F001DD7A8 /* LogInViewTest.swift */; };
@@ -24,6 +22,8 @@
 		DDAA6ED92C4F799A00764617 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6ED82C4F799A00764617 /* FirebaseAuth */; };
 		DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6EF82C4F845A00764617 /* SignUpView.swift */; };
 		DDAA6F052C50443E00764617 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6F042C50443E00764617 /* SignUpValidator.swift */; };
+		DDCF158B2C54EFDE00A94C35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDCF158A2C54EFDE00A94C35 /* GoogleService-Info.plist */; };
+		DDCF158C2C54EFDE00A94C35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDCF158A2C54EFDE00A94C35 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +40,6 @@
 		DDA67E082C507917001DD7A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewTest.swift; sourceTree = "<group>"; };
-		DDA67EA32C520D02001DD7A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInValidator.swift; sourceTree = "<group>"; };
 		DDA67EA92C52146F001DD7A8 /* LogInViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewTest.swift; sourceTree = "<group>"; };
 		DDAA6E6A2C4F680500764617 /* TalkALot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TalkALot.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +52,7 @@
 		DDAA6EA02C4F68CE00764617 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DDAA6EF82C4F845A00764617 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DDAA6F042C50443E00764617 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
+		DDCF158A2C54EFDE00A94C35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +95,7 @@
 		DDAA6E612C4F680500764617 = {
 			isa = PBXGroup;
 			children = (
-				DDA67EA32C520D02001DD7A8 /* GoogleService-Info.plist */,
+				DDCF158A2C54EFDE00A94C35 /* GoogleService-Info.plist */,
 				DDAA6E6C2C4F680500764617 /* TalkALot */,
 				DDA67E0F2C507C34001DD7A8 /* TalkALotTests */,
 				DDAA6E6B2C4F680500764617 /* Products */,
@@ -237,7 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDA67EA52C520D02001DD7A8 /* GoogleService-Info.plist in Resources */,
+				DDCF158C2C54EFDE00A94C35 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +247,7 @@
 			files = (
 				DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */,
 				DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */,
-				DDA67EA42C520D02001DD7A8 /* GoogleService-Info.plist in Resources */,
+				DDCF158B2C54EFDE00A94C35 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
