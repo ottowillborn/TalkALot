@@ -13,5 +13,7 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TalkALot requires access to your microphone</string>
 </dict>
 </plist>
