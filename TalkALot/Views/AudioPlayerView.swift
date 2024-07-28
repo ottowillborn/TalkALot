@@ -4,6 +4,28 @@
 //
 //  Created by Otto Willborn on 2024-07-28.
 //
+/*
+  Description:
+  This file defines a SwiftUI view for an audio player interface. The AudioPlayerView
+  allows users to play, pause, and seek audio playback.
+
+  Responsibilities:
+  - Display play/pause button to control audio playback
+  - Display a slider to seek through the audio track
+  - Display the current playback time
+
+  Key Components:
+  - AudioPlayer: An observed object managing audio playback state and controls
+  - audioURL: The URL of the audio file to be played
+
+  Key Methods:
+  - body: Constructs the view hierarchy for the audio player interface
+  - formatTime(_:): Converts a TimeInterval into a string formatted as MM:SS
+
+  Dependencies:
+  - SwiftUI
+  - AudioPlayer (a custom ObservableObject managing audio playback)
+*/
 
 import SwiftUI
 

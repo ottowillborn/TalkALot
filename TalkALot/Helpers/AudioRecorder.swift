@@ -4,6 +4,34 @@
 //
 //  Created by Otto Willborn on 2024-07-28.
 //
+/*
+  Description:
+  This file defines a class for managing audio recording functionalities. The AudioRecorder
+  class allows users to start and stop audio recordings, and handles the setup of the
+  audio recording session.
+
+  Responsibilities:
+  - Manage audio recording session setup and permissions
+  - Start and stop audio recordings
+  - Save recorded audio files to the device's document directory
+
+  Key Components:
+  - audioRecorder: An instance of AVAudioRecorder for recording audio
+  - audioPlayer: An instance of AVAudioPlayer for playing back audio (currently unused)
+  - recordingSession: An instance of AVAudioSession for managing audio session settings
+  - isRecording: A published property indicating whether recording is in progress
+
+  Key Methods:
+  - init(): Initializes the AudioRecorder and sets up the recording session
+  - setupRecording(): Configures the audio session and requests microphone permissions
+  - startRecording(): Starts recording audio and saves the file in the document directory
+  - stopRecording(): Stops the current audio recording
+  - getDocumentsDirectory(): Returns the URL of the document directory
+
+  Dependencies:
+  - Foundation
+  - AVFoundation
+*/
 
 import Foundation
 import AVFoundation
