@@ -4,6 +4,34 @@
 //
 //  Created by Otto Willborn on 2024-07-28.
 //
+/*
+  Description:
+  This file defines a SwiftUI view for recording and playing back audio. The RecordView
+  provides an interface for users to start/stop recording and play the recorded audio.
+
+  Responsibilities:
+  - Display UI to start/stop audio recording
+  - Show a button to control recording state
+  - Integrate an audio player to play back the recorded audio
+
+  Key Components:
+  - AudioRecorder: An observed object managing audio recording
+  - AudioPlayer: An observed object managing audio playback
+  - hasRecording: A state variable indicating whether a recording exists
+
+  Key Methods:
+  - body: Constructs the view hierarchy for the recording interface
+  - Button(action:): Toggles the recording state of the audio recorder
+
+  Dependencies:
+  - SwiftUI
+  - FirebaseAuth
+  - Firebase
+  - AudioRecorder (a custom ObservableObject managing audio recording)
+  - AudioPlayer (a custom ObservableObject managing audio playback)
+  - AudioPlayerView (a custom SwiftUI view for audio playback)
+
+*/
 
 import SwiftUI
 import FirebaseAuth
@@ -20,9 +48,6 @@ struct RecordView: View {
             GeometryReader { geometry in
                 
                 VStack {
-                    //if not recording, button is grey mic, self.audioRecorder.startRecording()
-                    //else button is red self.audioRecorder.stopRecording()
-                    //recordedAudioURL = audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: "")
                     if !audioRecorder.isRecording {
                         if !hasRecording {
                             Text("Click to start recording")

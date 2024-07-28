@@ -5,9 +5,36 @@
 //  Created by Otto Willborn on 2024-07-28.
 //
 /*
-Class for playing audio.
- play, pause, scroll etc
- */
+  Description:
+  This file defines a class for managing audio playback functionalities. The AudioPlayer
+  class allows users to play, pause, and stop audio playback, as well as seek to specific
+  positions within the audio track.
+
+  Responsibilities:
+  - Manage audio playback using AVAudioPlayer
+  - Provide controls to start, pause, stop, and seek audio playback
+  - Update and publish playback state and timing information
+
+  Key Components:
+  - audioPlayer: An instance of AVAudioPlayer for playing audio
+  - isPlaying: A published property indicating whether audio is currently playing
+  - currentTime: A published property tracking the current playback time
+  - duration: A published property representing the duration of the audio track
+  - timer: A timer to update currentTime periodically
+
+  Key Methods:
+  - startPlayback(url:): Starts audio playback from the given URL
+  - pausePlayback(): Pauses the current audio playback
+  - stopPlayback(): Stops the current audio playback and resets the current time
+  - seek(to:): Seeks to a specific time within the audio track
+  - startTimer(): Starts a timer to update the current time during playback
+  - stopTimer(): Stops the timer
+  - audioPlayerDidFinishPlaying(_:successfully:): Resets the current time and playback state when playback finishes
+
+  Dependencies:
+  - Foundation
+  - AVFoundation
+*/
  
 import Foundation
 import AVFoundation
