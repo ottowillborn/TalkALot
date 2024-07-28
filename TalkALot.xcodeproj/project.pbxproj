@@ -22,8 +22,14 @@
 		DDAA6ED92C4F799A00764617 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDAA6ED82C4F799A00764617 /* FirebaseAuth */; };
 		DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6EF82C4F845A00764617 /* SignUpView.swift */; };
 		DDAA6F052C50443E00764617 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAA6F042C50443E00764617 /* SignUpValidator.swift */; };
-		DDCF15972C54FEBB00A94C35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDCF15962C54FEBB00A94C35 /* GoogleService-Info.plist */; };
-		DDCF15982C54FEBB00A94C35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDCF15962C54FEBB00A94C35 /* GoogleService-Info.plist */; };
+		DDCF159D2C562C2D00A94C35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDCF159C2C562C2D00A94C35 /* GoogleService-Info.plist */; };
+		DDCF159E2C562C2D00A94C35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDCF159C2C562C2D00A94C35 /* GoogleService-Info.plist */; };
+		DDCF15A02C562C7B00A94C35 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF159F2C562C7B00A94C35 /* AudioRecorder.swift */; };
+		DDCF15A12C562C7B00A94C35 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF159F2C562C7B00A94C35 /* AudioRecorder.swift */; };
+		DDCF15A32C562CFC00A94C35 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15A22C562CFC00A94C35 /* RecordView.swift */; };
+		DDCF15A62C56327700A94C35 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15A52C56327700A94C35 /* AudioPlayer.swift */; };
+		DDCF15A72C56327700A94C35 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15A52C56327700A94C35 /* AudioPlayer.swift */; };
+		DDCF15A92C56329E00A94C35 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15A82C56329E00A94C35 /* AudioPlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +58,11 @@
 		DDAA6EA02C4F68CE00764617 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DDAA6EF82C4F845A00764617 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DDAA6F042C50443E00764617 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
-		DDCF15962C54FEBB00A94C35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DDCF159C2C562C2D00A94C35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DDCF159F2C562C7B00A94C35 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		DDCF15A22C562CFC00A94C35 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
+		DDCF15A52C56327700A94C35 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		DDCF15A82C56329E00A94C35 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +105,7 @@
 		DDAA6E612C4F680500764617 = {
 			isa = PBXGroup;
 			children = (
-				DDCF15962C54FEBB00A94C35 /* GoogleService-Info.plist */,
+				DDCF159C2C562C2D00A94C35 /* GoogleService-Info.plist */,
 				DDAA6E6C2C4F680500764617 /* TalkALot */,
 				DDA67E0F2C507C34001DD7A8 /* TalkALotTests */,
 				DDAA6E6B2C4F680500764617 /* Products */,
@@ -115,9 +125,8 @@
 		DDAA6E6C2C4F680500764617 /* TalkALot */ = {
 			isa = PBXGroup;
 			children = (
-				DDAA6EA02C4F68CE00764617 /* LoginView.swift */,
-				DDAA6EF82C4F845A00764617 /* SignUpView.swift */,
-				DDAA6E9E2C4F689C00764617 /* HomeView.swift */,
+				DDAA6E9C2C4F685900764617 /* TalkALotApp.swift */,
+				DDCF15AB2C5643F900A94C35 /* Views */,
 				DDAA6E972C4F682100764617 /* Helpers */,
 				DDAA6E712C4F680700764617 /* Assets.xcassets */,
 				DDAA6E732C4F680700764617 /* Preview Content */,
@@ -138,11 +147,24 @@
 			children = (
 				DDAA6E982C4F683100764617 /* +View.swift */,
 				DDAA6E9A2C4F684300764617 /* AppDelegate.swift */,
-				DDAA6E9C2C4F685900764617 /* TalkALotApp.swift */,
 				DDAA6F042C50443E00764617 /* SignUpValidator.swift */,
 				DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */,
+				DDCF159F2C562C7B00A94C35 /* AudioRecorder.swift */,
+				DDCF15A52C56327700A94C35 /* AudioPlayer.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DDCF15AB2C5643F900A94C35 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DDCF15A82C56329E00A94C35 /* AudioPlayerView.swift */,
+				DDCF15A22C562CFC00A94C35 /* RecordView.swift */,
+				DDAA6E9E2C4F689C00764617 /* HomeView.swift */,
+				DDAA6EF82C4F845A00764617 /* SignUpView.swift */,
+				DDAA6EA02C4F68CE00764617 /* LoginView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,7 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDCF15982C54FEBB00A94C35 /* GoogleService-Info.plist in Resources */,
+				DDCF159E2C562C2D00A94C35 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +269,7 @@
 			files = (
 				DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */,
 				DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */,
-				DDCF15972C54FEBB00A94C35 /* GoogleService-Info.plist in Resources */,
+				DDCF159D2C562C2D00A94C35 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +282,9 @@
 			files = (
 				DDA67EA82C5211C9001DD7A8 /* LogInValidator.swift in Sources */,
 				DDA67EAA2C52146F001DD7A8 /* LogInViewTest.swift in Sources */,
+				DDCF15A12C562C7B00A94C35 /* AudioRecorder.swift in Sources */,
 				DDA67E112C507C34001DD7A8 /* SignUpViewTest.swift in Sources */,
+				DDCF15A72C56327700A94C35 /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,8 +292,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDCF15A02C562C7B00A94C35 /* AudioRecorder.swift in Sources */,
 				DDAA6EA12C4F68CE00764617 /* LoginView.swift in Sources */,
+				DDCF15A92C56329E00A94C35 /* AudioPlayerView.swift in Sources */,
+				DDCF15A62C56327700A94C35 /* AudioPlayer.swift in Sources */,
 				DDAA6E9B2C4F684300764617 /* AppDelegate.swift in Sources */,
+				DDCF15A32C562CFC00A94C35 /* RecordView.swift in Sources */,
 				DDAA6E9F2C4F689C00764617 /* HomeView.swift in Sources */,
 				DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */,
 				DDAA6F052C50443E00764617 /* SignUpValidator.swift in Sources */,
