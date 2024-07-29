@@ -30,6 +30,8 @@
 		DDCF15A62C56327700A94C35 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15A52C56327700A94C35 /* AudioPlayer.swift */; };
 		DDCF15A72C56327700A94C35 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15A52C56327700A94C35 /* AudioPlayer.swift */; };
 		DDCF15A92C56329E00A94C35 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15A82C56329E00A94C35 /* AudioPlayerView.swift */; };
+		DDCF15C72C57290900A94C35 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15C62C57290900A94C35 /* WaveformView.swift */; };
+		DDCF15C92C572A1100A94C35 /* WaveformProcesor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15C82C572A1100A94C35 /* WaveformProcesor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		DDCF15A22C562CFC00A94C35 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		DDCF15A52C56327700A94C35 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		DDCF15A82C56329E00A94C35 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
+		DDCF15C62C57290900A94C35 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		DDCF15C82C572A1100A94C35 /* WaveformProcesor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformProcesor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,7 @@
 				DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */,
 				DDCF159F2C562C7B00A94C35 /* AudioRecorder.swift */,
 				DDCF15A52C56327700A94C35 /* AudioPlayer.swift */,
+				DDCF15C82C572A1100A94C35 /* WaveformProcesor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				DDAA6E9E2C4F689C00764617 /* HomeView.swift */,
 				DDAA6EF82C4F845A00764617 /* SignUpView.swift */,
 				DDAA6EA02C4F68CE00764617 /* LoginView.swift */,
+				DDCF15C62C57290900A94C35 /* WaveformView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -297,10 +303,12 @@
 				DDCF15A92C56329E00A94C35 /* AudioPlayerView.swift in Sources */,
 				DDCF15A62C56327700A94C35 /* AudioPlayer.swift in Sources */,
 				DDAA6E9B2C4F684300764617 /* AppDelegate.swift in Sources */,
+				DDCF15C92C572A1100A94C35 /* WaveformProcesor.swift in Sources */,
 				DDCF15A32C562CFC00A94C35 /* RecordView.swift in Sources */,
 				DDAA6E9F2C4F689C00764617 /* HomeView.swift in Sources */,
 				DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */,
 				DDAA6F052C50443E00764617 /* SignUpValidator.swift in Sources */,
+				DDCF15C72C57290900A94C35 /* WaveformView.swift in Sources */,
 				DDAA6E9D2C4F685900764617 /* TalkALotApp.swift in Sources */,
 				DDA67EA72C5211C9001DD7A8 /* LogInValidator.swift in Sources */,
 				DDAA6E992C4F683100764617 /* +View.swift in Sources */,

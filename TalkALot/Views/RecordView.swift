@@ -41,6 +41,7 @@ struct RecordView: View {
     @ObservedObject var audioRecorder = AudioRecorder()
     @ObservedObject var audioPlayer = AudioPlayer()
     @State var hasRecording = false
+    @State private var waveformData: [CGFloat] = [0]
     
     var body: some View {
         NavigationView {
@@ -63,6 +64,7 @@ struct RecordView: View {
                             self.audioRecorder.startRecording()
                         } else {
                             self.audioRecorder.stopRecording()
+                            self.loadWaveformData()
                             hasRecording = true
                         }
                         
@@ -82,8 +84,14 @@ struct RecordView: View {
                             )
                     }
                     
-                    AudioPlayerView(audioPlayer: audioPlayer, audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
-                        .opacity(audioRecorder.isRecording || !hasRecording ? 0 : 0.8)
+                    if hasRecording {
+                        AudioPlayerView(
+                            audioPlayer: audioPlayer,
+                            audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
+                            waveformData: self.$waveformData)
+                            .opacity(audioRecorder.isRecording || !hasRecording ? 0 : 0.8)
+                    }
+                    
                     
                     
                     
@@ -91,6 +99,10 @@ struct RecordView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height)
             }
         }
+    }
+    private func loadWaveformData() {
+        // Use WaveformProcessor to generate waveform data
+        self.waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
     }
 }
 
