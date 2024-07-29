@@ -3,6 +3,8 @@
 //  TalkALot
 //
 //  Created by Ryo Tabata on 2024-07-28.
+
+//code includes fucntions allowing us to pic photos from local photogally to be uploaded.
 //
 
 import Foundation

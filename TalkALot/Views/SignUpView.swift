@@ -15,6 +15,7 @@ struct SignUpView: View {
     @State private var confirmPassword = ""
     @State private var errorMessage: String = ""
     @State private var isShowingError: Bool = false
+    @State private var isNavigationActive: Bool = false
     let validator = SignUpValidator()
     
     
@@ -72,6 +73,9 @@ struct SignUpView: View {
                     let valid = validator.validate(email: email, password: password, confirmPassword: confirmPassword)
                     isShowingError = valid.isShowingError
                     errorMessage = valid.errorMessage
+                    if !isShowingError {
+                                              isNavigationActive = true
+                                          }
                     
                 }) {
                     Text("Sign Up")
@@ -91,6 +95,10 @@ struct SignUpView: View {
                 
                 Spacer()
                 Spacer()
+                
+                NavigationLink(destination: EnterNameView(), isActive: $isNavigationActive) {
+                                       EmptyView()
+                                   }
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
         }

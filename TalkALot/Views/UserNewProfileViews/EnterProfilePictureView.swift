@@ -57,6 +57,7 @@ struct EnterProfilePictureView: View {
         if let profileImage = profileImage, let imageData = profileImage.jpegData(compressionQuality: 0.8) {
             UserDefaults.standard.set(imageData, forKey: "profilePicture")
         }
+        UserDefaults.standard.set(true, forKey: "signIn")
     }
 }
 

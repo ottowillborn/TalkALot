@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        NavigationView {
-            EnterNameView()
-        }
-    }
-}
 
 struct EnterNameView: View {
     @State private var name: String = ""
@@ -51,6 +44,6 @@ struct EnterNameView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        EnterNameView()
     }
 }
