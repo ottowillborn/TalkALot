@@ -28,13 +28,17 @@
 */
 
 import SwiftUI
+import AVFoundation
 
 struct AudioPlayerView: View {
     @ObservedObject var audioPlayer: AudioPlayer
     var audioURL: URL
-    
+    @Binding var waveformData: [CGFloat]
+
+
     var body: some View {
         VStack {
+
             HStack {
                 Button(action: {
                     if self.audioPlayer.isPlaying {
@@ -47,16 +51,22 @@ struct AudioPlayerView: View {
                         .resizable()
                         .frame(width: 50, height: 50)
                 }
-                
-                Slider(value: Binding(
-                    get: {
-                        self.audioPlayer.currentTime
-                    },
-                    set: { (newValue) in
-                        self.audioPlayer.seek(to: newValue)
-                    }
-                ), in: 0...self.audioPlayer.duration)
-                .accentColor(.blue)
+                ZStack{
+                    Slider(value: Binding(
+                        get: {
+                            self.audioPlayer.currentTime
+                        },
+                        set: { (newValue) in
+                            self.audioPlayer.seek(to: newValue)
+                        }
+                    ), in: 0...self.audioPlayer.duration)
+                    .frame(height: 50)
+                    .accentColor(.blue)
+                    WaveformView(data: waveformData)
+                        .frame(height: 50)
+                        .border(Color.red)
+
+                }
                 
                 Text(formatTime(self.audioPlayer.currentTime))
                     .frame(width: 60, alignment: .trailing)
@@ -64,7 +74,7 @@ struct AudioPlayerView: View {
         }
         .padding()
     }
-    
+
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
@@ -72,10 +82,12 @@ struct AudioPlayerView: View {
     }
 }
 
-struct AudioPlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        let audioPlayer = AudioPlayer()
-        return AudioPlayerView(audioPlayer: audioPlayer, audioURL: URL(fileURLWithPath: ""))
-    }
-}
+//struct AudioPlayerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let audioPlayer = AudioPlayer()
+//        return AudioPlayerView(audioPlayer: audioPlayer, audioURL: URL(fileURLWithPath: ""), waveformData: waveformData)
+//    }
+//}
+
+
 
