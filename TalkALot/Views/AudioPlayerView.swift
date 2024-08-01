@@ -5,40 +5,39 @@
 //  Created by Otto Willborn on 2024-07-28.
 //
 /*
-  Description:
-  This file defines a SwiftUI view for an audio player interface. The AudioPlayerView
-  allows users to play, pause, and seek audio playback.
-
-  Responsibilities:
-  - Display play/pause button to control audio playback
-  - Display a slider to seek through the audio track
-  - Display the current playback time
-
-  Key Components:
-  - AudioPlayer: An observed object managing audio playback state and controls
-  - audioURL: The URL of the audio file to be played
-
-  Key Methods:
-  - body: Constructs the view hierarchy for the audio player interface
-  - formatTime(_:): Converts a TimeInterval into a string formatted as MM:SS
-
-  Dependencies:
-  - SwiftUI
-  - AudioPlayer (a custom ObservableObject managing audio playback)
-*/
+ Description:
+ This file defines a SwiftUI view for an audio player interface. The AudioPlayerView
+ allows users to play, pause, and seek audio playback.
+ 
+ Responsibilities:
+ - Display play/pause button to control audio playback
+ - Display a slider to seek through the audio track
+ - Display the current playback time
+ 
+ Key Components:
+ - AudioPlayer: An observed object managing audio playback state and controls
+ - audioURL: The URL of the audio file to be played
+ 
+ Key Methods:
+ - body: Constructs the view hierarchy for the audio player interface
+ - formatTime(_:): Converts a TimeInterval into a string formatted as MM:SS
+ 
+ Dependencies:
+ - SwiftUI
+ - AudioPlayer (a custom ObservableObject managing audio playback)
+ */
 
 import SwiftUI
 import AVFoundation
 
 struct AudioPlayerView: View {
     @ObservedObject var audioPlayer: AudioPlayer
-    var audioURL: URL
     @Binding var waveformData: [CGFloat]
-
-
+    var audioURL: URL
+    
     var body: some View {
         VStack {
-
+            
             HStack {
                 Button(action: {
                     if self.audioPlayer.isPlaying {
@@ -51,7 +50,10 @@ struct AudioPlayerView: View {
                         .resizable()
                         .frame(width: 50, height: 50)
                 }
+                // Layer waveform ontop of audio slider
                 ZStack{
+                    WaveformView(data: waveformData)
+                        .padding(.leading)
                     Slider(value: Binding(
                         get: {
                             self.audioPlayer.currentTime
@@ -62,11 +64,9 @@ struct AudioPlayerView: View {
                     ), in: 0...self.audioPlayer.duration)
                     .frame(height: 50)
                     .accentColor(.blue)
-                    WaveformView(data: waveformData)
-                        .frame(height: 50)
-                        .border(Color.red)
-
+                    
                 }
+                .frame(height: 100)
                 
                 Text(formatTime(self.audioPlayer.currentTime))
                     .frame(width: 60, alignment: .trailing)
@@ -74,7 +74,7 @@ struct AudioPlayerView: View {
         }
         .padding()
     }
-
+    
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60

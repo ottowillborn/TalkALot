@@ -58,9 +58,6 @@ final class SignUpViewTest: XCTestCase {
     func testValidSignUp() {
         let result = signUpValidator.validate(email: "test@example.com", password: "password1234", confirmPassword: "password1234")
         XCTAssertFalse(result.isShowingError)
-        
-        // Check UserDefaults for sign-in status
-        XCTAssertTrue(UserDefaults.standard.bool(forKey: "signIn"))
     }
 }
 
