@@ -4,7 +4,7 @@
 //
 //  Created by Ryo Tabata on 2024-07-28.
 //
-
+//add if username is taken
 import SwiftUI
 
 struct EnterUserNameScreen: View {
@@ -12,7 +12,8 @@ struct EnterUserNameScreen: View {
 
     var body: some View {
         VStack {
-            Text("Enter a username")
+            Spacer()
+            Text("Enter a Username")
                 .font(.largeTitle)
                 .padding()
             
@@ -25,7 +26,7 @@ struct EnterUserNameScreen: View {
                 Text("Next")
                     .font(.title2)
                     .padding()
-                    .background(Color.green)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }

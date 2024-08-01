@@ -13,8 +13,9 @@ struct EnterProfilePictureView: View {
 
     var body: some View {
         VStack {
+            Spacer()
             Text("Upload a profile picture")
-                .font(.largeTitle)
+                .font(.title)
                 .padding()
 
             if let profileImage = profileImage {
@@ -29,7 +30,7 @@ struct EnterProfilePictureView: View {
                 Image(systemName: "person.crop.circle.fill.badge.plus")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 200, height: 200)
+                    .frame(width: 150, height: 150)
                     .onTapGesture {
                         isImagePickerPresented = true
                     }
@@ -39,7 +40,7 @@ struct EnterProfilePictureView: View {
                 Text("Next")
                     .font(.title2)
                     .padding()
-                    .background(Color.green)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }

@@ -22,13 +22,15 @@ struct LoginView: View {
                 
                 VStack {
                     Spacer()
-                    
                     HStack {
-                        Text("TalkALott")
-                            .font(.system(size: 40,weight: .bold,design: .rounded))
-                        Spacer()
+                        
+                        Image("logo-no-background")
+                            .resizable()                // Makes the image resizable
+                            .aspectRatio(contentMode: .fit) // Maintains the aspect ratio
+                            .frame(width: 250, height: 250) // Sets the frame size
+                            .clipped()
                     }
-                    .padding()
+                    .padding(.bottom,-50) // Adjust this value to reduce the gap
                     
                     HStack {
                         TextField("Email", text: $email)

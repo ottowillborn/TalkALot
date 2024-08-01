@@ -4,6 +4,7 @@
 //
 //  Created by Ryo Tabata on 2024-07-28.
 //
+//add must be over certain age
 
 import SwiftUI
 
@@ -12,9 +13,10 @@ struct BirthdateView: View {
 
     var body: some View {
         VStack {
-            Text("Select your birthdate")
+            Spacer()
+            Text("Select Birthdate")
                 .font(.largeTitle)
-                .padding()
+                .padding(.bottom,60)
             
             DatePicker("Birthdate", selection: $birthdate, displayedComponents: .date)
                 .datePickerStyle(WheelDatePickerStyle())
@@ -26,7 +28,7 @@ struct BirthdateView: View {
                 Text("Next")
                     .font(.title2)
                     .padding()
-                    .background(Color.green)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }

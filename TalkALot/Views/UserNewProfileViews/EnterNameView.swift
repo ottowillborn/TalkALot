@@ -26,7 +26,7 @@ struct EnterNameView: View {
                 Text("Next")
                     .font(.title2)
                     .padding()
-                    .background(Color.green)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }

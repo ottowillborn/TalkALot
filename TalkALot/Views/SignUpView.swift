@@ -27,7 +27,7 @@ struct SignUpView: View {
                 HStack {
                     Text("Sign Up")
                         .font(.system(size: 40,weight: .bold,design: .rounded))
-                    Spacer()
+                
                 }
                 .padding()
                 HStack {
