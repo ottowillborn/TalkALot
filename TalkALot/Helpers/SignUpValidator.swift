@@ -33,7 +33,6 @@ class SignUpValidator {
                     return
                 }
             }
-            UserDefaults.standard.set(true, forKey: "signIn")
             return (false, "Passwords match, proceed with sign up.")
         }
     }
