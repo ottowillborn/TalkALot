@@ -37,6 +37,7 @@
 		DDCF15A92C56329E00A94C35 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15A82C56329E00A94C35 /* AudioPlayerView.swift */; };
 		DDCF15C72C57290900A94C35 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15C62C57290900A94C35 /* WaveformView.swift */; };
 		DDCF15C92C572A1100A94C35 /* WaveformProcesor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15C82C572A1100A94C35 /* WaveformProcesor.swift */; };
+		DDCF15CB2C5C01F900A94C35 /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCF15CA2C5C01F800A94C35 /* CustomViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		DDCF15A82C56329E00A94C35 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		DDCF15C62C57290900A94C35 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		DDCF15C82C572A1100A94C35 /* WaveformProcesor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformProcesor.swift; sourceTree = "<group>"; };
+		DDCF15CA2C5C01F800A94C35 /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 				DDCF15A52C56327700A94C35 /* AudioPlayer.swift */,
 				DDCF15C82C572A1100A94C35 /* WaveformProcesor.swift */,
 				395B61B92C57704900B08343 /* PictureSelector.swift */,
+				DDCF15CA2C5C01F800A94C35 /* CustomViews.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				DDAA6E9D2C4F685900764617 /* TalkALotApp.swift in Sources */,
 				39A8B4CA2C56D1BC00BD4389 /* EnterNameView.swift in Sources */,
 				DDA67EA72C5211C9001DD7A8 /* LogInValidator.swift in Sources */,
+				DDCF15CB2C5C01F900A94C35 /* CustomViews.swift in Sources */,
 				395B61B82C576F9A00B08343 /* EnterProfilePictureView.swift in Sources */,
 				DDAA6E992C4F683100764617 /* +View.swift in Sources */,
 			);

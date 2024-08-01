@@ -28,6 +28,7 @@
  */
 
 import SwiftUI
+import UIKit
 import AVFoundation
 
 struct AudioPlayerView: View {
@@ -54,16 +55,15 @@ struct AudioPlayerView: View {
                 ZStack{
                     WaveformView(data: waveformData)
                         .padding(.leading)
-                    Slider(value: Binding(
+                    CustomSlider(value: Binding(
                         get: {
                             self.audioPlayer.currentTime
                         },
                         set: { (newValue) in
                             self.audioPlayer.seek(to: newValue)
                         }
-                    ), in: 0...self.audioPlayer.duration)
+                    ), range: 0...self.audioPlayer.duration, step: 0.01)
                     .frame(height: 50)
-                    .accentColor(.blue)
                     
                 }
                 .frame(height: 100)
@@ -81,6 +81,9 @@ struct AudioPlayerView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
+
+
+
 
 //struct AudioPlayerView_Previews: PreviewProvider {
 //    static var previews: some View {
