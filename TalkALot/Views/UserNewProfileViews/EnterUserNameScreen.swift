@@ -44,6 +44,8 @@ struct EnterUserNameScreen: View {
 
 
 
-#Preview {
-    EnterUserNameScreen()
+struct EnterUserNameScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        EnterUserNameScreen()
+    }
 }

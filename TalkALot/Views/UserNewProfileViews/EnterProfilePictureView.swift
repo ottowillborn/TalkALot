@@ -70,6 +70,8 @@ struct FinalView: View {
     }
 }
 
-#Preview {
-    EnterProfilePictureView()
+struct EnterProfilePictureView_Previews: PreviewProvider {
+    static var previews: some View {
+        EnterProfilePictureView()
+    }
 }

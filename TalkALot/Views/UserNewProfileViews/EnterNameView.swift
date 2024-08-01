@@ -42,7 +42,7 @@ struct EnterNameView: View {
 
 
 
-struct ContentView_Previews: PreviewProvider {
+struct EnterNameView_Previews: PreviewProvider {
     static var previews: some View {
         EnterNameView()
     }
