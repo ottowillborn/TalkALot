@@ -64,6 +64,7 @@ struct RecordView: View {
                             self.audioRecorder.startRecording()
                         } else {
                             self.audioRecorder.stopRecording()
+                            waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
                             hasRecording = true
                         }
                     }) {
@@ -92,7 +93,7 @@ struct RecordView: View {
                     if hasRecording {
                         AudioPlayerView(
                             audioPlayer: audioPlayer,
-                            audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
+                            waveformData: $waveformData, audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
                     }
                     
                 }

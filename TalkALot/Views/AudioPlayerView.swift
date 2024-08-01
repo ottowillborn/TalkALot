@@ -32,6 +32,7 @@ import AVFoundation
 
 struct AudioPlayerView: View {
     @ObservedObject var audioPlayer: AudioPlayer
+    @Binding var waveformData: [CGFloat]
     var audioURL: URL
     
     var body: some View {
@@ -51,7 +52,8 @@ struct AudioPlayerView: View {
                 }
                 // Layer waveform ontop of audio slider
                 ZStack{
-                    WaveformView(data: WaveformProcessor.generateWaveformData(for: self.audioURL))
+                    WaveformView(data: waveformData)
+                        .padding(.leading)
                     Slider(value: Binding(
                         get: {
                             self.audioPlayer.currentTime
@@ -64,6 +66,7 @@ struct AudioPlayerView: View {
                     .accentColor(.blue)
                     
                 }
+                .frame(height: 100)
                 
                 Text(formatTime(self.audioPlayer.currentTime))
                     .frame(width: 60, alignment: .trailing)
