@@ -38,64 +38,55 @@ import AVFoundation
 
 class AudioRecorder: ObservableObject {
     var audioRecorder: AVAudioRecorder?
-    var audioPlayer: AVAudioPlayer?
-    var recordingSession: AVAudioSession
     @Published var isRecording = false
-    
-    init() {
-        self.recordingSession = AVAudioSession.sharedInstance()
-        setupRecording()
-    }
-    
-    func setupRecording() {
-        do {
-            try recordingSession.setCategory(.playAndRecord, mode: .default)
-            try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission { allowed in
-                DispatchQueue.main.async {
-                    if !allowed {
-                        // Handle permission not granted
-                        print("Permission to access the microphone was not granted.")
-                    }
-                }
-            }
-        } catch {
-            // Handle setup error
-            print("Failed to set up recording session: \(error.localizedDescription)")
-        }
-    }
+    @Published var audioAmplitude: CGFloat = 0.0
     
     func startRecording() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
-        
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
-        
+        let audioSession = AVAudioSession.sharedInstance()
         do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+            try audioSession.setCategory(.record, mode: .default)
+            try audioSession.setActive(true)
+            let settings = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 48000,
+                AVNumberOfChannelsKey: 2,
+                AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue
+            ]
+            
+            audioRecorder = try AVAudioRecorder(url: self.getURL(), settings: settings)
+            audioRecorder?.isMeteringEnabled = true
             audioRecorder?.record()
+            
             isRecording = true
-            print("Recording started. File saved at: \(audioFilename)")
+            startMonitoring()
         } catch {
-            // Handle recording error
-            print("Failed to start recording: \(error.localizedDescription)")
+            print("Failed to start recording: \(error)")
         }
     }
     
     func stopRecording() {
         audioRecorder?.stop()
         isRecording = false
-        print("Recording stopped.")
     }
     
-    func getDocumentsDirectory() -> URL {
+    private func startMonitoring() {
+        Timer.scheduledTimer(withTimeInterval: 0.025, repeats: true) { timer in
+            if self.isRecording {
+                self.audioRecorder?.updateMeters()
+                let power = self.audioRecorder?.averagePower(forChannel: 0) ?? -160
+                self.audioAmplitude = CGFloat(pow(10, power / 20))
+            } else {
+                timer.invalidate()
+            }
+        }
+    }
+    
+    private func getURL() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
+        let documentDirectory = paths[0]
+        return documentDirectory.appendingPathComponent("recording.m4a")
     }
 }
+
 
 

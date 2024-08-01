@@ -5,33 +5,33 @@
 //  Created by Otto Willborn on 2024-07-28.
 //
 /*
-  Description:
-  This file defines a SwiftUI view for recording and playing back audio. The RecordView
-  provides an interface for users to start/stop recording and play the recorded audio.
-
-  Responsibilities:
-  - Display UI to start/stop audio recording
-  - Show a button to control recording state
-  - Integrate an audio player to play back the recorded audio
-
-  Key Components:
-  - AudioRecorder: An observed object managing audio recording
-  - AudioPlayer: An observed object managing audio playback
-  - hasRecording: A state variable indicating whether a recording exists
-
-  Key Methods:
-  - body: Constructs the view hierarchy for the recording interface
-  - Button(action:): Toggles the recording state of the audio recorder
-
-  Dependencies:
-  - SwiftUI
-  - FirebaseAuth
-  - Firebase
-  - AudioRecorder (a custom ObservableObject managing audio recording)
-  - AudioPlayer (a custom ObservableObject managing audio playback)
-  - AudioPlayerView (a custom SwiftUI view for audio playback)
-
-*/
+ Description:
+ This file defines a SwiftUI view for recording and playing back audio. The RecordView
+ provides an interface for users to start/stop recording and play the recorded audio.
+ 
+ Responsibilities:
+ - Display UI to start/stop audio recording
+ - Show a button to control recording state
+ - Integrate an audio player to play back the recorded audio
+ 
+ Key Components:
+ - AudioRecorder: An observed object managing audio recording
+ - AudioPlayer: An observed object managing audio playback
+ - hasRecording: A state variable indicating whether a recording exists
+ 
+ Key Methods:
+ - body: Constructs the view hierarchy for the recording interface
+ - Button(action:): Toggles the recording state of the audio recorder
+ 
+ Dependencies:
+ - SwiftUI
+ - FirebaseAuth
+ - Firebase
+ - AudioRecorder (a custom ObservableObject managing audio recording)
+ - AudioPlayer (a custom ObservableObject managing audio playback)
+ - AudioPlayerView (a custom SwiftUI view for audio playback)
+ 
+ */
 
 import SwiftUI
 import FirebaseAuth
@@ -64,14 +64,17 @@ struct RecordView: View {
                             self.audioRecorder.startRecording()
                         } else {
                             self.audioRecorder.stopRecording()
-                            self.loadWaveformData()
                             hasRecording = true
                         }
-                        
                     }) {
+                        let baseSize: CGFloat = 80
+                        let maxSize: CGFloat = 160
+                        let amplitude = audioRecorder.audioAmplitude * 400
+                        let size = min(baseSize + amplitude, maxSize)
+                        
                         Circle()
                             .fill(audioRecorder.isRecording ? Color.red : Color.gray)
-                            .frame(width: 80, height: 80)
+                            .frame(width: size, height: size) // Adjust circle size based on amplitude, with a maximum limit
                             .overlay(
                                 Circle()
                                     .stroke(Color.white, lineWidth: 4)
@@ -83,26 +86,19 @@ struct RecordView: View {
                                     .font(.system(size: 40))
                             )
                     }
+                    .frame(width: 160, height: 160)
+                    
                     
                     if hasRecording {
                         AudioPlayerView(
                             audioPlayer: audioPlayer,
-                            audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
-                            waveformData: self.$waveformData)
-                            .opacity(audioRecorder.isRecording || !hasRecording ? 0 : 0.8)
+                            audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
                     }
-                    
-                    
-                    
                     
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
             }
         }
-    }
-    private func loadWaveformData() {
-        // Use WaveformProcessor to generate waveform data
-        self.waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
     }
 }
 
