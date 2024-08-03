@@ -64,6 +64,7 @@ struct RecordView: View {
                             self.audioRecorder.startRecording()
                         } else {
                             self.audioRecorder.stopRecording()
+                            self.audioPlayer.seek(to: 0) // Start from beginning if new recording
                             waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
                             hasRecording = true
                         }

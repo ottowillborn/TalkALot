@@ -54,7 +54,6 @@ struct AudioPlayerView: View {
                 // Layer waveform ontop of audio slider
                 ZStack{
                     WaveformView(data: waveformData)
-                        .padding(.leading)
                     CustomSlider(value: Binding(
                         get: {
                             self.audioPlayer.currentTime
