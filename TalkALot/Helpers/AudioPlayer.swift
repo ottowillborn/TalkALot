@@ -52,6 +52,7 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             duration = audioPlayer?.duration ?? 0
             audioPlayer?.delegate = self // Set the delegate
+            self.seek(to: currentTime) // Start playback from slider
             audioPlayer?.play()
             isPlaying = true
             startTimer()
