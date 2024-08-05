@@ -45,7 +45,7 @@ struct AudioPlayerView: View {
                     if self.audioPlayer.isPlaying {
                         self.audioPlayer.pausePlayback()
                     } else {
-                        self.audioPlayer.startPlayback()
+                        self.audioPlayer.startPlayback(url: audioURL)
                     }
                 }) {
                     Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
@@ -125,7 +125,7 @@ struct AudioPlayerView_Previews: PreviewProvider {
             audioPlayer: MockAudioPlayer(),
             waveformData: .constant(mockWaveformData),
             audioURL: mockURL,
-            isEditing: (false) // Set to true to show editing view
+            isEditing: (true) // Set to true to show editing view
         )
     }
 }
