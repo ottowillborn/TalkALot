@@ -49,12 +49,22 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     private var timer: Timer?
     
-    func startPlayback() {
-        
+    func startPlayback(url: URL) {
+        do {
+            // Configure the audio session, necessary for physical devices
+            let audioSession = AVAudioSession.sharedInstance()
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true, options: [])
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            duration = audioPlayer?.duration ?? 0
+            audioPlayer?.delegate = self // Set the delegate
+            self.seek(to: currentTime) // Start playback from slider
             audioPlayer?.play()
             isPlaying = true
             startTimer()
-        
+        } catch {
+            print("Failed to initialize playback: \(error.localizedDescription)")
+        }
     }
     
     func pausePlayback() {
@@ -88,12 +98,13 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             duration = audioPlayer?.duration ?? 0
             audioPlayer?.delegate = self // Set the delegate
+            self.seek(to: currentTime) // Start playback from slider
+            lowerValue = 0
+            upperValue = audioPlayer?.duration ?? 0
         } catch {
             print("Failed to initialize playback: \(error.localizedDescription)")
         }
-        self.seek(to: currentTime) // Start playback from slider
-        lowerValue = 0
-        upperValue = audioPlayer?.duration ?? 0
+        
     }
     
     private func startTimer() {
