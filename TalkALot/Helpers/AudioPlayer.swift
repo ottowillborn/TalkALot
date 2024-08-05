@@ -43,22 +43,18 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     var audioPlayer: AVAudioPlayer?
     @Published var isPlaying = false
     @Published var currentTime: TimeInterval = 0
+    @Published var lowerValue: TimeInterval = 0
+    @Published var upperValue: TimeInterval = 0
     @Published var duration: TimeInterval = 0
     
     private var timer: Timer?
     
-    func startPlayback(url: URL) {
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            duration = audioPlayer?.duration ?? 0
-            audioPlayer?.delegate = self // Set the delegate
-            self.seek(to: currentTime) // Start playback from slider
+    func startPlayback() {
+        
             audioPlayer?.play()
             isPlaying = true
             startTimer()
-        } catch {
-            print("Failed to start playback: \(error.localizedDescription)")
-        }
+        
     }
     
     func pausePlayback() {
@@ -77,6 +73,27 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func seek(to time: TimeInterval) {
         audioPlayer?.currentTime = time
         currentTime = time
+    }
+    
+    func seekLowerValue(to time: TimeInterval) {
+        lowerValue = time
+    }
+    
+    func seekUpperValue(to time: TimeInterval) {
+        upperValue = time
+    }
+    
+    func initializePlayer(url: URL){
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            duration = audioPlayer?.duration ?? 0
+            audioPlayer?.delegate = self // Set the delegate
+        } catch {
+            print("Failed to initialize playback: \(error.localizedDescription)")
+        }
+        self.seek(to: currentTime) // Start playback from slider
+        lowerValue = 0
+        upperValue = audioPlayer?.duration ?? 0
     }
     
     private func startTimer() {
