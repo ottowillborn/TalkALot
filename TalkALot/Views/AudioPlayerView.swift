@@ -41,18 +41,8 @@ struct AudioPlayerView: View {
         VStack {
             
             HStack {
-                Button(action: {
-                    if self.audioPlayer.isPlaying {
-                        self.audioPlayer.pausePlayback()
-                    } else {
-                        self.audioPlayer.startPlayback(url: audioURL)
-                    }
-                }) {
-                    Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                }
-
+                Text("Yap #1")
+                    .frame(width: 50, alignment: .leading)
                 // Layer waveform ontop of audio slider
                 ZStack{
                     WaveformView(data: waveformData)
@@ -85,8 +75,52 @@ struct AudioPlayerView: View {
                 .frame(height: 100)
                 
                 Text(formatTime(self.audioPlayer.currentTime))
-                    .frame(width: 60, alignment: .trailing)
+                    .frame(width: 50, alignment: .trailing)
             }
+            HStack {
+                // Skip backwards button
+                Button(action: {
+                    // Action to skip backwards
+                    let skipInterval: TimeInterval = -5
+                    let newTime = max(self.audioPlayer.currentTime + skipInterval, 0)
+                    self.audioPlayer.seek(to: newTime)
+                }) {
+                    Image(systemName: "gobackward.5")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                }
+                
+                
+                // Play/Pause button
+                Button(action: {
+                    if self.audioPlayer.isPlaying {
+                        self.audioPlayer.pausePlayback()
+                    } else {
+                        self.audioPlayer.startPlayback(url: audioURL)
+                    }
+                }) {
+                    Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                    
+                }
+                .padding()
+                
+                
+                // Skip forwards button
+                Button(action: {
+                    // Action to skip forwards
+                    let skipInterval: TimeInterval = 5
+                    let newTime = min(self.audioPlayer.currentTime + skipInterval, self.audioPlayer.duration)
+                    self.audioPlayer.seek(to: newTime)
+                }) {
+                    Image(systemName: "goforward.5")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                }
+            }
+            .frame(height: 50)
+            
         }
         .onAppear{
             audioPlayer.initializePlayer(url: self.audioURL)
@@ -117,10 +151,10 @@ struct AudioPlayerView_Previews: PreviewProvider {
     static var previews: some View {
         // Mock waveform data
         let mockWaveformData: [CGFloat] = Array(repeating: 0.02, count: 100)
-
+        
         // Mock audio URL
         let mockURL = URL(string: "https://example.com/audiofile.mp3")!
-
+        
         AudioPlayerView(
             audioPlayer: MockAudioPlayer(),
             waveformData: .constant(mockWaveformData),
