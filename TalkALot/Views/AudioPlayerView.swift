@@ -35,6 +35,7 @@ struct AudioPlayerView: View {
     @ObservedObject var audioPlayer: AudioPlayer
     @Binding var waveformData: [CGFloat]
     var audioURL: URL
+    var isEditing: Bool?
     
     var body: some View {
         VStack {
@@ -44,17 +45,18 @@ struct AudioPlayerView: View {
                     if self.audioPlayer.isPlaying {
                         self.audioPlayer.pausePlayback()
                     } else {
-                        self.audioPlayer.startPlayback(url: self.audioURL)
+                        self.audioPlayer.startPlayback()
                     }
                 }) {
                     Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
                         .resizable()
                         .frame(width: 50, height: 50)
                 }
+
                 // Layer waveform ontop of audio slider
                 ZStack{
                     WaveformView(data: waveformData)
-                    CustomSlider(value: Binding(
+                    PlaybackSlider(value: Binding(
                         get: {
                             self.audioPlayer.currentTime
                         },
@@ -63,6 +65,21 @@ struct AudioPlayerView: View {
                         }
                     ), range: 0...self.audioPlayer.duration, step: 0.01)
                     .frame(height: 50)
+                    // if editing, add the edit select tabs as an overlay
+                    if isEditing ?? false {
+                        EditCutSliders(
+                            lowerValue: Binding(
+                                get: { self.audioPlayer.lowerValue },
+                                set: { newValue in self.audioPlayer.seekLowerValue(to: newValue) }
+                            ),
+                            upperValue: Binding(
+                                get: {self.audioPlayer.upperValue},
+                                set: {newValue in self.audioPlayer.seekUpperValue(to: newValue)}
+                            ),
+                            range: 0.0...self.audioPlayer.duration,
+                            step: 0.01
+                        )
+                    }
                     
                 }
                 .frame(height: 100)
@@ -71,8 +88,12 @@ struct AudioPlayerView: View {
                     .frame(width: 60, alignment: .trailing)
             }
         }
+        .onAppear{
+            audioPlayer.initializePlayer(url: self.audioURL)
+        }
         .padding()
     }
+    
     
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
@@ -84,12 +105,30 @@ struct AudioPlayerView: View {
 
 
 
-//struct AudioPlayerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let audioPlayer = AudioPlayer()
-//        return AudioPlayerView(audioPlayer: audioPlayer, audioURL: URL(fileURLWithPath: ""), waveformData: waveformData)
-//    }
-//}
+class MockAudioPlayer: AudioPlayer {
+    override init() {
+        super.init()
+        self.duration = 180 // Mock duration of 3 minutes
+        self.currentTime = 30 // Mock current time of 30 seconds
+    }
+}
+
+struct AudioPlayerView_Previews: PreviewProvider {
+    static var previews: some View {
+        // Mock waveform data
+        let mockWaveformData: [CGFloat] = Array(repeating: 0.02, count: 100)
+
+        // Mock audio URL
+        let mockURL = URL(string: "https://example.com/audiofile.mp3")!
+
+        AudioPlayerView(
+            audioPlayer: MockAudioPlayer(),
+            waveformData: .constant(mockWaveformData),
+            audioURL: mockURL,
+            isEditing: (false) // Set to true to show editing view
+        )
+    }
+}
 
 
 

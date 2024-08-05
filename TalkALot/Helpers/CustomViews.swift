@@ -8,7 +8,7 @@ import Foundation
 import SwiftUI
 
 //Takes a range and value (set, get)
-struct CustomSlider: View {
+struct PlaybackSlider: View {
     @Binding var value: Double
     let range: ClosedRange<Double>
     let step: Double
@@ -40,6 +40,64 @@ struct CustomSlider: View {
                             }
                     )
                     .frame(width: 20)
+            }
+            .frame(height: thumbSize)
+        }
+        .frame(height: thumbSize)
+    }
+}
+
+// Sliders to select desired time range when editing
+struct EditCutSliders: View {
+    @Binding var lowerValue: Double
+    @Binding var upperValue: Double
+    let range: ClosedRange<Double>
+    let step: Double
+    let thumbSize: CGFloat = 35
+    let trackHeight: CGFloat = 2
+
+    var body: some View {
+        GeometryReader { geometry in
+            let totalWidth = geometry.size.width
+            let lowerThumbPosition = CGFloat((lowerValue - range.lowerBound) / (range.upperBound - range.lowerBound)) * totalWidth
+            let upperThumbPosition = CGFloat((upperValue - range.lowerBound) / (range.upperBound - range.lowerBound)) * totalWidth
+
+            ZStack(alignment: .leading) {
+
+                // Selected range track
+                Rectangle()
+                    .foregroundColor(Color.gray)
+                    .frame(width: upperThumbPosition - lowerThumbPosition, height: 50)
+                    .offset(x: lowerThumbPosition)
+                    .opacity(0.5)
+                
+                // Lower Thumb
+                Rectangle()
+                    .foregroundColor(.gray)
+                    .frame(width: 2, height: thumbSize)
+                    .shadow(radius: 2)
+                    .offset(x: lowerThumbPosition - 1)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { gesture in
+                                let newValue = Double(gesture.location.x / totalWidth) * (range.upperBound - range.lowerBound) + range.lowerBound
+                                lowerValue = min(max(range.lowerBound, newValue), upperValue)
+                            }
+                    )
+
+                // Upper Thumb
+                Rectangle()
+                    .foregroundColor(.gray)
+                    .frame(width: 2, height: thumbSize)
+                    .shadow(radius: 2)
+                    .offset(x: upperThumbPosition - 1)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { gesture in
+                                let newValue = Double(gesture.location.x / totalWidth) * (range.upperBound - range.lowerBound) + range.lowerBound
+                                upperValue = max(min(range.upperBound, newValue), lowerValue)
+                            }
+                    )
             }
             .frame(height: thumbSize)
         }
