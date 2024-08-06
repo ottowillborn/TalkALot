@@ -106,25 +106,66 @@ struct RecordView: View {
                 
             }
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(trailing: Button(action: {
-                isEditing = !isEditing
-            }) {
-                HStack {
-                    if isEditing {
-                        Text("Cancel Edit")
-                        Image(systemName: "xmark")
-                    } else {
-                        Text("Edit")
-                        Image(systemName: "crop")
+            .navigationBarItems(
+                trailing:
+                    VStack {
+                        Button(action: {
+                                if isEditing {
+                                    //revert changes
+                                    self.revertAudio()
+                                } else {
+                                    // store original
+                                    self.storeBackup()
+                                }
+                                isEditing = !isEditing
+                        }) {
+                            HStack {
+                                if isEditing {
+                                    Text("Cancel Edit")
+                                    Image(systemName: "xmark")
+                                } else {
+                                    Text("Edit")
+                                    Image(systemName: "crop")
+                                }
+                            }
+                            
+                        }
+                        .opacity((hasRecording && !audioRecorder.isRecording) ? 1 : 0)
                     }
-                }
                 
-            }
-                .opacity((hasRecording && !audioRecorder.isRecording) ? 1 : 0)
             )
                 
             
             .frame(width: geometry.size.width, height: geometry.size.height)
+        }
+    }
+    
+    //uses self to revert to stored audio file
+    func revertAudio() {
+        do {
+            let audioURL = audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: "")
+            let backupURL = audioURL.deletingPathExtension().appendingPathExtension("backup.m4a")
+            if FileManager.default.fileExists(atPath: backupURL.path) {
+                try FileManager.default.replaceItemAt(audioURL, withItemAt: backupURL)
+            }
+            self.audioPlayer.initializePlayer(url: audioURL) // re-initialize audio player as file has changed
+            self.waveformData = WaveformProcessor.generateWaveformData(for: audioURL) // regenerate waveform as audio has changed
+        } catch {
+            print("Failed to revert audio: \(error.localizedDescription)")
+        }
+    }
+    
+    //uses self to store a backup of audio file
+    func storeBackup() {
+        do {
+            let audioURL = audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: "")
+            let backupURL = audioURL.deletingPathExtension().appendingPathExtension("backup.m4a")
+            if !FileManager.default.fileExists(atPath: backupURL.path) {
+                try FileManager.default.copyItem(at: audioURL, to: backupURL)
+            }
+        } catch {
+            print("Failed to store backup: \(error.localizedDescription)")
+
         }
     }
 }

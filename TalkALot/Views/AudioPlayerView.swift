@@ -80,7 +80,6 @@ struct AudioPlayerView: View {
                 }
                 .frame(height: 300)
                 
-                    
                 VStack{
                     Text(formatTime(self.audioPlayer.currentTime))
                         .frame(width: 50, alignment: .trailing)
@@ -91,7 +90,6 @@ struct AudioPlayerView: View {
                     Button(action: {
                         do {
                             // Cut audio in editor and store new file in existing URL's place, replacing it
-                            // TODO: undo option for cuts
                             let audioEditor = try AudioEditor(fileURL: audioURL)
                             try audioEditor.cutAudio(startTime: audioPlayer.lowerValue, endTime: audioPlayer.upperValue, outputURL: audioURL)
                             self.audioPlayer.initializePlayer(url: audioURL) // re-initialize audio player as file has changed
@@ -165,7 +163,6 @@ struct AudioPlayerView: View {
                     Button(action: {
                         do {
                             // Trim audio in editor and store new file in existing URL's place, replacing it
-                            // TODO: undo option for trims
                             let audioEditor = try AudioEditor(fileURL: audioURL)
                             try audioEditor.trimAudio(startTime: audioPlayer.lowerValue, endTime: audioPlayer.upperValue, outputURL: audioURL)
                             self.audioPlayer.initializePlayer(url: audioURL) // re-initialize audio player as file has changed
