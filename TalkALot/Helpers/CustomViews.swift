@@ -39,9 +39,6 @@ struct PlaybackSlider: View {
                         .shadow(radius: 2)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                         .offset(y:thumbSize/2)
-                        
-
-
                 }
                 .offset(x: sliderWidth - 20) // Offset by half of thumbs width plus half of grabbable frame
                 .gesture(

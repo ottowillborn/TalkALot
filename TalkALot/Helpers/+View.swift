@@ -19,7 +19,29 @@ extension View {
             return .init()
         }
         
-        
         return root
     }
+}
+
+struct TabBarAppearanceModifier: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        let viewController = UIViewController()
+        
+        // Customize the tab bar appearance
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = UIColor.black
+        
+        // Adjust icon positioning
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.white
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor.blue
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+        
+        return viewController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }

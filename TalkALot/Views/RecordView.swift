@@ -92,8 +92,6 @@ struct RecordView: View {
                     
                 }
                 
-                
-                
                 if hasRecording && !audioRecorder.isRecording{
                     AudioPlayerView(
                         audioPlayer: audioPlayer,
@@ -101,9 +99,7 @@ struct RecordView: View {
                         audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
                         isEditing: isEditing
                     )
-                    
                 }
-                
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(
@@ -132,10 +128,7 @@ struct RecordView: View {
                         }
                         .opacity((hasRecording && !audioRecorder.isRecording) ? 1 : 0)
                     }
-                
             )
-                
-            
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
     }
@@ -165,7 +158,6 @@ struct RecordView: View {
             }
         } catch {
             print("Failed to store backup: \(error.localizedDescription)")
-
         }
     }
 }
