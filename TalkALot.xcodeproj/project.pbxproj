@@ -12,6 +12,7 @@
 		395B61B82C576F9A00B08343 /* EnterProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B61B72C576F9A00B08343 /* EnterProfilePictureView.swift */; };
 		395B61BA2C57704900B08343 /* PictureSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B61B92C57704900B08343 /* PictureSelector.swift */; };
 		39A8B4CA2C56D1BC00BD4389 /* EnterNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A8B4C92C56D1BC00BD4389 /* EnterNameView.swift */; };
+		DD5AF5C02C62122500D055CC /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5AF5BF2C62122500D055CC /* Enums.swift */; };
 		DDA67E112C507C34001DD7A8 /* SignUpViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */; };
 		DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */; };
 		DDA67EA72C5211C9001DD7A8 /* LogInValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA62C5211C9001DD7A8 /* LogInValidator.swift */; };
@@ -57,6 +58,7 @@
 		395B61B72C576F9A00B08343 /* EnterProfilePictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterProfilePictureView.swift; sourceTree = "<group>"; };
 		395B61B92C57704900B08343 /* PictureSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureSelector.swift; sourceTree = "<group>"; };
 		39A8B4C92C56D1BC00BD4389 /* EnterNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNameView.swift; sourceTree = "<group>"; };
+		DD5AF5BF2C62122500D055CC /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		DDA67E082C507917001DD7A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewTest.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				395B61B92C57704900B08343 /* PictureSelector.swift */,
 				DDCF15CA2C5C01F800A94C35 /* CustomViews.swift */,
 				DDCF15D42C60941E00A94C35 /* AudioEditor.swift */,
+				DD5AF5BF2C62122500D055CC /* Enums.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				395B61B62C576EA300B08343 /* EnterUserNameScreen.swift in Sources */,
 				395B61B42C576BC900B08343 /* BirthdateView.swift in Sources */,
 				DDAA6E9F2C4F689C00764617 /* HomeView.swift in Sources */,
+				DD5AF5C02C62122500D055CC /* Enums.swift in Sources */,
 				395B61BA2C57704900B08343 /* PictureSelector.swift in Sources */,
 				DDAA6EF92C4F845A00764617 /* SignUpView.swift in Sources */,
 				DDAA6F052C50443E00764617 /* SignUpValidator.swift in Sources */,

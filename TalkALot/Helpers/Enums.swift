@@ -6,3 +6,7 @@
 //
 
 import Foundation
+enum AudioEditOperation {
+    case trim
+    case cut
+}

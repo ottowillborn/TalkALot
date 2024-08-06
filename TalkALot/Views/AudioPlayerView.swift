@@ -5,26 +5,7 @@
 //  Created by Otto Willborn on 2024-07-28.
 //
 /*
- Description:
- This file defines a SwiftUI view for an audio player interface. The AudioPlayerView
- allows users to play, pause, and seek audio playback.
- 
- Responsibilities:
- - Display play/pause button to control audio playback
- - Display a slider to seek through the audio track
- - Display the current playback time
- 
- Key Components:
- - AudioPlayer: An observed object managing audio playback state and controls
- - audioURL: The URL of the audio file to be played
- 
- Key Methods:
- - body: Constructs the view hierarchy for the audio player interface
- - formatTime(_:): Converts a TimeInterval into a string formatted as MM:SS
- 
- Dependencies:
- - SwiftUI
- - AudioPlayer (a custom ObservableObject managing audio playback)
+ view for displaying, palying, and editing audio files
  */
 
 import SwiftUI
@@ -36,8 +17,6 @@ struct AudioPlayerView: View {
     @Binding var waveformData: [CGFloat]
     var audioURL: URL
     var isEditing: Bool = false
-    @State var toggleCutAudio = false
-    @State var toggleTrimAudio = false
     @State var yapName = ""
     @State var isEditingTitle: Bool = true
     
@@ -116,18 +95,9 @@ struct AudioPlayerView: View {
                 }
                 
                 HStack {
-                    // Confirm cut button
                     Button(action: {
-                        do {
-                            // Cut audio in editor and store new file in existing URL's place, replacing it
-                            let audioEditor = try AudioEditor(fileURL: audioURL)
-                            try audioEditor.cutAudio(startTime: audioPlayer.lowerValue, endTime: audioPlayer.upperValue, outputURL: audioURL)
-                            self.audioPlayer.initializePlayer(url: audioURL) // re-initialize audio player as file has changed
-                            self.waveformData = WaveformProcessor.generateWaveformData(for: audioURL) // regenerate waveform as audio has changed
-                            self.toggleCutAudio = false // reset toggle cut
-                        } catch {
-                            print("Failed to cut audio: \(error.localizedDescription)")
-                        }
+                        // Cut audio in editor and store new file in existing URL's place, replacing it
+                        editAudio(operation: .cut)
                     }) {
                         Text("Cut")
                     }
@@ -139,11 +109,8 @@ struct AudioPlayerView: View {
                     .disabled(isEditing ? false : true) // Disable interaction when editing
                     .padding()
                     
-                    
-                    
                     // Skip backwards button
                     Button(action: {
-                        // Action to skip backwards
                         let skipInterval: TimeInterval = -5
                         let newTime = max(self.audioPlayer.currentTime + skipInterval, 0)
                         self.audioPlayer.seek(to: newTime)
@@ -156,8 +123,6 @@ struct AudioPlayerView: View {
                     .disabled(isEditing ? true : false) // Disable interaction when editing
                     .foregroundStyle(.blue)
 
-                    
-                    
                     // Play/Pause button
                     Button(action: {
                         if self.audioPlayer.isPlaying {
@@ -169,14 +134,11 @@ struct AudioPlayerView: View {
                         Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
-                        
                     }
                     .padding()
                     
-                    
                     // Skip forwards button
                     Button(action: {
-                        // Action to skip forwards
                         let skipInterval: TimeInterval = 5
                         let newTime = min(self.audioPlayer.currentTime + skipInterval, self.audioPlayer.duration)
                         self.audioPlayer.seek(to: newTime)
@@ -189,18 +151,8 @@ struct AudioPlayerView: View {
                     .disabled(isEditing ? true : false) // Disable interaction when editing
                     .foregroundStyle(.blue)
                     
-                    // Confirm trim button
                     Button(action: {
-                        do {
-                            // Trim audio in editor and store new file in existing URL's place, replacing it
-                            let audioEditor = try AudioEditor(fileURL: audioURL)
-                            try audioEditor.trimAudio(startTime: audioPlayer.lowerValue, endTime: audioPlayer.upperValue, outputURL: audioURL)
-                            self.audioPlayer.initializePlayer(url: audioURL) // re-initialize audio player as file has changed
-                            self.waveformData = WaveformProcessor.generateWaveformData(for: audioURL) // regenerate waveform as audio has changed
-                            self.toggleTrimAudio = false // reset toggle trim
-                        } catch {
-                            print("Failed to trim audio: \(error.localizedDescription)")
-                        }
+                        editAudio(operation: AudioEditOperation.trim)
                     }) {
                         Text("Trim")
                     }
@@ -225,7 +177,23 @@ struct AudioPlayerView: View {
         }
     }
     
-    
+    private func editAudio(operation: AudioEditOperation) {
+        do {
+            let audioEditor = try AudioEditor(fileURL: audioURL)
+            switch operation {
+            case .trim: // replace trimmed audio in audioURL
+                try audioEditor.trimAudio(startTime: audioPlayer.lowerValue, endTime: audioPlayer.upperValue, outputURL: audioURL)
+            case .cut: // replace cut audio in audioURL
+                try audioEditor.cutAudio(startTime: audioPlayer.lowerValue, endTime: audioPlayer.upperValue, outputURL: audioURL)
+            }
+            // re-initialize audio player as file has changed
+            self.audioPlayer.initializePlayer(url: audioURL)
+            // regenerate waveform as audio has changed
+            self.waveformData = WaveformProcessor.generateWaveformData(for: audioURL)
+        } catch {
+            print("Failed to edit audio: \(error.localizedDescription)")
+        }
+    }
     private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
@@ -241,6 +209,7 @@ class MockAudioPlayer: AudioPlayer {
         super.init()
         self.duration = 180 // Mock duration of 3 minutes
         self.currentTime = 30 // Mock current time of 30 seconds
+        self.upperValue = 180
     }
 }
 
