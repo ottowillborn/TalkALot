@@ -53,8 +53,6 @@ struct RecordView: View {
                     if !audioRecorder.isRecording {
                         if !hasRecording {
                             Text("Click to start recording")
-                        } else {
-                            Text("Click to re-record")
                         }
                     } else {
                         Text("Click to stop recording")
@@ -70,28 +68,40 @@ struct RecordView: View {
                             hasRecording = true
                         }
                     }) {
-                        let baseSize: CGFloat = 80
+                        let baseSize: CGFloat = (hasRecording && !audioRecorder.isRecording ? 50 : 80)
                         let maxSize: CGFloat = 160
                         let amplitude = audioRecorder.audioAmplitude * 400
                         let size = min(baseSize + amplitude, maxSize)
-                        
-                        Circle()
-                            .fill(audioRecorder.isRecording ? Color.red : Color.gray)
-                            .frame(width: size, height: size) // Adjust circle size based on amplitude, with a maximum limit
-                            .overlay(
-                                Circle()
-                                    .stroke(Color.white, lineWidth: 4)
-                                    .frame(width: 100, height: 100)
-                            )
-                            .overlay(
-                                Image(systemName: audioRecorder.isRecording ? "stop.fill" : "mic.fill")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 40))
-                            )
+                        if hasRecording && !audioRecorder.isRecording {
+                            HStack {
+                                Text("Click to re-record")
+                                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                                    .multilineTextAlignment(.leading) // Align text to the left
+                                    .foregroundStyle(AppColors.darkGray)
+                                Image(systemName: "mic")
+                                    .foregroundStyle(.primary)
+                                    .font(.system(size: 25)) // Set the size of the icon
+                                    .fontWeight(.bold)
+                                    .padding()
+                            }
+                        } else {
+                            Circle()
+                                .fill(audioRecorder.isRecording ? Color.red : Color.gray)
+                                .frame(width: size, height: size) // Adjust circle size based on amplitude, with a maximum limit
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.white, lineWidth: 4)
+                                        .frame(width: 100, height: 100)
+                                )
+                                .overlay(
+                                    Image(systemName: audioRecorder.isRecording ? "stop.fill" : "mic.fill")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: hasRecording && !audioRecorder.isRecording ? 25 : 40))
+                                )
+                        }
                     }
-                    
+                    .padding()
                 }
-                
                 if hasRecording && !audioRecorder.isRecording{
                     AudioPlayerView(
                         audioPlayer: audioPlayer,

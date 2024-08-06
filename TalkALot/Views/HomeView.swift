@@ -39,6 +39,8 @@ struct HomeView: View {
                             .aspectRatio(contentMode: .fit) // Maintains the aspect ratio
                             .frame(width: 150, height: 250) // Sets the frame size
                             .clipped()
+                            .padding(.bottom, 20)
+                            .foregroundStyle(Color.black)
                     )
                 }
             }
@@ -59,6 +61,7 @@ struct HomeView: View {
                 }
         }
         .background(TabBarAppearanceModifier())
+        .background(ToolBarAppearanceModifier())
     }
 }
 

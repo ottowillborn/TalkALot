@@ -52,7 +52,7 @@ struct AudioPlayerView: View {
                     .padding()
                     
                 }
-                Spacer()
+                
                 // Layer waveform ontop of audio slider
                 ZStack{
                     WaveformView(data: waveformData)
@@ -134,6 +134,7 @@ struct AudioPlayerView: View {
                         Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
+                            .foregroundStyle(AppColors.primaryBlue)
                     }
                     .padding()
                     
