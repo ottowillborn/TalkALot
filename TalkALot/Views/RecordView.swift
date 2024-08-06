@@ -101,7 +101,7 @@ struct RecordView: View {
                         audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
                         isEditing: isEditing
                     )
-                    .frame(height: 400)
+                    
                 }
                 
             }

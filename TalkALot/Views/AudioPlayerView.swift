@@ -38,12 +38,42 @@ struct AudioPlayerView: View {
     var isEditing: Bool = false
     @State var toggleCutAudio = false
     @State var toggleTrimAudio = false
+    @State var yapName = ""
+    @State var isEditingTitle: Bool = true
     
     var body: some View {
         GeometryReader { geometry in
             
             VStack {
-                
+                if isEditing {
+                    HStack {
+                        if isEditingTitle {
+                            TextField("Enter Yap Title", text: $yapName)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
+
+                        } else {
+                            Text(yapName)
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
+                                .multilineTextAlignment(.leading) // Align text to the left
+                        }
+                        
+                        Button(action: {
+                            if !yapName.isEmpty {
+                                isEditingTitle.toggle()
+                            }
+                        }) {
+                            Image(systemName: isEditingTitle ? "checkmark" : "pencil")
+                                .foregroundStyle(.primary)
+                                .font(.system(size: 25)) // Set the size of the icon
+                                .fontWeight(.bold)
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                    
+                }
+                Spacer()
                 // Layer waveform ontop of audio slider
                 ZStack{
                     WaveformView(data: waveformData)
@@ -185,7 +215,7 @@ struct AudioPlayerView: View {
                     
                 }
                 .frame(height: 50)
-                
+                Spacer()
             }
             .onAppear{
                 audioPlayer.initializePlayer(url: self.audioURL)
