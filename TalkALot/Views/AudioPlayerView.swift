@@ -193,7 +193,7 @@ struct AudioPlayerView: View {
             .onAppear{
                 audioPlayer.initializePlayer(url: self.audioURL)
             }
-            .padding()
+            .padding(.horizontal)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         }
     }

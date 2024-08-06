@@ -89,7 +89,7 @@ struct RecordView: View {
                                     .font(.system(size: 40))
                             )
                     }
-                    .frame(width: 160, height: 160)
+                    
                 }
                 
                 
@@ -101,6 +101,7 @@ struct RecordView: View {
                         audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
                         isEditing: isEditing
                     )
+                    .frame(height: 400)
                     if isEditing {
                         Button(action: {
                             isEditing = false
@@ -118,10 +119,13 @@ struct RecordView: View {
                 }
                 
             }
+            .navigationTitle("Record")
+            .navigationBarBackButtonHidden(true)
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
     }
 }
+
 
 struct RecordView_Previews: PreviewProvider {
     static var previews: some View {
