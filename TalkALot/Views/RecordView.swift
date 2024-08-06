@@ -102,25 +102,28 @@ struct RecordView: View {
                         isEditing: isEditing
                     )
                     .frame(height: 400)
-                    if isEditing {
-                        Button(action: {
-                            isEditing = false
-                        }) {
-                            Text("Cancel Edit")
-                        }
-                    } else {
-                        Button(action: {
-                            isEditing = true
-                        }) {
-                            Text("Edit Audio")
-                        }
-                    }
-                    
                 }
                 
             }
-            .navigationTitle("Record")
             .navigationBarBackButtonHidden(true)
+            .navigationBarItems(trailing: Button(action: {
+                isEditing = !isEditing
+            }) {
+                HStack {
+                    if isEditing {
+                        Text("Cancel Edit")
+                        Image(systemName: "xmark")
+                    } else {
+                        Text("Edit")
+                        Image(systemName: "crop")
+                    }
+                }
+                
+            }
+                .opacity((hasRecording && !audioRecorder.isRecording) ? 1 : 0)
+            )
+                
+            
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
     }

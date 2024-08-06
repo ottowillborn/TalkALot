@@ -33,7 +33,13 @@ struct HomeView: View {
                         }
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    .navigationTitle("Home")
+                    .navigationBarItems(leading:
+                        Image("logo-no-background")
+                            .resizable()                // Makes the image resizable
+                            .aspectRatio(contentMode: .fit) // Maintains the aspect ratio
+                            .frame(width: 150, height: 250) // Sets the frame size
+                            .clipped()
+                    )
                 }
             }
             .tabItem {
@@ -52,40 +58,38 @@ struct HomeView: View {
                     Label("Other", systemImage: "star")
                 }
         }
-        .background(CustomTabBarModifier())
+        .background(TabBarAppearanceModifier())
     }
 }
 
 
 
-struct CustomTabBarModifier: UIViewControllerRepresentable {
+
+
+struct TabBarAppearanceModifier: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         let viewController = UIViewController()
+        
         // Customize the tab bar appearance
-        if let tabBar = viewController.tabBarController?.tabBar {
-            let appearance = UITabBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .systemBackground
-            appearance.stackedLayoutAppearance.normal.iconColor = .systemBlue
-            appearance.stackedLayoutAppearance.selected.iconColor = .systemRed
-            
-            // Adjust the tab bar height
-            tabBar.standardAppearance = appearance
-            tabBar.scrollEdgeAppearance = appearance
-            
-            // Set a custom height
-            if let tabBarItems = tabBar.items {
-                tabBar.frame.size.height = 20 // Adjust height as needed
-                for item in tabBarItems {
-                    item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -10, right: 0) // Adjust if needed
-                }
-            }
-        }
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = UIColor.black
+        
+        // Adjust icon positioning
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor.white
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor.blue
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+        
         return viewController
     }
-    
+
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
+
+
 
 
 
