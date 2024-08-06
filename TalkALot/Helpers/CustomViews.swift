@@ -12,7 +12,7 @@ struct PlaybackSlider: View {
     @Binding var value: Double
     let range: ClosedRange<Double>
     let step: Double
-    let thumbSize: CGFloat = 35
+    var thumbSize: CGFloat = 35
     let trackHeight: CGFloat = 2
     
     var body: some View {
@@ -27,19 +27,30 @@ struct PlaybackSlider: View {
                     .frame(height: trackHeight)
                 
                 // Thumb
-                Rectangle()
-                    .foregroundColor(.red)
-                    .frame(width: 2, height: thumbSize) // Set a narrow width and adjust height
-                    .shadow(radius: 2)
-                    .offset(x: sliderWidth - 11) // Offset by half of thumbs width plus half of grabbable frame
-                    .gesture(
-                        DragGesture()
-                            .onChanged { gesture in
-                                let newValue = Double(gesture.location.x / totalWidth) * (range.upperBound - range.lowerBound) + range.lowerBound
-                                value = min(max(range.lowerBound, newValue), range.upperBound)
-                            }
-                    )
-                    .frame(width: 20)
+                ZStack{
+                    Rectangle()
+                        .foregroundColor(.red)
+                        .frame(width: 2, height: thumbSize) // Set a narrow width and adjust height
+                        .shadow(radius: 2)
+                        .frame(width: 20)
+                    Rectangle()
+                        .foregroundColor(.red)
+                        .frame(width: 40, height: 15) // Set a narrow width and adjust height
+                        .shadow(radius: 2)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .offset(y:thumbSize/2)
+                        
+
+
+                }
+                .offset(x: sliderWidth - 20) // Offset by half of thumbs width plus half of grabbable frame
+                .gesture(
+                    DragGesture()
+                        .onChanged { gesture in
+                            let newValue = Double(gesture.location.x / totalWidth) * (range.upperBound - range.lowerBound) + range.lowerBound
+                            value = min(max(range.lowerBound, newValue), range.upperBound)
+                        }
+                )
             }
             .frame(height: thumbSize)
         }
@@ -53,7 +64,7 @@ struct EditCutSliders: View {
     @Binding var upperValue: Double
     let range: ClosedRange<Double>
     let step: Double
-    let thumbSize: CGFloat = 35
+    var thumbSize: CGFloat = 300
     let trackHeight: CGFloat = 2
     
     var body: some View {
@@ -67,9 +78,9 @@ struct EditCutSliders: View {
                 // Selected range track
                 Rectangle()
                     .foregroundColor(Color.gray)
-                    .frame(width: upperThumbPosition - lowerThumbPosition, height: 50)
+                    .frame(width: upperThumbPosition - lowerThumbPosition, height: thumbSize)
                     .offset(x: lowerThumbPosition)
-                    .opacity(0.5)
+                    .opacity(0.15)
                 
                 ZStack {
                     Rectangle()
@@ -80,7 +91,7 @@ struct EditCutSliders: View {
                     Circle()
                         .frame(width: 15, height: thumbSize)
                         .foregroundColor(.red)
-                        .offset(y: -thumbSize)
+                        .offset(y: -thumbSize/2)
                 }
                 .offset(x: lowerThumbPosition - 8)
                 .gesture(
@@ -101,7 +112,7 @@ struct EditCutSliders: View {
                     Circle()
                         .frame(width: 15, height: thumbSize)
                         .foregroundColor(.red)
-                        .offset(y: -thumbSize)
+                        .offset(y: -thumbSize/2)
                     
                 }
                 .offset(x: upperThumbPosition - 8)

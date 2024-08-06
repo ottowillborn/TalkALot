@@ -35,28 +35,33 @@ struct AudioPlayerView: View {
     @ObservedObject var audioPlayer: AudioPlayer
     @Binding var waveformData: [CGFloat]
     var audioURL: URL
-    var isEditing: Bool?
+    var isEditing: Bool = false
+    @State var toggleCutAudio = false
+    @State var toggleTrimAudio = false
     
     var body: some View {
-        VStack {
+        GeometryReader { geometry in
             
-            HStack {
-                Text("Yap #1")
-                    .frame(width: 50, alignment: .leading)
+            VStack {
+                
                 // Layer waveform ontop of audio slider
                 ZStack{
                     WaveformView(data: waveformData)
-                    PlaybackSlider(value: Binding(
-                        get: {
-                            self.audioPlayer.currentTime
-                        },
-                        set: { (newValue) in
-                            self.audioPlayer.seek(to: newValue)
-                        }
-                    ), range: 0...self.audioPlayer.duration, step: 0.01)
-                    .frame(height: 50)
+                    PlaybackSlider(
+                        value: Binding(
+                            get: {
+                                self.audioPlayer.currentTime
+                            },
+                            set: { (newValue) in
+                                self.audioPlayer.seek(to: newValue)
+                            }
+                        ),
+                        range: 0...self.audioPlayer.duration,
+                        step: 0.01,
+                        thumbSize: 300
+                    )
                     // if editing, add the edit select tabs as an overlay
-                    if isEditing ?? false {
+                    if isEditing {
                         EditCutSliders(
                             lowerValue: Binding(
                                 get: { self.audioPlayer.lowerValue },
@@ -67,65 +72,130 @@ struct AudioPlayerView: View {
                                 set: {newValue in self.audioPlayer.seekUpperValue(to: newValue)}
                             ),
                             range: 0.0...self.audioPlayer.duration,
-                            step: 0.01
+                            step: 0.01,
+                            thumbSize: 300
                         )
                     }
                     
                 }
-                .frame(height: 100)
+                .frame(height: 300)
                 
-                Text(formatTime(self.audioPlayer.currentTime))
-                    .frame(width: 50, alignment: .trailing)
-            }
-            HStack {
-                // Skip backwards button
-                Button(action: {
-                    // Action to skip backwards
-                    let skipInterval: TimeInterval = -5
-                    let newTime = max(self.audioPlayer.currentTime + skipInterval, 0)
-                    self.audioPlayer.seek(to: newTime)
-                }) {
-                    Image(systemName: "gobackward.5")
-                        .resizable()
-                        .frame(width: 30, height: 30)
+                    
+                VStack{
+                    Text(formatTime(self.audioPlayer.currentTime))
+                        .frame(width: 50, alignment: .trailing)
                 }
                 
-                
-                // Play/Pause button
-                Button(action: {
-                    if self.audioPlayer.isPlaying {
-                        self.audioPlayer.pausePlayback()
-                    } else {
-                        self.audioPlayer.startPlayback(url: audioURL)
+                HStack {
+                    // Confirm cut button
+                    Button(action: {
+                        do {
+                            // Cut audio in editor and store new file in existing URL's place, replacing it
+                            // TODO: undo option for cuts
+                            let audioEditor = try AudioEditor(fileURL: audioURL)
+                            try audioEditor.cutAudio(startTime: audioPlayer.lowerValue, endTime: audioPlayer.upperValue, outputURL: audioURL)
+                            self.audioPlayer.initializePlayer(url: audioURL) // re-initialize audio player as file has changed
+                            self.waveformData = WaveformProcessor.generateWaveformData(for: audioURL) // regenerate waveform as audio has changed
+                            self.toggleCutAudio = false // reset toggle cut
+                        } catch {
+                            print("Failed to cut audio: \(error.localizedDescription)")
+                        }
+                    }) {
+                        Text("Cut")
                     }
-                }) {
-                    Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
-                        .resizable()
-                        .frame(width: 50, height: 50)
+                    .frame(width:60, height: 30)
+                    .foregroundStyle(.white)
+                    .background(Color.blue)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .opacity(isEditing ? 1 : 0) // Show or hide the button
+                    .disabled(isEditing ? false : true) // Disable interaction when editing
+                    .padding()
+                    
+                    
+                    
+                    // Skip backwards button
+                    Button(action: {
+                        // Action to skip backwards
+                        let skipInterval: TimeInterval = -5
+                        let newTime = max(self.audioPlayer.currentTime + skipInterval, 0)
+                        self.audioPlayer.seek(to: newTime)
+                    }) {
+                        Image(systemName: "gobackward.5")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                    }
+                    .opacity(isEditing ? 0 : 1) // Show or hide the button
+                    .disabled(isEditing ? true : false) // Disable interaction when editing
+                    .foregroundStyle(.blue)
+
+                    
+                    
+                    // Play/Pause button
+                    Button(action: {
+                        if self.audioPlayer.isPlaying {
+                            self.audioPlayer.pausePlayback()
+                        } else {
+                            self.audioPlayer.startPlayback(url: audioURL)
+                        }
+                    }) {
+                        Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                        
+                    }
+                    .padding()
+                    
+                    
+                    // Skip forwards button
+                    Button(action: {
+                        // Action to skip forwards
+                        let skipInterval: TimeInterval = 5
+                        let newTime = min(self.audioPlayer.currentTime + skipInterval, self.audioPlayer.duration)
+                        self.audioPlayer.seek(to: newTime)
+                    }) {
+                        Image(systemName: "goforward.5")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                    }
+                    .opacity(isEditing ? 0 : 1) // Show or hide the button
+                    .disabled(isEditing ? true : false) // Disable interaction when editing
+                    .foregroundStyle(.blue)
+                    
+                    // Confirm trim button
+                    Button(action: {
+                        do {
+                            // Trim audio in editor and store new file in existing URL's place, replacing it
+                            // TODO: undo option for trims
+                            let audioEditor = try AudioEditor(fileURL: audioURL)
+                            try audioEditor.trimAudio(startTime: audioPlayer.lowerValue, endTime: audioPlayer.upperValue, outputURL: audioURL)
+                            self.audioPlayer.initializePlayer(url: audioURL) // re-initialize audio player as file has changed
+                            self.waveformData = WaveformProcessor.generateWaveformData(for: audioURL) // regenerate waveform as audio has changed
+                            self.toggleTrimAudio = false // reset toggle trim
+                        } catch {
+                            print("Failed to trim audio: \(error.localizedDescription)")
+                        }
+                    }) {
+                        Text("Trim")
+                    }
+                    .frame(width:60, height: 30)
+                    .foregroundStyle(.white)
+                    .background(Color.blue)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .opacity(isEditing ? 1 : 0) // Show or hide the button
+                    .disabled(isEditing ? false : true) // Disable interaction when editing
+                    .padding()
+                    
                     
                 }
-                .padding()
+                .frame(height: 50)
                 
-                
-                // Skip forwards button
-                Button(action: {
-                    // Action to skip forwards
-                    let skipInterval: TimeInterval = 5
-                    let newTime = min(self.audioPlayer.currentTime + skipInterval, self.audioPlayer.duration)
-                    self.audioPlayer.seek(to: newTime)
-                }) {
-                    Image(systemName: "goforward.5")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                }
             }
-            .frame(height: 50)
-            
+            .onAppear{
+                audioPlayer.initializePlayer(url: self.audioURL)
+            }
+            .padding()
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         }
-        .onAppear{
-            audioPlayer.initializePlayer(url: self.audioURL)
-        }
-        .padding()
     }
     
     

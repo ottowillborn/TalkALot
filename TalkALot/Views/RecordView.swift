@@ -42,66 +42,79 @@ struct RecordView: View {
     @ObservedObject var audioPlayer = AudioPlayer()
     @State var hasRecording = false
     @State private var waveformData: [CGFloat] = [0]
+    @State var isEditing: Bool = false
     
     var body: some View {
         
         GeometryReader { geometry in
             
             VStack {
-                if !audioRecorder.isRecording {
-                    if !hasRecording {
-                        Text("Click to start recording")
-                    } else {
-                        Text("Click to re-record")
-                    }
-                } else {
-                    Text("Click to stop recording")
-                }
-                
-                Button(action: {
+                if !isEditing {
                     if !audioRecorder.isRecording {
-                        self.audioRecorder.startRecording()
+                        if !hasRecording {
+                            Text("Click to start recording")
+                        } else {
+                            Text("Click to re-record")
+                        }
                     } else {
-                        self.audioRecorder.stopRecording()
-                        self.audioPlayer.seek(to: 0) // Start from beginning if new recording
-                        waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
-                        hasRecording = true
+                        Text("Click to stop recording")
                     }
-                }) {
-                    let baseSize: CGFloat = 80
-                    let maxSize: CGFloat = 160
-                    let amplitude = audioRecorder.audioAmplitude * 400
-                    let size = min(baseSize + amplitude, maxSize)
                     
-                    Circle()
-                        .fill(audioRecorder.isRecording ? Color.red : Color.gray)
-                        .frame(width: size, height: size) // Adjust circle size based on amplitude, with a maximum limit
-                        .overlay(
-                            Circle()
-                                .stroke(Color.white, lineWidth: 4)
-                                .frame(width: 100, height: 100)
-                        )
-                        .overlay(
-                            Image(systemName: audioRecorder.isRecording ? "stop.fill" : "mic.fill")
-                                .foregroundColor(.white)
-                                .font(.system(size: 40))
-                        )
+                    Button(action: {
+                        if !audioRecorder.isRecording {
+                            self.audioRecorder.startRecording()
+                        } else {
+                            self.audioRecorder.stopRecording()
+                            self.audioPlayer.seek(to: 0) // Start from beginning if new recording
+                            waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
+                            hasRecording = true
+                        }
+                    }) {
+                        let baseSize: CGFloat = 80
+                        let maxSize: CGFloat = 160
+                        let amplitude = audioRecorder.audioAmplitude * 400
+                        let size = min(baseSize + amplitude, maxSize)
+                        
+                        Circle()
+                            .fill(audioRecorder.isRecording ? Color.red : Color.gray)
+                            .frame(width: size, height: size) // Adjust circle size based on amplitude, with a maximum limit
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.white, lineWidth: 4)
+                                    .frame(width: 100, height: 100)
+                            )
+                            .overlay(
+                                Image(systemName: audioRecorder.isRecording ? "stop.fill" : "mic.fill")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 40))
+                            )
+                    }
+                    .frame(width: 160, height: 160)
                 }
-                .frame(width: 160, height: 160)
                 
                 
-                if hasRecording {
+                
+                if hasRecording && !audioRecorder.isRecording{
                     AudioPlayerView(
                         audioPlayer: audioPlayer,
                         waveformData: $waveformData,
-                        audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
-                    NavigationLink(destination: EditAudioView(
-                        audioPlayer: audioPlayer,
-                        waveformData: $waveformData,
-                        audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
-                    ){
-                        Text("Edit Audio")
+                        audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
+                        isEditing: isEditing
+                    )
+                    if isEditing {
+                        Button(action: {
+                            isEditing = false
+                        }) {
+                            Text("Cancel Edit")
+                        }
+                    } else {
+                        Button(action: {
+                            isEditing = true
+                        }) {
+                            Text("Edit Audio")
+                        }
                     }
+                    
                 }
                 
             }

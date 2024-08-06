@@ -82,7 +82,8 @@ struct EditAudioView: View {
                     audioURL: audioURL,
                     isEditing: toggleCutAudio || toggleTrimAudio
                 )
-                .padding()
+                .padding(.horizontal)
+                .border(Color.red)
                 
                 Button(action: {
                     self.toggleCutAudio = false
@@ -93,7 +94,6 @@ struct EditAudioView: View {
                 
             }
             .onAppear{audioPlayer.initializePlayer(url: self.audioURL)} //initialize player on load: makes edit tabs visible when selected
-            .frame(width: geometry.size.width, height: geometry.size.height)
         }
         
     }
