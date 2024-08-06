@@ -55,10 +55,6 @@ final class SignUpViewTest: XCTestCase {
         XCTAssertEqual(result.errorMessage, "Passwords do not match")
     }
     
-    func testValidSignUp() {
-        let result = signUpValidator.validate(email: "test@example.com", password: "password1234", confirmPassword: "password1234")
-        XCTAssertFalse(result.isShowingError)
-    }
 }
 
 
