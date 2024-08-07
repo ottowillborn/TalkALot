@@ -24,34 +24,37 @@ struct AudioPlayerView: View {
         GeometryReader { geometry in
             
             VStack {
-                if isEditing {
-                    HStack {
-                        if isEditingTitle {
-                            TextField("Enter Yap Title", text: $yapName)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .font(.system(size: 30, weight: .bold, design: .rounded))
-
-                        } else {
-                            Text(yapName)
-                                .font(.system(size: 30, weight: .bold, design: .rounded))
-                                .multilineTextAlignment(.leading) // Align text to the left
-                        }
-                        
-                        Button(action: {
-                            if !yapName.isEmpty {
-                                isEditingTitle.toggle()
-                            }
-                        }) {
-                            Image(systemName: isEditingTitle ? "checkmark" : "pencil")
-                                .foregroundStyle(.primary)
-                                .font(.system(size: 25)) // Set the size of the icon
-                                .fontWeight(.bold)
-                        }
-                        Spacer()
+                HStack  {
+                    if isEditingTitle {
+                        CustomTextField(
+                            text: $yapName,
+                            placeholder: "Enter Yap Title",
+                            placeholderColor: AppColors.textSecondary, // Set placeholder color
+                            textColor: AppColors.textSecondary // Set text color
+                        )
+                    } else {
+                        Text(yapName)
+                            .font(.system(size: 30, weight: .bold, design: .rounded))
+                            .multilineTextAlignment(.leading) // Align text to the left
                     }
-                    .padding()
                     
+                    Button(action: {
+                        if !yapName.isEmpty {
+                            isEditingTitle.toggle()
+                        }
+                    }) {
+                        Image(systemName: isEditingTitle ? "checkmark" : "pencil")
+                            .foregroundStyle(.primary)
+                            .font(.system(size: 25)) // Set the size of the icon
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                    }
+                    Spacer()
                 }
+                .opacity(isEditing ? 1 : 0)
+                .padding(.bottom)
+                
+                
                 
                 // Layer waveform ontop of audio slider
                 ZStack{
@@ -176,6 +179,8 @@ struct AudioPlayerView: View {
             .padding(.horizontal)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         }
+
+        
     }
     
     private func editAudio(operation: AudioEditOperation) {

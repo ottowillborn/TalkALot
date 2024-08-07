@@ -15,6 +15,7 @@ enum AudioEditOperation {
 
 struct AppColors {
     static let background = Color(red: 18/255, green: 18/255, blue: 18/255)
+    static let overlayBackground = Color(red: 30/255, green: 30/255, blue: 30/255)
     static let surface = Color(red: 30/255, green: 30/255, blue: 30/255)
     static let textPrimary = Color(red: 224/255, green: 224/255, blue: 224/255)
     static let textSecondary = Color(red: 176/255, green: 176/255, blue: 176/255)

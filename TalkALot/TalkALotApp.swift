@@ -19,6 +19,7 @@ struct TalkALotApp: App {
                 LoginView()
             } else {
                 HomeView()
+                
             }
         }
     }
