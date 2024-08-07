@@ -29,12 +29,12 @@ struct PlaybackSlider: View {
                 // Thumb
                 ZStack{
                     Rectangle()
-                        .foregroundColor(.red)
+                        .foregroundColor(AppColors.highlightPrimary)
                         .frame(width: 2, height: thumbSize) // Set a narrow width and adjust height
                         .shadow(radius: 2)
                         .frame(width: 20)
                     Rectangle()
-                        .foregroundColor(.red)
+                        .foregroundColor(AppColors.highlightPrimary)
                         .frame(width: 40, height: 15) // Set a narrow width and adjust height
                         .shadow(radius: 2)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
@@ -87,7 +87,7 @@ struct EditCutSliders: View {
                     
                     Circle()
                         .frame(width: 15, height: thumbSize)
-                        .foregroundColor(.red)
+                        .foregroundColor(AppColors.highlightPrimary)
                         .offset(y: -thumbSize/2)
                 }
                 .offset(x: lowerThumbPosition - 8)
@@ -108,7 +108,7 @@ struct EditCutSliders: View {
                     
                     Circle()
                         .frame(width: 15, height: thumbSize)
-                        .foregroundColor(.red)
+                        .foregroundColor(AppColors.highlightPrimary)
                         .offset(y: -thumbSize/2)
                     
                 }

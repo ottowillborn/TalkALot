@@ -134,8 +134,8 @@ struct AudioPlayerView: View {
                         Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
-                            .foregroundStyle(AppColors.primaryBlue)
                     }
+                    .foregroundStyle(.blue)
                     .padding()
                     
                     // Skip forwards button
@@ -226,7 +226,7 @@ struct AudioPlayerView_Previews: PreviewProvider {
             audioPlayer: MockAudioPlayer(),
             waveformData: .constant(mockWaveformData),
             audioURL: mockURL,
-            isEditing: (true) // Set to true to show editing view
+            isEditing: (false) // Set to true to show editing view
         )
     }
 }

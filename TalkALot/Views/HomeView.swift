@@ -29,20 +29,41 @@ struct HomeView: View {
                                 .frame(width: 200, height: 50)
                                 .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
                                 .cornerRadius(25)
-                                .shadow(color: .gray, radius: 10, x: 0, y: 10)
+                                .shadow(color: .gray, radius: 10, x: 0, y: 5)
                         }
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    .navigationBarItems(leading:
-                        Image("logo-no-background")
-                            .resizable()                // Makes the image resizable
-                            .aspectRatio(contentMode: .fit) // Maintains the aspect ratio
-                            .frame(width: 150, height: 250) // Sets the frame size
-                            .clipped()
-                            .padding(.bottom, 20)
-                            .foregroundStyle(Color.black)
+                    .navigationBarItems(
+                        leading:
+                            HStack{
+                                Button(action: {
+                                    // TODO: add profile sub view
+                                }) {
+                                    Circle()
+                                        .frame(width: 35, height: 35)
+                                        .padding(.leading, -10)
+                                        .foregroundStyle(AppColors.highlightPrimary)
+                                        .overlay(
+                                            Image(systemName: "person.crop.circle")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 25, height: 25)
+                                                .foregroundColor(Color.gray)
+                                                .padding(.leading,-10)
+                                        )
+                                }
+                                Text("Home")
+                                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                                    .multilineTextAlignment(.leading) // Align text to the left
+                                    .foregroundStyle(AppColors.textSecondary)
+                                    .padding(.leading,-10)
+                            }
+                            .padding(.bottom,15)
                     )
                 }
+                .background(AppColors.background)
+                .defaultTextColor()
+                
             }
             .tabItem {
                 Label("Home", systemImage: "house")
@@ -50,6 +71,9 @@ struct HomeView: View {
             
             NavigationView {
                 RecordView()
+                    .background(AppColors.background)
+                    .defaultTextColor()
+                
             }
             .tabItem {
                 Label("Record", systemImage: "mic")

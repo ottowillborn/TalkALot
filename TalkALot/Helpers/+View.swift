@@ -23,17 +23,24 @@ extension View {
     }
 }
 
+
+extension View {
+    func defaultTextColor() -> some View {
+        self.foregroundColor(AppColors.textPrimary)
+    }
+}
+
 struct TabBarAppearanceModifier: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         let viewController = UIViewController()
         
         // Customize the tab bar appearance
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = UIColor.white
+        appearance.backgroundColor = UIColor(AppColors.background)
         
         // Adjust icon positioning
-        appearance.stackedLayoutAppearance.normal.iconColor = UIColor(AppColors.darkGray)
-        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(AppColors.primaryBlue)
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor(AppColors.textPrimary)
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(AppColors.highlightPrimary)
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
 
@@ -51,7 +58,7 @@ struct ToolBarAppearanceModifier: UIViewControllerRepresentable {
         let viewController = UIViewController()
         
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = UIColor.white
+        appearance.backgroundColor = UIColor(AppColors.background)
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         
         UINavigationBar.appearance().standardAppearance = appearance
