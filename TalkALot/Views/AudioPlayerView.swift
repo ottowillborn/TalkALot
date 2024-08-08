@@ -17,42 +17,12 @@ struct AudioPlayerView: View {
     @Binding var waveformData: [CGFloat]
     var audioURL: URL
     var isEditing: Bool = false
-    @State var yapName = ""
-    @State var isEditingTitle: Bool = true
     
     var body: some View {
         GeometryReader { geometry in
             
             VStack {
-                HStack  {
-                    if isEditingTitle {
-                        CustomTextField(
-                            text: $yapName,
-                            placeholder: "Enter Yap Title",
-                            placeholderColor: AppColors.textSecondary, // Set placeholder color
-                            textColor: AppColors.textSecondary // Set text color
-                        )
-                    } else {
-                        Text(yapName)
-                            .font(.system(size: 30, weight: .bold, design: .rounded))
-                            .multilineTextAlignment(.leading) // Align text to the left
-                    }
-                    
-                    Button(action: {
-                        if !yapName.isEmpty {
-                            isEditingTitle.toggle()
-                        }
-                    }) {
-                        Image(systemName: isEditingTitle ? "checkmark" : "pencil")
-                            .foregroundStyle(.primary)
-                            .font(.system(size: 25)) // Set the size of the icon
-                            .fontWeight(.bold)
-                            .padding(.horizontal)
-                    }
-                    Spacer()
-                }
-                .opacity(isEditing ? 1 : 0)
-                .padding(.bottom)
+                
                 
                 
                 

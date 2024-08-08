@@ -9,6 +9,53 @@ import SwiftUI
 import FirebaseAuth
 import Firebase
 
+struct EditTextView: View {
+    @Binding var showEditTextView: Bool // Binding to control visibility
+    @FocusState private var isTextFieldFocused: Bool // Focus state for the TextField
+    
+    var body: some View {
+        ZStack {
+            // Conditional background to handle taps
+            if showEditTextView {
+                GeometryReader { geometry in
+                    TapOutsideDetector {
+                        withAnimation {
+                            showEditTextView = false
+                        }
+                    }
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .background(Color.clear) // Make sure it's transparent to not block taps
+                }
+            }
+            
+            VStack(alignment: .leading, spacing: 25) {
+                // Your content here
+                TextField("Enter text...", text: .constant(""))
+                    .focused($isTextFieldFocused)
+            }
+            .padding()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .ignoresSafeArea()
+            .opacity(1) // Keep the background opacity at 1
+            .background(AppColors.overlayBackground)
+            .gesture(
+                DragGesture(minimumDistance: 20) // Detect swipe gestures
+                    .onEnded { value in
+                        if value.translation.height > 50 { // Adjust swipe threshold if needed
+                            withAnimation {
+                                showEditTextView = false
+                            }
+                        }
+                    }
+            )
+            .onChange(of: showEditTextView) { newValue in
+                // Trigger keyboard based on visibility
+                isTextFieldFocused = newValue
+            }
+        }
+    }
+}
+
 struct CustomTextField: View {
     @Binding var text: String
     var placeholder: String

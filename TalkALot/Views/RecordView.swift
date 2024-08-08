@@ -44,146 +44,191 @@ struct RecordView: View {
     @State private var waveformData: [CGFloat] = [0]
     @State var isEditing: Bool = false
     @Binding var showProfileView: Bool // Binding to control visibility
+    @State var showEditTextView: Bool = false // Binding to control visibility
+    @State var isEditingTitle: Bool = true
+    @State var yapName = ""
+
+
+
     
     
     var body: some View {
-        
-        GeometryReader { geometry in
-            
-            VStack {
-                if !isEditing && !hasRecording{
-                    Button(action: {
-                        if !audioRecorder.isRecording {
-                            self.audioRecorder.startRecording()
-                        } else {
-                            self.audioRecorder.stopRecording()
-                            self.audioPlayer.seek(to: 0) // Start from beginning if new recording
-                            waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
-                            hasRecording = true
-                        }
-                    }) {
-                        let baseSize: CGFloat = (hasRecording && !audioRecorder.isRecording ? 50 : 80)
-                        let maxSize: CGFloat = 160
-                        let amplitude = audioRecorder.audioAmplitude * 400
-                        let size = min(baseSize + amplitude, maxSize)
-                        
-                        Circle()
-                            .fill(audioRecorder.isRecording ? AppColors.highlightPrimary : AppColors.textPrimary)
-                            .frame(width: size, height: size) // Adjust circle size based on amplitude, with a maximum limit
-                            .overlay(
-                                Circle()
-                                    .stroke(audioRecorder.isRecording ? Color.white : AppColors.highlightPrimary, lineWidth: 4)
-                                    .frame(width: 100, height: 100)
-                            )
-                            .overlay(
-                                Image(systemName: audioRecorder.isRecording ? "stop.fill" : "mic.fill")
-                                    .foregroundColor(audioRecorder.isRecording ? .white : AppColors.highlightPrimary)
-                                    .font(.system(size: hasRecording && !audioRecorder.isRecording ? 25 : 40))
-                            )
-                        
-                    }
-                    .padding()
-                }
+        NavigationView {
+            GeometryReader { geometry in
                 
-                HStack(spacing: 40) {
-                    if isEditing {
-                        // Cancel
+                VStack {
+                    if !isEditing && !hasRecording{
                         Button(action: {
-                            self.revertAudio()
-                            isEditing.toggle()
-                        }) {
-                            Text("Cancel")
-                                .fontWeight(.bold)
-                                .foregroundStyle(AppColors.textSecondary)
-                            
-                        }
-                    }
-                    Spacer()
-                    // proceed, save, edit btns etc
-                    Button(action: {
-                        if isEditing {
-                            //save
-                        } else {
-                            // store original
-                            self.storeBackup()
-                            isEditing.toggle()
-                        }
-                    }) {
-                        if isEditing {
-                            Text("Save")
-                                .fontWeight(.bold)
-                                .foregroundStyle(AppColors.textSecondary)
-                        } else {
-                            Image(systemName: "crop")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 25, height: 25)
-                                .foregroundStyle(AppColors.textSecondary)
-                        }
-                        
-                    }
-                    .opacity((hasRecording && !audioRecorder.isRecording) ? 1 : 0)
-                }
-                .padding()
-                
-                
-                
-                if hasRecording && !audioRecorder.isRecording{
-                    AudioPlayerView(
-                        audioPlayer: audioPlayer,
-                        waveformData: $waveformData,
-                        audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
-                        isEditing: isEditing
-                    )
-                }
-                
-                Button(action: {
-                    hasRecording = false
-                }) {
-                    if hasRecording {
-                        Image(systemName: "mic")
-                            .foregroundStyle(AppColors.textSecondary)
-                            .font(.system(size: 25)) // Set the size of the icon
-                            .fontWeight(.bold)
-                    }
-                }
-                .padding(.top, 40)
-                .padding(.bottom, 70)
-                .opacity(isEditing ? 0 : 1)
-                
-                
-            }
-            
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(
-                leading:
-                    HStack {
-                        Button(action: {
-                            withAnimation {
-                                showProfileView.toggle()
+                            if !audioRecorder.isRecording {
+                                self.audioRecorder.startRecording()
+                            } else {
+                                self.audioRecorder.stopRecording()
+                                self.audioPlayer.seek(to: 0) // Start from beginning if new recording
+                                waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
+                                hasRecording = true
                             }
                         }) {
+                            let baseSize: CGFloat = (hasRecording && !audioRecorder.isRecording ? 50 : 80)
+                            let maxSize: CGFloat = 160
+                            let amplitude = audioRecorder.audioAmplitude * 400
+                            let size = min(baseSize + amplitude, maxSize)
+                            
                             Circle()
-                                .frame(width: 35, height: 35)
-                                .foregroundStyle(AppColors.highlightPrimary)
+                                .fill(audioRecorder.isRecording ? AppColors.highlightPrimary : AppColors.textPrimary)
+                                .frame(width: size, height: size) // Adjust circle size based on amplitude, with a maximum limit
                                 .overlay(
-                                    Image(systemName: "person.crop.circle")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 25, height: 25)
-                                        .foregroundColor(Color.gray)
+                                    Circle()
+                                        .stroke(audioRecorder.isRecording ? Color.white : AppColors.highlightPrimary, lineWidth: 4)
+                                        .frame(width: 100, height: 100)
                                 )
+                                .overlay(
+                                    Image(systemName: audioRecorder.isRecording ? "stop.fill" : "mic.fill")
+                                        .foregroundColor(audioRecorder.isRecording ? .white : AppColors.highlightPrimary)
+                                        .font(.system(size: hasRecording && !audioRecorder.isRecording ? 25 : 40))
+                                )
+                            
                         }
-                        Text(isEditing ? "Edit" : "Record")
-                            .font(.system(size: 30, weight: .bold, design: .rounded))
-                            .multilineTextAlignment(.leading) // Align text to the left
-                            .foregroundStyle(AppColors.textPrimary)
+                        .padding()
                     }
+                    
+                    HStack(spacing: 40) {
+                        if isEditing {
+                            // Cancel
+                            Button(action: {
+                                self.revertAudio()
+                                isEditing.toggle()
+                            }) {
+                                Text("Cancel")
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(AppColors.textSecondary)
+                                
+                            }
+                        }
+                        Spacer()
+                        // proceed, save, edit btns etc
+                        Button(action: {
+                            if isEditing {
+                                //save
+                            } else {
+                                // store original
+                                self.storeBackup()
+                                isEditing.toggle()
+                            }
+                        }) {
+                            if isEditing {
+                                Text("Save")
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(AppColors.textSecondary)
+                            } else {
+                                Image(systemName: "crop")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 25, height: 25)
+                                    .foregroundStyle(AppColors.textSecondary)
+                            }
+                            
+                        }
+                        .opacity((hasRecording && !audioRecorder.isRecording) ? 1 : 0)
+                    }
+                    .padding()
+                    HStack  {
+                        if isEditingTitle {
+                            CustomTextField(
+                                text: $yapName,
+                                placeholder: "Enter Yap Title",
+                                placeholderColor: AppColors.textSecondary, // Set placeholder color
+                                textColor: AppColors.textSecondary // Set text color
+                            )
+                        } else {
+                            Text(yapName)
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
+                                .multilineTextAlignment(.leading) // Align text to the left
+                        }
+                        
+                        Button(action: {
+                            if !yapName.isEmpty {
+                                isEditingTitle.toggle()
+                            }
+                            showEditTextView.toggle()
+                        }) {
+                            Image(systemName: isEditingTitle ? "checkmark" : "pencil")
+                                .foregroundStyle(.primary)
+                                .font(.system(size: 25)) // Set the size of the icon
+                                .fontWeight(.bold)
+                                .padding(.horizontal)
+                        }
+                        Spacer()
+                    }
+                    .opacity(isEditing ? 1 : 0)
+                    .padding(.bottom)
+                    
+                    
+                    
+                    if hasRecording && !audioRecorder.isRecording{
+                        AudioPlayerView(
+                            audioPlayer: audioPlayer,
+                            waveformData: $waveformData,
+                            audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
+                            isEditing: isEditing
+                        )
+                    }
+                    
+                    Button(action: {
+                        hasRecording = false
+                    }) {
+                        if hasRecording {
+                            Image(systemName: "mic")
+                                .foregroundStyle(AppColors.textSecondary)
+                                .font(.system(size: 25)) // Set the size of the icon
+                                .fontWeight(.bold)
+                        }
+                    }
+                    .padding(.top, 40)
+                    .padding(.bottom, 70)
+                    .opacity(isEditing ? 0 : 1)
+                    
+                    
+                }
                 
-            )
-            .frame(width: geometry.size.width, height: geometry.size.height)
-        }        
-        
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(
+                    leading:
+                        HStack {
+                            Button(action: {
+                                withAnimation {
+                                    showProfileView.toggle()
+                                }
+                            }) {
+                                Circle()
+                                    .frame(width: 35, height: 35)
+                                    .foregroundStyle(AppColors.highlightPrimary)
+                                    .overlay(
+                                        Image(systemName: "person.crop.circle")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 25, height: 25)
+                                            .foregroundColor(Color.gray)
+                                    )
+                            }
+                            Text(isEditing ? "Edit" : "Record")
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
+                                .multilineTextAlignment(.leading) // Align text to the left
+                                .foregroundStyle(AppColors.textPrimary)
+                        }
+                    
+                )
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                
+                // View slide up from bottom with keyboard when editing text
+                EditTextView(showEditTextView: $showEditTextView)
+                    .offset(y: showEditTextView ? 0 : UIScreen.main.bounds.height)
+                    .opacity(1)
+                    .animation(.linear(duration: 0.05), value: showEditTextView)
+            }
+            .background(AppColors.background)
+            .defaultTextColor()
+            
+        }
         
     }
     
