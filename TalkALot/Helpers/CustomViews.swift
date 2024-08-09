@@ -11,37 +11,54 @@ import Firebase
 
 struct EditTextView: View {
     @Binding var showEditTextView: Bool // Binding to control visibility
+    @Binding var text: String // Binding to control the text
+
     @FocusState private var isTextFieldFocused: Bool // Focus state for the TextField
-    
+
     var body: some View {
         ZStack {
-            // Conditional background to handle taps
+            // Conditional background to handle taps outside
             if showEditTextView {
-                GeometryReader { geometry in
-                    TapOutsideDetector {
+                Color.black.opacity(0.5) // Dimmed background
+                    .ignoresSafeArea()
+                    .onTapGesture {
                         withAnimation {
                             showEditTextView = false
                         }
                     }
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                    .background(Color.clear) // Make sure it's transparent to not block taps
-                }
             }
             
             VStack(alignment: .leading, spacing: 25) {
-                // Your content here
-                TextField("Enter text...", text: .constant(""))
-                    .focused($isTextFieldFocused)
+               
+                HStack {
+                    CustomTextField(text: $text, placeholder: "Enter Yap Title", placeholderColor: AppColors.textSecondary, textColor: AppColors.textPrimary)
+                        .focused($isTextFieldFocused)
+                        .onSubmit {
+                            withAnimation {
+                                showEditTextView = false
+                            }
+                        }
+                    
+                    // Confirm Button
+                    Button(action: {
+                        showEditTextView.toggle()
+                    }) {
+                        Image(systemName: "checkmark")
+                            .foregroundStyle(AppColors.highlightPrimary)
+                            .font(.system(size: 25)) // Set the size of the icon
+                            .fontWeight(.bold)
+                            .padding(.horizontal)
+                    }
+                }
             }
             .padding()
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-            .ignoresSafeArea()
-            .opacity(1) // Keep the background opacity at 1
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.70)
             .background(AppColors.overlayBackground)
+            .cornerRadius(10) // Optional, for better UI
             .gesture(
-                DragGesture(minimumDistance: 20) // Detect swipe gestures
+                DragGesture(minimumDistance: 20)
                     .onEnded { value in
-                        if value.translation.height > 50 { // Adjust swipe threshold if needed
+                        if value.translation.height > 50 { // Swipe down to dismiss
                             withAnimation {
                                 showEditTextView = false
                             }
@@ -49,12 +66,19 @@ struct EditTextView: View {
                     }
             )
             .onChange(of: showEditTextView) { newValue in
-                // Trigger keyboard based on visibility
                 isTextFieldFocused = newValue
+            }
+            .zIndex(1)
+            // Ensure this view stays above the background
+            
+            .animation(.linear(duration: 0.05), value: showEditTextView)
+            .onAppear {
+                isTextFieldFocused = showEditTextView // Automatically focus the text field if view is shown
             }
         }
     }
 }
+
 
 struct CustomTextField: View {
     @Binding var text: String
@@ -85,17 +109,17 @@ struct CustomTextField: View {
     }
 }
 
-struct ProfileView: View {
-    @Binding var showProfileView: Bool // Binding to control visibility
+struct ProfileMenuView: View {
+    @Binding var showProfileMenuView: Bool // Binding to control visibility
     
     var body: some View {
         ZStack {
             // conditional background to handle taps
-            if showProfileView {
+            if showProfileMenuView {
                 GeometryReader { geometry in
                     TapOutsideDetector {
                         withAnimation {
-                            showProfileView = false
+                            showProfileMenuView = false
                         }
                     }
                     .frame(width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height)
@@ -104,7 +128,8 @@ struct ProfileView: View {
             }
             VStack (alignment: .leading, spacing: 25) {
                 Button(action: {
-                    
+                    UserDefaults.standard.set("Profile", forKey: "selectedTab") //set user deafult tab to profile
+                    showProfileMenuView.toggle() //toggle showProfileMenuView
                 }) {
                     Circle()
                         .frame(width: 60, height: 60)
@@ -193,7 +218,7 @@ struct ProfileView: View {
                     .onEnded { value in
                         if value.translation.width < -50 { // Adjust swipe threshold if needed
                             withAnimation {
-                                showProfileView = false
+                                showProfileMenuView = false
                             }
                         }
                     }

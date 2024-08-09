@@ -11,7 +11,10 @@ import SwiftUI
 struct TalkALotApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @AppStorage("signIn") var isSignIn = false
-    @State private var showProfileView = false // State to track if the profile view is shown
+    //TODO: create tab enum for home, record, and profile
+    @AppStorage("selectedTab") private var selectedTab: String = "Home"
+
+    @State private var showProfileMenuView = false // State to track if the profile view is shown
 
     
     var body: some Scene {
@@ -21,37 +24,40 @@ struct TalkALotApp: App {
             if !isSignIn {
                 LoginView()
             } else {
-                TabView {
-                    HomeView(showProfileView: $showProfileView)
+                TabView (selection: $selectedTab) {
+                    HomeView(showProfileMenuView: $showProfileMenuView)
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
+                        .tag("Home")
                     
-                    RecordView(showProfileView: $showProfileView)
+                    RecordView(showProfileMenuView: $showProfileMenuView)
                         .background(AppColors.background)
                         .defaultTextColor()
                         .tabItem {
-                        Label("Record", systemImage: "mic")
-                    }
-                    
-                    Text("Another View")
-                        .tabItem {
-                            Label("Other", systemImage: "star")
+                            Label("Record", systemImage: "mic")
                         }
+                        .tag("Record")
+                    
+                    ProfileView(showProfileMenuView: $showProfileMenuView)
+                        .tabItem {
+                            Label("Profile", systemImage: "person.crop.circle")
+                        }
+                        .tag("Profile")
                 }
-                .opacity(showProfileView ? 0.3 : 1)
+                .opacity(showProfileMenuView ? 0.3 : 1)
                 .background(AppColors.background)
                 .background(TabBarAppearanceModifier())
                 .background(ToolBarAppearanceModifier())
-                .offset(x: showProfileView ? UIScreen.main.bounds.width * 0.85 : 0) // Offset when profile view is shown
-                .animation(.linear(duration: 0.2), value: showProfileView)
+                .offset(x: showProfileMenuView ? UIScreen.main.bounds.width * 0.85 : 0) // Offset when profile view is shown
+                .animation(.linear(duration: 0.2), value: showProfileMenuView)
                 
                 // Profile view sliding in from the left
-                ProfileView(showProfileView: $showProfileView)
+                ProfileMenuView(showProfileMenuView: $showProfileMenuView)
                     .frame(width: UIScreen.main.bounds.width * 0.85)
-                    .offset(x: showProfileView ? 0 : -UIScreen.main.bounds.width * 0.85)
+                    .offset(x: showProfileMenuView ? 0 : -UIScreen.main.bounds.width * 0.85)
                     .opacity(1)
-                    .animation(.linear(duration: 0.2), value: showProfileView)
+                    .animation(.linear(duration: 0.2), value: showProfileMenuView)
                 
                 
             }

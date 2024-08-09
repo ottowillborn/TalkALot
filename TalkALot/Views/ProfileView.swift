@@ -1,16 +1,15 @@
 //
-//  HomeView.swift
+//  ProfileView.swift
 //  TalkALot
 //
-//  Created by Otto Willborn on 2024-07-22.
+//  Created by Otto Willborn on 2024-08-08.
 //
 
 import SwiftUI
 import FirebaseAuth
 import Firebase
 
-struct HomeView: View {
-    @State private var userEmail = Auth.auth().currentUser?.email
+struct ProfileView: View {
     @Binding var showProfileMenuView: Bool // Binding to control visibility
 
     
@@ -20,7 +19,7 @@ struct HomeView: View {
                 NavigationView {
                     GeometryReader { geometry in
                         VStack {
-                            //Home content
+                            //Profile content
                         }
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .navigationBarItems(
@@ -43,7 +42,7 @@ struct HomeView: View {
                                                     .foregroundColor(Color.gray)
                                             )
                                     }
-                                    Text("Home")
+                                    Text("Profile")
                                         .font(.system(size: 30, weight: .bold, design: .rounded))
                                         .multilineTextAlignment(.leading) // Align text to the left
                                         .foregroundStyle(AppColors.textPrimary)
@@ -60,10 +59,3 @@ struct HomeView: View {
         }
     }
 }
-
-
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeView()
-//    }
-//}

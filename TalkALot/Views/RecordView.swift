@@ -43,7 +43,7 @@ struct RecordView: View {
     @State var hasRecording = false
     @State private var waveformData: [CGFloat] = [0]
     @State var isEditing: Bool = false
-    @Binding var showProfileView: Bool // Binding to control visibility
+    @Binding var showProfileMenuView: Bool // Binding to control visibility
     @State var showEditTextView: Bool = false // Binding to control visibility
     @State var isEditingTitle: Bool = true
     @State var yapName = ""
@@ -105,10 +105,9 @@ struct RecordView: View {
                             }
                         }
                         Spacer()
-                        // proceed, save, edit btns etc
                         Button(action: {
                             if isEditing {
-                                //save
+                                //TODO: create new Yap() object - title, audio file, waveform?
                             } else {
                                 // store original
                                 self.storeBackup()
@@ -132,34 +131,35 @@ struct RecordView: View {
                     }
                     .padding()
                     HStack  {
-                        if isEditingTitle {
-                            CustomTextField(
-                                text: $yapName,
-                                placeholder: "Enter Yap Title",
-                                placeholderColor: AppColors.textSecondary, // Set placeholder color
-                                textColor: AppColors.textSecondary // Set text color
-                            )
-                        } else {
-                            Text(yapName)
-                                .font(.system(size: 30, weight: .bold, design: .rounded))
-                                .multilineTextAlignment(.leading) // Align text to the left
-                        }
+                        Text(yapName.isEmpty ? "Edit Yap Title": yapName)
+                            .font(.system(size: 30, weight: .bold, design: .rounded))
+                            .multilineTextAlignment(.leading) // Align text to the left
+                            .padding(.horizontal)
                         
                         Button(action: {
-                            if !yapName.isEmpty {
-                                isEditingTitle.toggle()
-                            }
                             showEditTextView.toggle()
                         }) {
-                            Image(systemName: isEditingTitle ? "checkmark" : "pencil")
+                            Image(systemName: "pencil")
                                 .foregroundStyle(.primary)
                                 .font(.system(size: 25)) // Set the size of the icon
                                 .fontWeight(.bold)
                                 .padding(.horizontal)
                         }
                         Spacer()
+                        Button(action: {
+                            
+                                //TODO: create new Yap() object - title, audio file, waveform?
+                            
+                        }) {
+                            Text("Save")
+                                .fontWeight(.bold)
+                                .foregroundStyle(AppColors.textSecondary)
+                                .padding(.horizontal)
+
+                        }
+                        .opacity((hasRecording && !isEditing) ? 1 : 0)
                     }
-                    .opacity(isEditing ? 1 : 0)
+                    .opacity(hasRecording ? 1 : 0)
                     .padding(.bottom)
                     
                     
@@ -174,6 +174,7 @@ struct RecordView: View {
                     }
                     
                     Button(action: {
+                        //TODO: clear all state recording data
                         hasRecording = false
                     }) {
                         if hasRecording {
@@ -196,7 +197,7 @@ struct RecordView: View {
                         HStack {
                             Button(action: {
                                 withAnimation {
-                                    showProfileView.toggle()
+                                    showProfileMenuView.toggle()
                                 }
                             }) {
                                 Circle()
@@ -220,7 +221,7 @@ struct RecordView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 
                 // View slide up from bottom with keyboard when editing text
-                EditTextView(showEditTextView: $showEditTextView)
+                EditTextView(showEditTextView: $showEditTextView, text: $yapName)
                     .offset(y: showEditTextView ? 0 : UIScreen.main.bounds.height)
                     .opacity(1)
                     .animation(.linear(duration: 0.05), value: showEditTextView)
