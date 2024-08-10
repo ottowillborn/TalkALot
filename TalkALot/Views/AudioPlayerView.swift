@@ -21,10 +21,7 @@ struct AudioPlayerView: View {
         GeometryReader { geometry in
             
             VStack {
-                
-                
-                
-                
+      
                 // Layer waveform ontop of audio slider
                 ZStack{
                     WaveformView(data: audioPlayer.waveformData)
@@ -89,6 +86,7 @@ struct AudioPlayerView: View {
                     }) {
                         Image(systemName: "gobackward.5")
                             .resizable()
+                            .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
                     }
                     .opacity(isEditing ? 0 : 1) // Show or hide the button
@@ -118,6 +116,7 @@ struct AudioPlayerView: View {
                     }) {
                         Image(systemName: "goforward.5")
                             .resizable()
+                            .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
                     }
                     .opacity(isEditing ? 0 : 1) // Show or hide the button

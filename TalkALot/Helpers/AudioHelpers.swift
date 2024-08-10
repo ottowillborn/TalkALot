@@ -67,6 +67,7 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var upperValue: TimeInterval = 0
     @Published var duration: TimeInterval = 0
     @Published var waveformData: [CGFloat] = [0]
+    @Published var url: URL = URL(fileURLWithPath: "")
 
     
     private var timer: Timer?
@@ -124,6 +125,7 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
             lowerValue = 0
             upperValue = audioPlayer?.duration ?? 0
             waveformData = WaveformProcessor.generateWaveformData(for: url)
+            self.url = url
         } catch {
             print("Failed to initialize playback: \(error.localizedDescription)")
         }

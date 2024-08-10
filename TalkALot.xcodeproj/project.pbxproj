@@ -14,6 +14,8 @@
 		39A8B4CA2C56D1BC00BD4389 /* EnterNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A8B4C92C56D1BC00BD4389 /* EnterNameView.swift */; };
 		DD5AF5C02C62122500D055CC /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5AF5BF2C62122500D055CC /* Enums.swift */; };
 		DD5AF5C42C65A1F900D055CC /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5AF5C32C65A1F900D055CC /* ProfileView.swift */; };
+		DD5AF5C72C6626AB00D055CC /* sample1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD5AF5C62C6626AB00D055CC /* sample1.m4a */; };
+		DD5AF5C92C6626C400D055CC /* sample3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD5AF5C82C6626C400D055CC /* sample3.m4a */; };
 		DDA67E112C507C34001DD7A8 /* SignUpViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */; };
 		DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */; };
 		DDA67EA72C5211C9001DD7A8 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA62C5211C9001DD7A8 /* Validators.swift */; };
@@ -55,6 +57,8 @@
 		39A8B4C92C56D1BC00BD4389 /* EnterNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterNameView.swift; sourceTree = "<group>"; };
 		DD5AF5BF2C62122500D055CC /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		DD5AF5C32C65A1F900D055CC /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		DD5AF5C62C6626AB00D055CC /* sample1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample1.m4a; sourceTree = "<group>"; };
+		DD5AF5C82C6626C400D055CC /* sample3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample3.m4a; sourceTree = "<group>"; };
 		DDA67E082C507917001DD7A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewTest.swift; sourceTree = "<group>"; };
@@ -108,6 +112,15 @@
 			path = UserNewProfileViews;
 			sourceTree = "<group>";
 		};
+		DD5AF5C52C66267900D055CC /* TestAudioFiles */ = {
+			isa = PBXGroup;
+			children = (
+				DD5AF5C82C6626C400D055CC /* sample3.m4a */,
+				DD5AF5C62C6626AB00D055CC /* sample1.m4a */,
+			);
+			path = TestAudioFiles;
+			sourceTree = "<group>";
+		};
 		DDA67DC62C506D46001DD7A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +161,7 @@
 		DDAA6E6C2C4F680500764617 /* TalkALot */ = {
 			isa = PBXGroup;
 			children = (
+				DD5AF5C52C66267900D055CC /* TestAudioFiles */,
 				DDAA6E9C2C4F685900764617 /* TalkALotApp.swift */,
 				DDCF15AB2C5643F900A94C35 /* Views */,
 				DDAA6E972C4F682100764617 /* Helpers */,
@@ -294,8 +308,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD5AF5C92C6626C400D055CC /* sample3.m4a in Resources */,
 				DDAA6E752C4F680700764617 /* Preview Assets.xcassets in Resources */,
 				DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */,
+				DD5AF5C72C6626AB00D055CC /* sample1.m4a in Resources */,
 				DDCF159D2C562C2D00A94C35 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

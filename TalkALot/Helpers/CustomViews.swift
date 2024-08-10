@@ -234,6 +234,8 @@ struct PlaybackSlider: View {
     let step: Double
     var thumbSize: CGFloat = 35
     let trackHeight: CGFloat = 2
+    @State var isInList: Bool = false
+
     
     var body: some View {
         GeometryReader { geometry in
@@ -259,6 +261,7 @@ struct PlaybackSlider: View {
                         .shadow(radius: 2)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                         .offset(y:thumbSize/2)
+                        .opacity(isInList ? 0 : 1)
                 }
                 .offset(x: sliderWidth - 20) // Offset by half of thumbs width plus half of grabbable frame
                 .gesture(
