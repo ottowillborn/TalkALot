@@ -14,7 +14,6 @@ import AVFoundation
 
 struct AudioPlayerView: View {
     @ObservedObject var audioPlayer: AudioPlayer
-    @Binding var waveformData: [CGFloat]
     var audioURL: URL
     var isEditing: Bool = false
     
@@ -22,13 +21,10 @@ struct AudioPlayerView: View {
         GeometryReader { geometry in
             
             VStack {
-                
-                
-                
-                
+      
                 // Layer waveform ontop of audio slider
                 ZStack{
-                    WaveformView(data: waveformData)
+                    WaveformView(data: audioPlayer.waveformData)
                     PlaybackSlider(
                         value: Binding(
                             get: {
@@ -90,6 +86,7 @@ struct AudioPlayerView: View {
                     }) {
                         Image(systemName: "gobackward.5")
                             .resizable()
+                            .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
                     }
                     .opacity(isEditing ? 0 : 1) // Show or hide the button
@@ -119,6 +116,7 @@ struct AudioPlayerView: View {
                     }) {
                         Image(systemName: "goforward.5")
                             .resizable()
+                            .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
                     }
                     .opacity(isEditing ? 0 : 1) // Show or hide the button
@@ -164,8 +162,6 @@ struct AudioPlayerView: View {
             }
             // re-initialize audio player as file has changed
             self.audioPlayer.initializePlayer(url: audioURL)
-            // regenerate waveform as audio has changed
-            self.waveformData = WaveformProcessor.generateWaveformData(for: audioURL)
         } catch {
             print("Failed to edit audio: \(error.localizedDescription)")
         }
@@ -179,32 +175,6 @@ struct AudioPlayerView: View {
 
 
 
-
-class MockAudioPlayer: AudioPlayer {
-    override init() {
-        super.init()
-        self.duration = 180 // Mock duration of 3 minutes
-        self.currentTime = 30 // Mock current time of 30 seconds
-        self.upperValue = 180
-    }
-}
-
-struct AudioPlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        // Mock waveform data
-        let mockWaveformData: [CGFloat] = Array(repeating: 0.02, count: 100)
-        
-        // Mock audio URL
-        let mockURL = URL(string: "https://example.com/audiofile.mp3")!
-        
-        AudioPlayerView(
-            audioPlayer: MockAudioPlayer(),
-            waveformData: .constant(mockWaveformData),
-            audioURL: mockURL,
-            isEditing: (false) // Set to true to show editing view
-        )
-    }
-}
 
 
 

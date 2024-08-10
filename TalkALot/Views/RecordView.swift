@@ -41,7 +41,6 @@ struct RecordView: View {
     @ObservedObject var audioRecorder = AudioRecorder()
     @ObservedObject var audioPlayer = AudioPlayer()
     @State var hasRecording = false
-    @State private var waveformData: [CGFloat] = [0]
     @State var isEditing: Bool = false
     @Binding var showProfileMenuView: Bool // Binding to control visibility
     @State var showEditTextView: Bool = false // Binding to control visibility
@@ -64,7 +63,6 @@ struct RecordView: View {
                             } else {
                                 self.audioRecorder.stopRecording()
                                 self.audioPlayer.seek(to: 0) // Start from beginning if new recording
-                                waveformData = WaveformProcessor.generateWaveformData(for: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""))
                                 hasRecording = true
                             }
                         }) {
@@ -167,7 +165,6 @@ struct RecordView: View {
                     if hasRecording && !audioRecorder.isRecording{
                         AudioPlayerView(
                             audioPlayer: audioPlayer,
-                            waveformData: $waveformData,
                             audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
                             isEditing: isEditing
                         )
@@ -242,7 +239,6 @@ struct RecordView: View {
                 try FileManager.default.replaceItemAt(audioURL, withItemAt: backupURL)
             }
             self.audioPlayer.initializePlayer(url: audioURL) // re-initialize audio player as file has changed
-            self.waveformData = WaveformProcessor.generateWaveformData(for: audioURL) // regenerate waveform as audio has changed
         } catch {
             print("Failed to revert audio: \(error.localizedDescription)")
         }
