@@ -11,8 +11,9 @@ import SwiftUI
 struct TalkALotApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @AppStorage("signIn") var isSignIn = false
-    //TODO: create tab enum for home, record, and profile
     @AppStorage("selectedTab") private var selectedTab: String = "Home"
+    @StateObject private var currentUserYaps = UserYapList()
+
 
     @State private var showProfileMenuView = false // State to track if the profile view is shown
 
@@ -32,6 +33,7 @@ struct TalkALotApp: App {
                         .tag("Home")
                     
                     RecordView(showProfileMenuView: $showProfileMenuView)
+                        .environmentObject(currentUserYaps)
                         .background(AppColors.background)
                         .defaultTextColor()
                         .tabItem {
@@ -40,6 +42,7 @@ struct TalkALotApp: App {
                         .tag("Record")
                     
                     ProfileView(showProfileMenuView: $showProfileMenuView)
+                        .environmentObject(currentUserYaps)
                         .tabItem {
                             Label("Profile", systemImage: "person.crop.circle")
                         }

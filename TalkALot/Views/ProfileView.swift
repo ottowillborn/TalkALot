@@ -14,31 +14,10 @@ struct ProfileView: View {
     @Binding var showProfileMenuView: Bool
     @ObservedObject var audioPlayer = AudioPlayer()
 
-    @State private var yaps: [Yap] = []
+    @EnvironmentObject var currentUserYaps: UserYapList
     @State private var audioURLs: [URL] = []
     @State private var selectedItemID: UUID? = nil
     @State private var showSlider: Bool = false
-
-    init(showProfileMenuView: Binding<Bool>) {
-        self._showProfileMenuView = showProfileMenuView
-        self._audioURLs = State(initialValue: [
-            Bundle.main.url(forResource: "sample1", withExtension: "m4a")!,
-            Bundle.main.url(forResource: "sample3", withExtension: "m4a")!
-        ])
-        self._yaps = State(initialValue: [
-            Yap(title: "Yap 1", url: Bundle.main.url(forResource: "sample1", withExtension: "m4a")!, date: "2024-08-09"),
-            Yap(title: "Bing Bong", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "afgan rabba 5", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "song", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "love this app", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "yeehaw", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "mook", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "mikayla is wonderful", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "she is my girlfriend", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "i love her so much", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-            Yap(title: "AWWWWWW", url: Bundle.main.url(forResource: "sample3", withExtension: "m4a")!, date: "2024-07-13"),
-        ])
-    }
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -80,25 +59,36 @@ struct ProfileView: View {
                             .padding()
                             Spacer()
                         }
-
-                        Button(action: {
-                            // Edit profile action
-                        }) {
-                            Text("Edit")
-                                .font(.system(size: 12, design: .rounded))
-                                .frame(width: 40, height: 25)
-                                .background(Color.clear)
-                                .foregroundColor(AppColors.textSecondary)
-                                .overlay(
-                                    Capsule()
-                                        .stroke(AppColors.textSecondary, lineWidth: 2)
-                                )
+                        HStack {
+                            Button(action: {
+                                // Edit profile action
+                            }) {
+                                Text("Edit")
+                                    .font(.system(size: 12, design: .rounded))
+                                    .frame(width: 40, height: 25)
+                                    .background(Color.clear)
+                                    .foregroundColor(AppColors.textSecondary)
+                                    .overlay(
+                                        Capsule()
+                                            .stroke(AppColors.textSecondary, lineWidth: 2)
+                                    )
+                            }
+                            .padding(.leading, 14)
+                            .padding()
+                            Spacer()
+                            
+                            Button(action: {
+                            }) {
+                                Image(systemName: "plus")
+                                    .foregroundStyle(.blue) // Apply your desired color
+                                    .font(.system(size: 20)) // Set the size of the icon
+                                    .frame(width: 45)
+                            }
+                            
                         }
-                        .padding()
-                        .padding(.leading, 14)
 
                         ScrollView {
-                            ForEach(yaps) { yap in
+                            ForEach(currentUserYaps.yaps) { yap in
                                     VStack {
                                         Rectangle()
                                             .fill(Color.gray)
@@ -108,12 +98,12 @@ struct ProfileView: View {
                                             VStack (alignment: .leading) {
                                                 Text(yap.title)
                                                     .foregroundStyle(AppColors.textPrimary)
-                                                Text(yap.date)
+                                                Text(yap.date.formatted())
                                                     .foregroundStyle(AppColors.textSecondary)
                                             }
                                             Spacer()
                                             
-                                            if selectedItemID == yap.id {
+                                            if (selectedItemID == yap.id) && showSlider {
                                                 Button(action: {
                                                     // Add the action for the button here
                                                 }) {
@@ -124,13 +114,21 @@ struct ProfileView: View {
                                                 }
                                             }
                                         }
+                                        .frame(maxWidth: .infinity)
+                                        .contentShape(Rectangle())
                                         .onTapGesture {
                                             // Toggle selected item and slider visibility
                                             if selectedItemID == yap.id {
-                                                showSlider.toggle()
+                                                withAnimation {
+                                                    showSlider.toggle()
+                                                }
                                             } else {
-                                                selectedItemID = yap.id
-                                                showSlider = true
+                                                withAnimation {
+                                                    selectedItemID = yap.id
+                                                    
+                                                    showSlider = true
+                                                }
+                                               
                                                 audioPlayer.initializePlayer(url: yap.url)
                                             }
                                         }
@@ -200,7 +198,7 @@ struct ProfileView: View {
                                                 .foregroundStyle(.blue)
                                                 Spacer()
                                                 Button(action: {
-                                                    // Add the action for the button here
+                                                    currentUserYaps.removeYap(by: selectedItemID)
                                                 }) {
                                                     Image(systemName: "trash")
                                                         .foregroundStyle(.blue) // Apply your desired color
@@ -225,6 +223,9 @@ struct ProfileView: View {
                 .defaultTextColor()
             }
         }
+        .onDisappear {
+            self.selectedItemID = nil
+        }
     }
 
     private func formatTime(_ time: TimeInterval) -> String {
@@ -238,8 +239,9 @@ struct Yap: Identifiable {
     var id: UUID = UUID()
     var title: String
     let url: URL
-    let date: String
+    let date: Date
 }
+
 
 
 

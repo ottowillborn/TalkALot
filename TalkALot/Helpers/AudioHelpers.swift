@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import SwiftUI
 
 class AudioRecorder: ObservableObject {
     var audioRecorder: AVAudioRecorder?
@@ -116,20 +117,49 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
         upperValue = time
     }
     
-    func initializePlayer(url: URL){
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            duration = audioPlayer?.duration ?? 0
-            audioPlayer?.delegate = self // Set the delegate
-            self.seek(to: 0) // Start playback from slider
-            lowerValue = 0
-            upperValue = audioPlayer?.duration ?? 0
-            waveformData = WaveformProcessor.generateWaveformData(for: url)
-            self.url = url
-        } catch {
-            print("Failed to initialize playback: \(error.localizedDescription)")
+    func initializePlayer(url: URL) {
+        // Asynchronously initialize the audio player and generate waveform data
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                // Initialize the audio player
+                let fileManager = FileManager.default
+                if fileManager.fileExists(atPath: url.path) {
+                    print("File exists and is accessible")
+                } else {
+                    print("File does not exist or is not accessible")
+                }
+                let player = try AVAudioPlayer(contentsOf: url)
+                player.delegate = self
+                let duration = player.duration
+                
+                
+                // Update the properties on the main thread
+                DispatchQueue.main.async {
+                    self.audioPlayer = player
+                    self.duration = duration
+                    self.lowerValue = 0
+                    self.upperValue = duration
+                    self.url = url
+                    
+                    // Generate waveform data asynchronously
+                    DispatchQueue.global(qos: .background).async {
+                        let waveformData = WaveformProcessor.generateWaveformData(for: url)
+                        
+                        // Update waveformData on the main thread
+                        DispatchQueue.main.async {
+                            self.waveformData = waveformData
+                        }
+                    }
+                    
+                    // Start playback from slider
+                    self.seek(to: 0)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    print("Failed to initialize playback: \(error.localizedDescription)")
+                }
+            }
         }
-        
     }
     
     private func startTimer() {

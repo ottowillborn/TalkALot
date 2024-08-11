@@ -16,6 +16,8 @@
 		DD5AF5C42C65A1F900D055CC /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5AF5C32C65A1F900D055CC /* ProfileView.swift */; };
 		DD5AF5C72C6626AB00D055CC /* sample1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD5AF5C62C6626AB00D055CC /* sample1.m4a */; };
 		DD5AF5C92C6626C400D055CC /* sample3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD5AF5C82C6626C400D055CC /* sample3.m4a */; };
+		DD79F77E2C68494A004CBD98 /* UserYapList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79F77D2C68494A004CBD98 /* UserYapList.swift */; };
+		DD79F7802C684EC2004CBD98 /* ProfileMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79F77F2C684EC2004CBD98 /* ProfileMenuView.swift */; };
 		DDA67E112C507C34001DD7A8 /* SignUpViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */; };
 		DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */; };
 		DDA67EA72C5211C9001DD7A8 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA62C5211C9001DD7A8 /* Validators.swift */; };
@@ -59,6 +61,8 @@
 		DD5AF5C32C65A1F900D055CC /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		DD5AF5C62C6626AB00D055CC /* sample1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample1.m4a; sourceTree = "<group>"; };
 		DD5AF5C82C6626C400D055CC /* sample3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample3.m4a; sourceTree = "<group>"; };
+		DD79F77D2C68494A004CBD98 /* UserYapList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserYapList.swift; sourceTree = "<group>"; };
+		DD79F77F2C684EC2004CBD98 /* ProfileMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuView.swift; sourceTree = "<group>"; };
 		DDA67E082C507917001DD7A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewTest.swift; sourceTree = "<group>"; };
@@ -189,6 +193,8 @@
 				DDCF15CA2C5C01F800A94C35 /* CustomViews.swift */,
 				DDCF15D42C60941E00A94C35 /* AudioHelpers.swift */,
 				DD5AF5BF2C62122500D055CC /* Enums.swift */,
+				DD79F77D2C68494A004CBD98 /* UserYapList.swift */,
+				DD79F77F2C684EC2004CBD98 /* ProfileMenuView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -346,9 +352,11 @@
 				DDCF15C72C57290900A94C35 /* WaveformView.swift in Sources */,
 				DDAA6E9D2C4F685900764617 /* TalkALotApp.swift in Sources */,
 				39A8B4CA2C56D1BC00BD4389 /* EnterNameView.swift in Sources */,
+				DD79F77E2C68494A004CBD98 /* UserYapList.swift in Sources */,
 				DDA67EA72C5211C9001DD7A8 /* Validators.swift in Sources */,
 				DDCF15CB2C5C01F900A94C35 /* CustomViews.swift in Sources */,
 				DDCF15D52C60941E00A94C35 /* AudioHelpers.swift in Sources */,
+				DD79F7802C684EC2004CBD98 /* ProfileMenuView.swift in Sources */,
 				DD5AF5C42C65A1F900D055CC /* ProfileView.swift in Sources */,
 				395B61B82C576F9A00B08343 /* EnterProfilePictureView.swift in Sources */,
 				DDAA6E992C4F683100764617 /* +View.swift in Sources */,
@@ -542,13 +550,16 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TalkALot/Info.plist;
-				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "TalkALot requires access to your files to upload content";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "TalkALot requires access to your microphone";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				"INFOPLIST_KEY_UIUserInterfaceStyle[sdk=iphoneos*]" = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -574,13 +585,16 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TalkALot/Info.plist;
-				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "TalkALot requires access to your files to upload content";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "TalkALot requires access to your microphone";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				"INFOPLIST_KEY_UIUserInterfaceStyle[sdk=iphoneos*]" = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

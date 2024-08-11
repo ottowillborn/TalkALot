@@ -40,6 +40,7 @@ import Firebase
 struct RecordView: View {
     @ObservedObject var audioRecorder = AudioRecorder()
     @ObservedObject var audioPlayer = AudioPlayer()
+    @EnvironmentObject var currentUserYaps: UserYapList
     @State var hasRecording = false
     @State var isEditing: Bool = false
     @Binding var showProfileMenuView: Bool // Binding to control visibility
@@ -105,7 +106,7 @@ struct RecordView: View {
                         Spacer()
                         Button(action: {
                             if isEditing {
-                                //TODO: create new Yap() object - title, audio file, waveform?
+                                self.saveYap()
                             } else {
                                 // store original
                                 self.storeBackup()
@@ -145,9 +146,7 @@ struct RecordView: View {
                         }
                         Spacer()
                         Button(action: {
-                            
-                                //TODO: create new Yap() object - title, audio file, waveform?
-                            
+                            self.saveYap()
                         }) {
                             Text("Save")
                                 .fontWeight(.bold)
@@ -255,6 +254,23 @@ struct RecordView: View {
         } catch {
             print("Failed to store backup: \(error.localizedDescription)")
         }
+    }
+    
+    func saveYap() {
+        //TODO: validate the new yap items
+        currentUserYaps.addYap(Yap(title: yapName, url: audioPlayer.url, date: Date()))
+        self.resetState()
+        UserDefaults.standard.set("Profile", forKey: "selectedTab")
+    }
+    
+    // reset state variables
+    func resetState() {
+        self.hasRecording = false
+        self.isEditing = false
+        self.showProfileMenuView = false
+        self.showEditTextView = false
+        self.isEditingTitle = false
+        self.yapName = ""
     }
 }
 
