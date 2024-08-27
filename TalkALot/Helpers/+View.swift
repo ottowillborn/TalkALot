@@ -9,6 +9,32 @@ import Foundation
 
 import SwiftUI
 
+// Given a function to perform on confirmation, shows a popup to confirm deletion
+struct DeleteConfirmationModifier: ViewModifier {
+    @Binding var showAlert: Bool
+    let onDelete: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Delete Yap"),
+                    message: Text("Are you sure you want to delete this Yap?"),
+                    primaryButton: .destructive(Text("Delete")) {
+                        onDelete()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
+    }
+}
+
+extension View {
+    func deleteConfirmation(showAlert: Binding<Bool>, onDelete: @escaping () -> Void) -> some View {
+        self.modifier(DeleteConfirmationModifier(showAlert: showAlert, onDelete: onDelete))
+    }
+}
+
 extension View {
     func getRootViewController() -> UIViewController {
         guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
