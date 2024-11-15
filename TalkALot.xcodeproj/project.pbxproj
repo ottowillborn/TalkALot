@@ -12,12 +12,15 @@
 		395B61B82C576F9A00B08343 /* EnterProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B61B72C576F9A00B08343 /* EnterProfilePictureView.swift */; };
 		395B61BA2C57704900B08343 /* PictureSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395B61B92C57704900B08343 /* PictureSelector.swift */; };
 		39A8B4CA2C56D1BC00BD4389 /* EnterNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A8B4C92C56D1BC00BD4389 /* EnterNameView.swift */; };
+		DD2D260F2CE6AB2F00F54193 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DD2D260E2CE6AB2F00F54193 /* FirebaseStorage */; };
 		DD5AF5C02C62122500D055CC /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5AF5BF2C62122500D055CC /* Enums.swift */; };
 		DD5AF5C42C65A1F900D055CC /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5AF5C32C65A1F900D055CC /* ProfileView.swift */; };
 		DD5AF5C72C6626AB00D055CC /* sample1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD5AF5C62C6626AB00D055CC /* sample1.m4a */; };
 		DD5AF5C92C6626C400D055CC /* sample3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD5AF5C82C6626C400D055CC /* sample3.m4a */; };
 		DD79F77E2C68494A004CBD98 /* UserYapList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79F77D2C68494A004CBD98 /* UserYapList.swift */; };
 		DD79F7802C684EC2004CBD98 /* ProfileMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD79F77F2C684EC2004CBD98 /* ProfileMenuView.swift */; };
+		DD79F78F2C84DEC3004CBD98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD79F78E2C84DEC2004CBD98 /* GoogleService-Info.plist */; };
+		DD79F7902C84DEC3004CBD98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD79F78E2C84DEC2004CBD98 /* GoogleService-Info.plist */; };
 		DDA67E112C507C34001DD7A8 /* SignUpViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */; };
 		DDA67E2A2C50AA8B001DD7A8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDA67E292C50AA8B001DD7A8 /* FirebaseAuth */; };
 		DDA67EA72C5211C9001DD7A8 /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA67EA62C5211C9001DD7A8 /* Validators.swift */; };
@@ -63,6 +66,7 @@
 		DD5AF5C82C6626C400D055CC /* sample3.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample3.m4a; sourceTree = "<group>"; };
 		DD79F77D2C68494A004CBD98 /* UserYapList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserYapList.swift; sourceTree = "<group>"; };
 		DD79F77F2C684EC2004CBD98 /* ProfileMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuView.swift; sourceTree = "<group>"; };
+		DD79F78E2C84DEC2004CBD98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DDA67E082C507917001DD7A8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DDA67E0E2C507C34001DD7A8 /* TalkALotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TalkALotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA67E102C507C34001DD7A8 /* SignUpViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewTest.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDAA6ED92C4F799A00764617 /* FirebaseAuth in Frameworks */,
+				DD2D260F2CE6AB2F00F54193 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				DDCF159C2C562C2D00A94C35 /* GoogleService-Info.plist */,
+				DD79F78E2C84DEC2004CBD98 /* GoogleService-Info.plist */,
 				DDAA6E6C2C4F680500764617 /* TalkALot */,
 				DDA67E0F2C507C34001DD7A8 /* TalkALotTests */,
 				DDAA6E6B2C4F680500764617 /* Products */,
@@ -255,6 +261,7 @@
 			name = TalkALot;
 			packageProductDependencies = (
 				DDAA6ED82C4F799A00764617 /* FirebaseAuth */,
+				DD2D260E2CE6AB2F00F54193 /* FirebaseStorage */,
 			);
 			productName = TalkALot;
 			productReference = DDAA6E6A2C4F680500764617 /* TalkALot.app */;
@@ -307,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDCF159E2C562C2D00A94C35 /* GoogleService-Info.plist in Resources */,
+				DD79F7902C84DEC3004CBD98 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +327,7 @@
 				DDAA6E722C4F680700764617 /* Assets.xcassets in Resources */,
 				DD5AF5C72C6626AB00D055CC /* sample1.m4a in Resources */,
 				DDCF159D2C562C2D00A94C35 /* GoogleService-Info.plist in Resources */,
+				DD79F78F2C84DEC3004CBD98 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +670,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DD2D260E2CE6AB2F00F54193 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDAA6ED72C4F799A00764617 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		DDA67E172C50AA43001DD7A8 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DDAA6ED72C4F799A00764617 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

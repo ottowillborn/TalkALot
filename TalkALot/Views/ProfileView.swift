@@ -20,7 +20,7 @@ struct ProfileView: View {
     @State private var selectedItemID: UUID? = nil
     @State private var showSlider: Bool = false
     @State private var showAlert = false
-    @State private var selectedFilter: Filter = .none
+    @State private var selectedFilter: Filter = .draft
 
 
     
@@ -101,6 +101,7 @@ struct ProfileView: View {
                             .padding(.leading, 14)
                             
                             Button(action: {
+                                currentUserYaps.fetchDraftYaps()
                             }) {
                                 Image(systemName: "plus")
                                     .foregroundStyle(.blue) // Apply your desired color
@@ -114,30 +115,51 @@ struct ProfileView: View {
                         HStack (spacing: 20) {
                             Spacer()
                             Button(action: {
-                                selectedFilter = .none
+                                selectedFilter = .shared
+                                currentUserYaps.fetchSharedYaps()
                             }) {
-                                Image(systemName: "list.bullet")
-                                    .foregroundStyle(selectedFilter == .none ? .blue : .gray)
-                                    .font(.system(size: 25))
-                                    .frame(width: 45)
+                                VStack{
+                                    Image(systemName: "list.bullet")
+                                        .foregroundStyle(selectedFilter == .shared ? .blue : .gray)
+                                        .font(.system(size: 25))
+                                        .frame(width: 45)
+//                                    Text("Private")
+//                                        .font(.system(size: 12, design: .rounded))
+//                                        .multilineTextAlignment(.leading)
+//                                        .foregroundStyle(AppColors.textSecondary)
+                                }
                             }
                             Spacer()
                             Button(action: {
-                                selectedFilter = .saved
+                                selectedFilter = .draft
+                                currentUserYaps.fetchDraftYaps()
                             }) {
-                                Image(systemName: "bookmark")
-                                    .foregroundStyle(selectedFilter == .saved ? .blue : .gray)
-                                    .font(.system(size: 25))
-                                    .frame(width: 45)
+                                VStack{
+                                    Image(systemName: "lock.fill")
+                                        .foregroundStyle(selectedFilter == .draft ? .blue : .gray)
+                                        .font(.system(size: 25))
+                                        .frame(width: 45)
+//                                    Text("Public")
+//                                        .font(.system(size: 12, design: .rounded))
+//                                        .multilineTextAlignment(.leading)
+//                                        .foregroundStyle(AppColors.textSecondary)
+                                }
                             }
                             Spacer()
                             Button(action: {
                                 selectedFilter = .liked
+                                currentUserYaps.fetchLikedYaps()
                             }) {
-                                Image(systemName: "heart")
-                                    .foregroundStyle(selectedFilter == .liked ? .blue : .gray)
-                                    .font(.system(size: 25))
-                                    .frame(width: 45)
+                                VStack {
+                                    Image(systemName: "heart")
+                                        .foregroundStyle(selectedFilter == .liked ? .blue : .gray)
+                                        .font(.system(size: 25))
+                                        .frame(width: 45)
+//                                    Text("Liked")
+//                                        .font(.system(size: 12, design: .rounded))
+//                                        .multilineTextAlignment(.leading)
+//                                        .foregroundStyle(AppColors.textSecondary)
+                                }
                             }
                             
                             Spacer()
@@ -261,6 +283,8 @@ struct ProfileView: View {
                                             .frame(width: 50)
                                             .deleteConfirmation(showAlert: $showAlert) {
                                                 currentUserYaps.removeYap(by: selectedItemID)
+                                                //TODO: delete from firebase
+                                                
                                             }
                                         }
                                     }
@@ -277,6 +301,9 @@ struct ProfileView: View {
                 .background(AppColors.background)
                 .defaultTextColor()
             }
+        }
+        .onAppear(){
+            currentUserYaps.fetchDraftYaps()
         }
         .onDisappear {
             self.selectedItemID = nil
@@ -300,6 +327,8 @@ struct Yap: Identifiable {
 enum Filter: Int {
     case none
     case saved
+    case draft
+    case shared
     case liked
 }
 

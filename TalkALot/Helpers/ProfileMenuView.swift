@@ -92,6 +92,13 @@ struct ProfileMenuView: View {
                 HStack {
                     Button(action: {
                         UserDefaults.standard.set(false, forKey: "signIn")
+                        //Sign out of firebase
+                        let firebaseAuth = Auth.auth()
+                        do {
+                          try firebaseAuth.signOut()
+                        } catch let signOutError as NSError {
+                          print("Error signing out: %@", signOutError)
+                        }
                     }){
                         Image(systemName: "arrow.right.square")
                             .resizable()

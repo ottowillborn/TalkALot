@@ -36,6 +36,7 @@
 import SwiftUI
 import FirebaseAuth
 import Firebase
+import FirebaseStorage
 
 struct RecordView: View {
     @ObservedObject var audioRecorder = AudioRecorder()
@@ -47,6 +48,7 @@ struct RecordView: View {
     @State var showEditTextView: Bool = false // Binding to control visibility
     @State var isEditingTitle: Bool = true
     @State var yapName = ""
+    @State var loading = false
 
 
 
@@ -57,7 +59,14 @@ struct RecordView: View {
             GeometryReader { geometry in
                 
                 VStack {
-                    if !isEditing && !hasRecording{
+                    if loading {
+                        Spacer()
+                        ProgressView()
+                           .progressViewStyle(CircularProgressViewStyle(tint: .pink))
+                           .scaleEffect(2)
+                        Spacer()
+                    }
+                    else if !isEditing && !hasRecording{
                         Button(action: {
                             if !audioRecorder.isRecording {
                                 self.audioRecorder.startRecording()
@@ -258,9 +267,40 @@ struct RecordView: View {
     
     func saveYap() {
         //TODO: validate the new yap items
-        currentUserYaps.addYap(Yap(title: yapName, url: audioPlayer.url, date: Date()))
+        //TODO: upload to firebase
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        
+        // Get a reference to the file you want to upload
+        guard let UUID = Auth.auth().currentUser?.uid else { return }
+        let fileRef = storageRef.child(UUID + "/Yaps/" + yapName)
+        
+        // Create metadata and add custom values
+        let metadata = StorageMetadata()
+        metadata.customMetadata = [
+            "title": yapName,
+            "creationDate": "\(Date())"
+        ]
+
+        // Upload the file
+        fileRef.putFile(from: audioPlayer.url, metadata: metadata) { (metadata, error) in
+          if let error = error {
+            // Handle errors
+            print("Error uploading file: \(error)")
+          } else {
+            // File uploaded successfully
+            print("File uploaded successfully")
+          }
+        }
+        loading = true
+        // Wait for 1 second
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            // Code to execute after 1 second
+            loading = false
+            UserDefaults.standard.set("Profile", forKey: "selectedTab")
+        }
         self.resetState()
-        UserDefaults.standard.set("Profile", forKey: "selectedTab")
+       
     }
     
     // reset state variables

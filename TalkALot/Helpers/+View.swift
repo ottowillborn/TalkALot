@@ -125,3 +125,27 @@ struct ToolBarAppearanceModifier: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
+
+//Loading animation module
+class ViewController: UIViewController {
+
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Set up the activity indicator
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        self.view.addSubview(activityIndicator)
+        
+        // Start the loading animation
+        activityIndicator.startAnimating()
+
+        // Wait for 1 second and stop the animation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.activityIndicator.stopAnimating()
+            print("1 second has passed")
+        }
+    }
+}
