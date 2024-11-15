@@ -25,7 +25,9 @@ class LogInValidator {
                     print("Error during login: \(error!.localizedDescription)")
                     return
                 }
+                
             }
+           
             UserDefaults.standard.set(true, forKey: "signIn")
             return false
         }

@@ -6,6 +6,7 @@
 //
 //add if username is taken
 import SwiftUI
+import FirebaseAuth
 
 struct EnterUserNameScreen: View {
     @State private var username: String = ""
@@ -39,8 +40,28 @@ struct EnterUserNameScreen: View {
 
     func saveUsername() {
         UserDefaults.standard.set(username, forKey: "username")
+        updateDisplayName(newDisplayName: username)
     }
 }
+
+func updateDisplayName(newDisplayName: String) {
+    if let user = Auth.auth().currentUser {
+        let changeRequest = user.createProfileChangeRequest()
+        changeRequest.displayName = newDisplayName
+        
+        // Commit the changes
+        changeRequest.commitChanges { error in
+            if let error = error {
+                print("Error updating profile: \(error.localizedDescription)")
+            } else {
+                print("Display name updated to: \(newDisplayName)")
+            }
+        }
+    } else {
+        print("No user is currently signed in.")
+    }
+}
+
 
 
 

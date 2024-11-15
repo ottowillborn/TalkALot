@@ -16,7 +16,6 @@ struct ProfileView: View {
     @ObservedObject var audioPlayer = AudioPlayer()
     @EnvironmentObject var currentUserYaps: UserYapList
     
-    @State private var audioURLs: [URL] = []
     @State private var selectedItemID: UUID? = nil
     @State private var showSlider: Bool = false
     @State private var showAlert = false
@@ -42,7 +41,7 @@ struct ProfileView: View {
                                         .foregroundColor(Color.gray)
                                 )
                             VStack {
-                                Text("Username")
+                                Text(Auth.auth().currentUser?.displayName ?? "Username")
                                     .font(.system(size: 30, weight: .bold, design: .rounded))
                                     .multilineTextAlignment(.leading)
                                     .foregroundStyle(AppColors.textPrimary)
@@ -186,6 +185,7 @@ struct ProfileView: View {
                                         if (selectedItemID == yap.id) && showSlider {
                                             Button(action: {
                                                 // Add the action for the button here
+                                                currentUserYaps.shareYap(by: selectedItemID)
                                             }) {
                                                 Image(systemName: "ellipsis.circle")
                                                     .foregroundStyle(.blue) // Apply your desired color

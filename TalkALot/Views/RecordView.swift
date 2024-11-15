@@ -275,10 +275,12 @@ struct RecordView: View {
         guard let UUID = Auth.auth().currentUser?.uid else { return }
         let fileRef = storageRef.child(UUID + "/Yaps/" + yapName)
         
-        // Create metadata and add custom values
+        // Default to draft on creation
         let metadata = StorageMetadata()
         metadata.customMetadata = [
             "title": yapName,
+            "isDraft": "true",
+            "isShared": "false",
             "creationDate": "\(Date())"
         ]
 

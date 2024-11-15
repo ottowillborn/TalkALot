@@ -13,6 +13,8 @@ struct TalkALotApp: App {
     @AppStorage("signIn") var isSignIn = false
     @AppStorage("selectedTab") private var selectedTab: String = "Home"
     @StateObject private var currentUserYaps = UserYapList()
+    @StateObject private var publicYaps = UserYapList()
+
 
 
     @State private var showProfileMenuView = false // State to track if the profile view is shown
@@ -27,6 +29,7 @@ struct TalkALotApp: App {
             } else {
                 TabView (selection: $selectedTab) {
                     HomeView(showProfileMenuView: $showProfileMenuView)
+                        .environmentObject(publicYaps)
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
