@@ -19,7 +19,7 @@ jobs:
 
       - name: Set up Xcode
         run: |
-          sudo xcode-select --switch /Applications/Xcode_14.3.app
+          sudo xcode-select --switch /Applications/Xcode_16.0.app
           xcodebuild -version
           
       - name: Load Google Service file
