@@ -12,6 +12,7 @@ import Firebase
 struct EditTextView: View {
     @Binding var showEditTextView: Bool // Binding to control visibility
     @Binding var text: String // Binding to control the text
+    @State var placeholder: String
 
     @FocusState private var isTextFieldFocused: Bool // Focus state for the TextField
 
@@ -31,7 +32,7 @@ struct EditTextView: View {
             VStack(alignment: .leading, spacing: 25) {
                
                 HStack {
-                    CustomTextField(text: $text, placeholder: "Enter Yap Title", placeholderColor: AppColors.textSecondary, textColor: AppColors.textPrimary)
+                    CustomTextField(text: $text, placeholder: placeholder, placeholderColor: AppColors.textSecondary, textColor: AppColors.textPrimary)
                         .focused($isTextFieldFocused)
                         .onSubmit {
                             withAnimation {

@@ -10,6 +10,8 @@ import SwiftUI
 import FirebaseAuth
 struct ProfileMenuView: View {
     @Binding var showProfileMenuView: Bool // Binding to control visibility
+    @State private var profileImage: UIImage?
+
     
     var body: some View {
         ZStack {
@@ -30,16 +32,31 @@ struct ProfileMenuView: View {
                     UserDefaults.standard.set("Profile", forKey: "selectedTab") //set user deafult tab to profile
                     showProfileMenuView.toggle() //toggle showProfileMenuView
                 }) {
-                    Circle()
-                        .frame(width: 60, height: 60)
-                        .foregroundStyle(AppColors.highlightPrimary)
-                        .overlay(
+                    VStack {
+                        if let profileImage = profileImage {
+                            Image(uiImage: profileImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                .shadow(radius: 10)
+                        } else {
                             Image(systemName: "person.crop.circle")
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(Color.gray)
-                        )
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                        }
+                    }
+                    .onAppear(){
+                        fetchProfilePicture { image in
+                            if let image = image {
+                                DispatchQueue.main.async {
+                                    self.profileImage = image
+                                }
+                            }
+                        }
+                    }
                     VStack (alignment: .leading) {
                         Text(Auth.auth().currentUser?.displayName ?? "Username")
                             .font(.system(size: 30, weight: .bold, design: .rounded))

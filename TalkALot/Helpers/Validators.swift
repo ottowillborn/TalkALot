@@ -25,11 +25,10 @@ class LogInValidator {
                     print("Error during login: \(error!.localizedDescription)")
                     return
                 }
-                
+                //If firebase authenticates, sign in
+                UserDefaults.standard.set(true, forKey: "signIn")
             }
-           
-            UserDefaults.standard.set(true, forKey: "signIn")
-            return false
+            return true
         }
     }
 }

@@ -13,7 +13,7 @@ struct TalkALotApp: App {
     @AppStorage("signIn") var isSignIn = false
     @AppStorage("selectedTab") private var selectedTab: String = "Home"
     @StateObject private var currentUserYaps = UserYapList()
-    @StateObject private var publicYaps = UserYapList()
+    @StateObject private var sharedYaps = UserYapList()
 
 
 
@@ -29,7 +29,7 @@ struct TalkALotApp: App {
             } else {
                 TabView (selection: $selectedTab) {
                     HomeView(showProfileMenuView: $showProfileMenuView)
-                        .environmentObject(publicYaps)
+                        .environmentObject(sharedYaps)
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }

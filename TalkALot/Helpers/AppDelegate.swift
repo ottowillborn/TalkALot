@@ -13,7 +13,10 @@ import FirebaseCore
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Initializetion code for firebase
+        print("Pre")
         FirebaseApp.configure()
+        print("Post")
+
         return true
     }
 }

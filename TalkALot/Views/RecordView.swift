@@ -49,6 +49,8 @@ struct RecordView: View {
     @State var isEditingTitle: Bool = true
     @State var yapName = ""
     @State var loading = false
+    @State private var profileImage: UIImage?
+
 
 
 
@@ -205,16 +207,31 @@ struct RecordView: View {
                                     showProfileMenuView.toggle()
                                 }
                             }) {
-                                Circle()
-                                    .frame(width: 35, height: 35)
-                                    .foregroundStyle(AppColors.highlightPrimary)
-                                    .overlay(
+                                VStack {
+                                    if let profileImage = profileImage {
+                                        Image(uiImage: profileImage)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 35, height: 35)
+                                            .clipShape(Circle())
+                                            .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                            .shadow(radius: 10)
+                                    } else {
                                         Image(systemName: "person.crop.circle")
                                             .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 25, height: 25)
-                                            .foregroundColor(Color.gray)
-                                    )
+                                            .scaledToFit()
+                                            .frame(width: 35, height: 35)
+                                    }
+                                }
+                                .onAppear(){
+                                    fetchProfilePicture { image in
+                                        if let image = image {
+                                            DispatchQueue.main.async {
+                                                self.profileImage = image
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             Text(isEditing ? "Edit" : "Record")
                                 .font(.system(size: 30, weight: .bold, design: .rounded))
@@ -226,7 +243,7 @@ struct RecordView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 
                 // View slide up from bottom with keyboard when editing text
-                EditTextView(showEditTextView: $showEditTextView, text: $yapName)
+                EditTextView(showEditTextView: $showEditTextView, text: $yapName,  placeholder: "Enter yap title")
                     .offset(y: showEditTextView ? 0 : UIScreen.main.bounds.height)
                     .opacity(1)
                     .animation(.linear(duration: 0.05), value: showEditTextView)

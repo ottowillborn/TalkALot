@@ -234,6 +234,7 @@ class UserYapList: ObservableObject {
         yaps = []
     }
     
+    //Fetch user specific shared yaps
     func fetchSharedYaps(){
         yaps = []
         let storage = Storage.storage()
@@ -318,13 +319,12 @@ class UserYapList: ObservableObject {
             // Once all tasks are completed, perform final operations
             dispatchGroup.notify(queue: .main) {
                 print("All Yaps fetched successfully")
-                // You can now update UI or perform other tasks after all files are downloaded
+                self.yaps.sort(by: { $0.date > $1.date })
             }
         }
-        yaps.sort(by: { $0.date > $1.date })
     }
     
-    func fetchPublicYaps(){
+    func fetchPublicYaps(completion: @escaping () -> Void){
         yaps = []
         let storage = Storage.storage()
         let storageRef = storage.reference()
@@ -408,7 +408,7 @@ class UserYapList: ObservableObject {
                 print("All Yaps fetched successfully")
                 // Sort chronologically descending
                 self.yaps.sort(by: { $0.date > $1.date })
-                
+                completion()
             }
         }
         
