@@ -46,9 +46,12 @@ struct RecordView: View {
 
     @State var hasRecording = false
     @State var isEditing: Bool = false
+    @State var isDoneEditing = false //toggled when user clicks "next"
     @Binding var showProfileMenuView: Bool // Binding to control visibility
     @State var showEditTextView: Bool = false // Binding to control visibility
     @State var isEditingTitle: Bool = true
+    @State var yapImage: UIImage?
+    @State private var isImagePickerPresented = false
     @State var yapName = ""
     @State var loading = false
 
@@ -103,13 +106,18 @@ struct RecordView: View {
                     }
                     
                     HStack(spacing: 40) {
-                        if isEditing {
-                            // Cancel
+                        if isEditing || isDoneEditing{
                             Button(action: {
-                                self.revertAudio()
-                                isEditing.toggle()
+                                // Cancel
+                                if isEditing {
+                                    self.revertAudio()
+                                    isEditing.toggle()
+                                } else {
+                                    //Go back from final edit
+                                    isDoneEditing.toggle()
+                                }
                             }) {
-                                Text("Cancel")
+                                Text(isDoneEditing ? "Back" : "Cancel")
                                     .fontWeight(.bold)
                                     .foregroundStyle(AppColors.textSecondary)
                                 
@@ -119,14 +127,19 @@ struct RecordView: View {
                         Button(action: {
                             if isEditing {
                                 self.saveYap()
-                            } else {
+                            }
+                            else if isDoneEditing {
+                                //Save the draft
+                                self.saveYap()
+                            }
+                            else {
                                 // store original
                                 self.storeBackup()
                                 isEditing.toggle()
                             }
                         }) {
-                            if isEditing {
-                                Text("Save")
+                            if isEditing || isDoneEditing{
+                                Text(isDoneEditing ? "Save as draft" : "Save")
                                     .fontWeight(.bold)
                                     .foregroundStyle(AppColors.textSecondary)
                             } else {
@@ -158,9 +171,14 @@ struct RecordView: View {
                         }
                         Spacer()
                         Button(action: {
-                            self.saveYap()
+                            if isDoneEditing {
+                                //post
+                            }else{
+                                isDoneEditing.toggle()
+                            }
+                            
                         }) {
-                            Text("Save")
+                            Text(isDoneEditing ? "Post" : "Next")
                                 .fontWeight(.bold)
                                 .foregroundStyle(AppColors.textSecondary)
                                 .padding(.horizontal)
@@ -173,12 +191,54 @@ struct RecordView: View {
                     
                     
                     
-                    if hasRecording && !audioRecorder.isRecording{
+                    if hasRecording && !audioRecorder.isRecording && !isDoneEditing{
                         AudioPlayerView(
                             audioPlayer: audioPlayer,
                             audioURL: audioRecorder.audioRecorder?.url ?? URL(fileURLWithPath: ""),
                             isEditing: isEditing
                         )
+                    }else if isDoneEditing{
+                        VStack {
+                            Button(action: {
+                                // change profile picture
+                                isImagePickerPresented = true
+                            }) {
+                                HStack {
+                                    Spacer()
+                                    VStack {
+                                        if yapImage != nil {
+                                            Image(uiImage: yapImage!)
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
+                                                .clipShape(Rectangle())
+                                        } else {
+                                            Spacer()
+                                            Image(systemName: "photo.on.rectangle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 125, height: 125)
+                                            Text("Choose a photo for your yap")
+                                                .foregroundStyle(AppColors.textSecondary)
+                                                .padding(.horizontal)
+                                            Spacer()
+                                        }
+                                    }
+                                    .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
+
+                                    Spacer()
+                                }
+                            }
+                            Text("Hashtags")
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
+                                .multilineTextAlignment(.leading) // Align text to the left
+                                .padding(.horizontal)
+                            Text("Other stuff")
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
+                                .multilineTextAlignment(.leading) // Align text to the left
+                                .padding(.horizontal)
+                            Spacer()
+                        }
                     }
                     
                     Button(action: {
@@ -194,7 +254,7 @@ struct RecordView: View {
                     }
                     .padding(.top, 40)
                     .padding(.bottom, 70)
-                    .opacity(isEditing ? 0 : 1)
+                    .opacity(isEditing || isDoneEditing ? 0 : 1)
                     
                     
                 }
@@ -234,7 +294,12 @@ struct RecordView: View {
                     
                 )
                 .frame(width: geometry.size.width, height: geometry.size.height)
-                
+                .sheet(isPresented: $isImagePickerPresented) {
+                    ImagePicker(image: $yapImage)
+                        .onDisappear(){
+                            
+                        }
+                }
                 // View slide up from bottom with keyboard when editing text
                 EditTextView(showEditTextView: $showEditTextView, text: $yapName,  placeholder: "Enter yap title")
                     .offset(y: showEditTextView ? 0 : UIScreen.main.bounds.height)
@@ -317,12 +382,16 @@ struct RecordView: View {
     
     // reset state variables
     func resetState() {
+        self.isDoneEditing = false //toggled when user clicks "next"
         self.hasRecording = false
         self.isEditing = false
         self.showProfileMenuView = false
         self.showEditTextView = false
         self.isEditingTitle = false
         self.yapName = ""
+        self.yapImage = nil
+        self.isImagePickerPresented = false
+
     }
 }
 
