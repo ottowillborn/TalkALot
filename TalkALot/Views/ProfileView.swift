@@ -278,6 +278,13 @@ struct ProfileView: View {
                                                     .foregroundStyle(AppColors.textSecondary)
                                             }
                                             Spacer()
+                                            Image(uiImage: yap.yapImage)
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 40, height: 40)
+                                                .clipShape(Rectangle())
+                                                .shadow(radius: 10)
+                                                
                                             
                                             if (selectedItemID == yap.id) && showSlider {
                                                 Button(action: {

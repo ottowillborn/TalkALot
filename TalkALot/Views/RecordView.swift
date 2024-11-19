@@ -52,7 +52,7 @@ struct RecordView: View {
     @State var isEditingTitle: Bool = true
     @State var yapImage: UIImage?
     @State private var isImagePickerPresented = false
-    @State var yapName = ""
+    @State public var yapName = ""
     @State var loading = false
 
 
@@ -172,19 +172,19 @@ struct RecordView: View {
                         Spacer()
                         Button(action: {
                             if isDoneEditing {
-                                //post
+                               
                             }else{
                                 isDoneEditing.toggle()
                             }
                             
                         }) {
-                            Text(isDoneEditing ? "Post" : "Next")
+                            Text("Next")
                                 .fontWeight(.bold)
                                 .foregroundStyle(AppColors.textSecondary)
                                 .padding(.horizontal)
 
                         }
-                        .opacity((hasRecording && !isEditing) ? 1 : 0)
+                        .opacity((hasRecording && !isEditing && !isDoneEditing) ? 1 : 0)
                     }
                     .opacity(hasRecording ? 1 : 0)
                     .padding(.bottom)
@@ -343,32 +343,36 @@ struct RecordView: View {
     func saveYap() {
         //TODO: validate the new yap items
         //TODO: upload to firebase
+        //store image in firebase and store imageurl in audio metadata
         let storage = Storage.storage()
         let storageRef = storage.reference()
         
         // Get a reference to the file you want to upload
         guard let UUID = Auth.auth().currentUser?.uid else { return }
         let fileRef = storageRef.child(UUID + "/Yaps/" + yapName)
+        uploadYapImage(yapImage ?? UIImage()) { url, yapTitle in
+               if let url = url {
+                   let metadata = StorageMetadata()
+                   metadata.customMetadata = [
+                       "imageURL": url.absoluteString,
+                       "title": yapTitle,
+                       "isDraft": "true",
+                       "isShared": "false",
+                       "creationDate": "\(Date())"
+                   ]
+                   // Upload the file
+                   fileRef.putFile(from: audioPlayer.url, metadata: metadata) { (metadata, error) in
+                     if let error = error {
+                       // Handle errors
+                       print("Error uploading audio with image URL: \(error)")
+                     } else {
+                       // File uploaded successfully
+                       print("Audi uploaded successfully with Image URL")
+                     }
+                   }
+               }
+           }
         
-        // Default to draft on creation
-        let metadata = StorageMetadata()
-        metadata.customMetadata = [
-            "title": yapName,
-            "isDraft": "true",
-            "isShared": "false",
-            "creationDate": "\(Date())"
-        ]
-
-        // Upload the file
-        fileRef.putFile(from: audioPlayer.url, metadata: metadata) { (metadata, error) in
-          if let error = error {
-            // Handle errors
-            print("Error uploading file: \(error)")
-          } else {
-            // File uploaded successfully
-            print("File uploaded successfully")
-          }
-        }
         loading = true
         // Wait for 1 second
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -393,7 +397,35 @@ struct RecordView: View {
         self.isImagePickerPresented = false
 
     }
+    func uploadYapImage(_ image: UIImage, completion: @escaping (URL?, String) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.75) else { return }
+        
+        let storageRef = Storage.storage().reference()
+        let yapImageRef = storageRef.child("\(Auth.auth().currentUser?.uid ?? "defaultUserID")/YapImages/\(self.yapName)")
+        let yapTitle = self.yapName
+        
+        
+        yapImageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                print("Error uploading \(yapTitle) image: \(error.localizedDescription)")
+                completion(nil, yapTitle)
+                return
+            }
+            
+            yapImageRef.downloadURL { url, error in
+                if let error = error {
+                    print("Error getting download URL for \(yapTitle) image : \(error.localizedDescription)")
+                    completion(nil, yapTitle)
+                    return
+                }
+
+                completion(url, yapTitle)
+            }
+        }
+    }
 }
+
+
 
 
 //struct RecordView_Previews: PreviewProvider {

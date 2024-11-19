@@ -93,6 +93,13 @@ struct HomeView: View {
                                             .padding(.vertical, 7)
                                             .background(AppColors.background)
                                             .cornerRadius(10)
+                                            //Access the current yaps image
+                                            Image(uiImage: yap.yapImage)
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 150, height: 150)
+                                                .clipShape(Rectangle())
+                                                .shadow(radius: 10)
                                             
                                             if showSlider && (selectedItemID == yap.id) {
                                                 PlaybackSlider(

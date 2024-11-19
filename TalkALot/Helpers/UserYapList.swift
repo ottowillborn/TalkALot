@@ -53,7 +53,7 @@ class UserYapList: ObservableObject {
     }
     
     func shareYap(by id: UUID?){
-        let UUID = Auth.auth().currentUser?.uid ?? "defaultUserID"
+        let currentUUID = Auth.auth().currentUser?.uid ?? "defaultUserID"
         guard let id = id else {
             // Handle the case where id is nil if needed
             return
@@ -66,7 +66,7 @@ class UserYapList: ObservableObject {
             let storageRef = storage.reference()
             
             // Reference to the original file location
-            let originalFileRef = storageRef.child("\(UUID)/Yaps/\(removedTitle)")
+            let originalFileRef = storageRef.child("\(currentUUID)/Yaps/\(removedTitle)")
             
             // Reference to the new location for the file (e.g., moving to another folder)
             let newFileRef = storageRef.child("PublicYaps/\(removedTitle)")
@@ -89,6 +89,7 @@ class UserYapList: ObservableObject {
                 let title = metadata.customMetadata?["title"] ?? "Unknown Title"
                 let dateString = metadata.customMetadata?["creationDate"] ?? "Unknown Date"
                 let date = dateFormatter.date(from: dateString)
+                let publishingProfileUUID = currentUUID
                 
                 // Fetch download URL
                 originalFileRef.downloadURL { url, error in
@@ -117,7 +118,8 @@ class UserYapList: ObservableObject {
                             let metadata = StorageMetadata()
                             metadata.customMetadata = [
                                 "isDraft": "false",
-                                "isShared": "true"
+                                "isShared": "true",
+                                "postedBy": publishingProfileUUID
                             ]
                         
                         // Update the file's metadata
@@ -174,6 +176,8 @@ class UserYapList: ObservableObject {
                 
                 // Fetch metadata
                 item.getMetadata { metadata, error in
+                    var yapImage: UIImage = UIImage()
+
                     if let error = error {
                         print("Error fetching metadata for \(item.name): \(error.localizedDescription)")
                         dispatchGroup.leave() // Leave the group if error occurs
@@ -191,7 +195,15 @@ class UserYapList: ObservableObject {
                         let title = metadata.customMetadata?["title"] ?? "Unknown Title"
                         let dateString = metadata.customMetadata?["creationDate"] ?? "Unknown Date"
                         let date = dateFormatter.date(from: dateString)
-                        
+                        let imageURL = metadata.customMetadata?["imageURL"] ?? "Unknown imageURL"
+
+                        fetchYapImage(photoURL: URL(string: imageURL)!) { image in
+                            if let image = image {
+                                DispatchQueue.main.async {
+                                    yapImage = image
+                                }
+                            }
+                        }
                         
                         // Fetch download URL
                         item.downloadURL { url, error in
@@ -213,7 +225,7 @@ class UserYapList: ObservableObject {
                                 // Use the downloaded file and update the yap
                                 if let url = url {
                                     print("Downloaded file to local URL: \(url)")
-                                    let yap = Yap(title: title, url: localURL, date: date ?? Date())
+                                    let yap = Yap(title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
                                     self.yaps.append(yap)
                                 }
                                 
@@ -268,6 +280,8 @@ class UserYapList: ObservableObject {
                 
                 // Fetch metadata
                 item.getMetadata { metadata, error in
+                    var yapImage: UIImage = UIImage()
+
                     if let error = error {
                         print("Error fetching metadata for \(item.name): \(error.localizedDescription)")
                         dispatchGroup.leave() // Leave the group if error occurs
@@ -285,7 +299,15 @@ class UserYapList: ObservableObject {
                         let title = metadata.customMetadata?["title"] ?? "Unknown Title"
                         let dateString = metadata.customMetadata?["creationDate"] ?? "Unknown Date"
                         let date = dateFormatter.date(from: dateString)
-                        
+                        let imageURL = metadata.customMetadata?["imageURL"] ?? "Unknown imageURL"
+
+                        fetchYapImage(photoURL: URL(string: imageURL)!) { image in
+                            if let image = image {
+                                DispatchQueue.main.async {
+                                    yapImage = image
+                                }
+                            }
+                        }
                         
                         // Fetch download URL
                         item.downloadURL { url, error in
@@ -307,7 +329,7 @@ class UserYapList: ObservableObject {
                                 // Use the downloaded file and update the yap
                                 if let url = url {
                                     print("Downloaded file to local URL: \(url)")
-                                    let yap = Yap(title: title, url: localURL, date: date ?? Date())
+                                    let yap = Yap(title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
                                     self.yaps.append(yap)
                                 }
                                 
@@ -357,6 +379,8 @@ class UserYapList: ObservableObject {
                 
                 // Fetch metadata
                 item.getMetadata { metadata, error in
+                    var yapImage: UIImage = UIImage()
+
                     if let error = error {
                         print("Error fetching metadata for \(item.name): \(error.localizedDescription)")
                         dispatchGroup.leave() // Leave the group if error occurs
@@ -372,6 +396,15 @@ class UserYapList: ObservableObject {
                         let title = metadata.customMetadata?["title"] ?? "Unknown Title"
                         let dateString = metadata.customMetadata?["creationDate"] ?? "Unknown Date"
                         let date = dateFormatter.date(from: dateString)
+                        let imageURL = metadata.customMetadata?["imageURL"] ?? "Unknown imageURL"
+
+                        fetchYapImage(photoURL: URL(string: imageURL)!) { image in
+                            if let image = image {
+                                DispatchQueue.main.async {
+                                    yapImage = image
+                                }
+                            }
+                        }
                         
                         
                         // Fetch download URL
@@ -394,7 +427,7 @@ class UserYapList: ObservableObject {
                                 // Use the downloaded file and update the yap
                                 if let url = url {
                                     print("Downloaded file to local URL: \(url)")
-                                    let yap = Yap(title: title, url: localURL, date: date ?? Date())
+                                    let yap = Yap(title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
                                     self.yaps.append(yap)
                                 }
                                 

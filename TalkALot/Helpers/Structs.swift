@@ -12,9 +12,10 @@ import SwiftUI
 
 struct Yap: Identifiable {
     var id: UUID = UUID()
-    //var yapImage: UIImage
+    
     var title: String
     //var likeCount: Int
     let url: URL
+    var yapImage: UIImage
     let date: Date
 }

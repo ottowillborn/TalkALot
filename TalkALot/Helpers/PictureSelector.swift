@@ -112,3 +112,21 @@ func fetchProfilePicture(completion: @escaping (UIImage?) -> Void) {
     }
 }
 
+func fetchYapImage(photoURL: URL, completion: @escaping (UIImage?) -> Void) {
+    // Download the image data from the URL
+    URLSession.shared.dataTask(with: photoURL) { data, response, error in
+        if let error = error {
+            print("Error fetching profile picture: \(error.localizedDescription)")
+            completion(nil)
+            return
+        }
+        
+        if let data = data, let image = UIImage(data: data) {
+            completion(image)
+        } else {
+            completion(nil)
+        }
+    }.resume()
+    
+}
+
