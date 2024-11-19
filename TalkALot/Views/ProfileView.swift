@@ -15,21 +15,15 @@ struct ProfileView: View {
     
     @ObservedObject var audioPlayer = AudioPlayer()
     @EnvironmentObject var currentUserYaps: UserYapList
+    @EnvironmentObject var currentUserProfile: UserProfile
     
     @State private var selectedItemID: UUID? = nil
     @State private var showSlider: Bool = false
     @State private var showAlert = false
     @State private var selectedFilter: Filter = .draft
     @State private var isEditingProfile = false
-    @State private var profileImage: UIImage?
     @State private var isImagePickerPresented = false
     @State var showEditTextView: Bool = false  // Binding to control visibility
-    @State var username = Auth.auth().currentUser?.displayName ?? ""
-
-
-
-
-
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -46,9 +40,9 @@ struct ProfileView: View {
                                     .foregroundStyle(AppColors.textPrimary)
                                 Spacer()
                                 Button(action: {
-                                    // Toggle editing profile
+                                    // Done editing profile
                                     isEditingProfile = false
-                                    updateDisplayName(to: username) { error in
+                                    updateDisplayName(to: currentUserProfile.username) { error in
                                         if let error = error {
                                             print("Failed to update display name:", error)
                                         }
@@ -69,8 +63,8 @@ struct ProfileView: View {
                                 isImagePickerPresented = true
                             }) {
                                 VStack {
-                                    if let profileImage = profileImage {
-                                        Image(uiImage: profileImage)
+                                    if currentUserProfile.profileImage != nil {
+                                        Image(uiImage: currentUserProfile.profileImage!)
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 90, height: 90)
@@ -93,21 +87,13 @@ struct ProfileView: View {
                                     }
                                 }
                                 .padding(.leading, 20)
-                                .onAppear(){
-                                    fetchProfilePicture { image in
-                                       if let image = image {
-                                           DispatchQueue.main.async {
-                                               self.profileImage = image
-                                           }
-                                       }
-                                   }
-                                }
+                                
                             }
                             .disabled(!isEditingProfile)
                             isEditingProfile ? Spacer() : nil
                             if !isEditingProfile {
                                 VStack {
-                                    Text(Auth.auth().currentUser?.displayName ?? "Username")
+                                    Text(currentUserProfile.username)
                                         .font(.system(size: 30, weight: .bold, design: .rounded))
                                         .multilineTextAlignment(.leading)
                                         .foregroundStyle(AppColors.textPrimary)
@@ -211,7 +197,7 @@ struct ProfileView: View {
                                             .padding(.horizontal, 5)
                                             .frame(width: 100,alignment: .leading)
                                         
-                                        Text(username)
+                                        Text(currentUserProfile.username)
                                             .font(.system(size: 20, design: .rounded))
                                             .foregroundStyle(AppColors.textPrimary)
                                             .padding(.horizontal, 5)
@@ -409,16 +395,16 @@ struct ProfileView: View {
                     }
                     
                     .sheet(isPresented: $isImagePickerPresented) {
-                        ImagePicker(image: $profileImage)
+                        ImagePicker(image: $currentUserProfile.profileImage)
                             .onDisappear(){
-                                uploadProfileImage(profileImage ?? UIImage()) { url in
+                                uploadProfileImage(currentUserProfile.profileImage ?? UIImage()) { url in
                                        if let url = url {
                                            updateProfilePicture(with: url)
                                        }
                                    }
                             }
                     }
-                    EditTextView(showEditTextView: $showEditTextView, text: $username, placeholder: "Enter new username")
+                    EditTextView(showEditTextView: $showEditTextView, text: $currentUserProfile.username, placeholder: "Enter new username")
                         .offset(y: showEditTextView ? 0 : UIScreen.main.bounds.height)
                         .opacity(1)
                         .animation(.linear(duration: 0.05), value: showEditTextView)
@@ -443,13 +429,6 @@ struct ProfileView: View {
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)
     }
-}
-
-struct Yap: Identifiable {
-    var id: UUID = UUID()
-    var title: String
-    let url: URL
-    let date: Date
 }
 
 enum Filter: Int {

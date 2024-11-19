@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 @main
 struct TalkALotApp: App {
@@ -14,6 +15,7 @@ struct TalkALotApp: App {
     @AppStorage("selectedTab") private var selectedTab: String = "Home"
     @StateObject private var currentUserYaps = UserYapList()
     @StateObject private var sharedYaps = UserYapList()
+    @StateObject private var currentUserProfile = UserProfile()
 
 
 
@@ -30,6 +32,7 @@ struct TalkALotApp: App {
                 TabView (selection: $selectedTab) {
                     HomeView(showProfileMenuView: $showProfileMenuView)
                         .environmentObject(sharedYaps)
+                        .environmentObject(currentUserProfile)
                         .tabItem {
                             Label("Home", systemImage: "house")
                         }
@@ -37,6 +40,7 @@ struct TalkALotApp: App {
                     
                     RecordView(showProfileMenuView: $showProfileMenuView)
                         .environmentObject(currentUserYaps)
+                        .environmentObject(currentUserProfile)
                         .background(AppColors.background)
                         .defaultTextColor()
                         .tabItem {
@@ -46,10 +50,14 @@ struct TalkALotApp: App {
                     
                     ProfileView(showProfileMenuView: $showProfileMenuView)
                         .environmentObject(currentUserYaps)
+                        .environmentObject(currentUserProfile)
                         .tabItem {
                             Label("Profile", systemImage: "person.crop.circle")
                         }
                         .tag("Profile")
+                }
+                .onAppear(){
+                    currentUserProfile.loadProfile()
                 }
                 .opacity(showProfileMenuView ? 0.3 : 1)
                 .background(AppColors.background)
@@ -60,6 +68,7 @@ struct TalkALotApp: App {
                 
                 // Profile view sliding in from the left
                 ProfileMenuView(showProfileMenuView: $showProfileMenuView)
+                    .environmentObject(currentUserProfile)
                     .frame(width: UIScreen.main.bounds.width * 0.85)
                     .offset(x: showProfileMenuView ? 0 : -UIScreen.main.bounds.width * 0.85)
                     .opacity(1)
@@ -70,6 +79,7 @@ struct TalkALotApp: App {
         }
     }
     }
+    
 }
 
 

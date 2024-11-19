@@ -42,6 +42,8 @@ struct RecordView: View {
     @ObservedObject var audioRecorder = AudioRecorder()
     @ObservedObject var audioPlayer = AudioPlayer()
     @EnvironmentObject var currentUserYaps: UserYapList
+    @EnvironmentObject var currentUserProfile: UserProfile
+
     @State var hasRecording = false
     @State var isEditing: Bool = false
     @Binding var showProfileMenuView: Bool // Binding to control visibility
@@ -49,7 +51,6 @@ struct RecordView: View {
     @State var isEditingTitle: Bool = true
     @State var yapName = ""
     @State var loading = false
-    @State private var profileImage: UIImage?
 
 
 
@@ -208,8 +209,8 @@ struct RecordView: View {
                                 }
                             }) {
                                 VStack {
-                                    if let profileImage = profileImage {
-                                        Image(uiImage: profileImage)
+                                    if currentUserProfile.profileImage != nil {
+                                        Image(uiImage: currentUserProfile.profileImage!)
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 35, height: 35)
@@ -223,15 +224,7 @@ struct RecordView: View {
                                             .frame(width: 35, height: 35)
                                     }
                                 }
-                                .onAppear(){
-                                    fetchProfilePicture { image in
-                                        if let image = image {
-                                            DispatchQueue.main.async {
-                                                self.profileImage = image
-                                            }
-                                        }
-                                    }
-                                }
+                                
                             }
                             Text(isEditing ? "Edit" : "Record")
                                 .font(.system(size: 30, weight: .bold, design: .rounded))

@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseStorage
 import FirebaseAuth
+import SwiftUI
+
 
 class UserYapList: ObservableObject {
     @Published var yaps: [Yap] = []

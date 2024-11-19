@@ -10,7 +10,8 @@ import SwiftUI
 import FirebaseAuth
 struct ProfileMenuView: View {
     @Binding var showProfileMenuView: Bool // Binding to control visibility
-    @State private var profileImage: UIImage?
+    @EnvironmentObject var currentUserProfile: UserProfile
+
 
     
     var body: some View {
@@ -33,8 +34,8 @@ struct ProfileMenuView: View {
                     showProfileMenuView.toggle() //toggle showProfileMenuView
                 }) {
                     VStack {
-                        if let profileImage = profileImage {
-                            Image(uiImage: profileImage)
+                        if currentUserProfile.profileImage != nil {
+                            Image(uiImage: currentUserProfile.profileImage!)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 35, height: 35)
@@ -48,15 +49,7 @@ struct ProfileMenuView: View {
                                 .frame(width: 35, height: 35)
                         }
                     }
-                    .onAppear(){
-                        fetchProfilePicture { image in
-                            if let image = image {
-                                DispatchQueue.main.async {
-                                    self.profileImage = image
-                                }
-                            }
-                        }
-                    }
+                    
                     VStack (alignment: .leading) {
                         Text(Auth.auth().currentUser?.displayName ?? "Username")
                             .font(.system(size: 30, weight: .bold, design: .rounded))

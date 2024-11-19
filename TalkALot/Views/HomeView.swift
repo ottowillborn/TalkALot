@@ -13,12 +13,12 @@ struct HomeView: View {
     @State private var userEmail = Auth.auth().currentUser?.email
     @Binding var showProfileMenuView: Bool // Binding to control visibility
     @ObservedObject var audioPlayer = AudioPlayer()
-
+    
+    @EnvironmentObject var currentUserProfile: UserProfile
     @EnvironmentObject var publicYaps: UserYapList
     @State private var selectedItemID: UUID? = nil
     @State private var showSlider: Bool = false
     @State private var showAlert = false
-    @State var profileImage: UIImage?
     @State var loading = false
 
 
@@ -188,8 +188,8 @@ struct HomeView: View {
                                         }
                                     }) {
                                         VStack {
-                                            if let profileImage = profileImage {
-                                                Image(uiImage: profileImage)
+                                            if currentUserProfile.profileImage != nil {
+                                                Image(uiImage: currentUserProfile.profileImage!)
                                                     .resizable()
                                                     .scaledToFit()
                                                     .frame(width: 35, height: 35)
@@ -204,13 +204,6 @@ struct HomeView: View {
                                             }
                                         }
                                         .onAppear(){
-                                            fetchProfilePicture { image in
-                                                if let image = image {
-                                                    DispatchQueue.main.async {
-                                                        self.profileImage = image
-                                                    }
-                                                }
-                                            }
                                             loading.toggle()
                                             publicYaps.fetchPublicYaps{
                                                 loading.toggle()
