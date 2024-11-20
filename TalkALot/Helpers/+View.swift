@@ -149,3 +149,45 @@ class ViewController: UIViewController {
         }
     }
 }
+
+
+enum SwipeDirection {
+    case right
+    case left
+}
+
+struct CardView: View {
+    var yap: Yap
+    @State private var offset = CGSize.zero
+    var onSwipe: ((SwipeDirection) -> Void)?
+
+    var body: some View {
+        ZStack {
+            Image(uiImage: yap.yapImage)
+                .resizable()
+                .scaledToFill() // Ensures the image fills the square frame
+                .frame(width: 350, height: 400) // Square frame, adjust size as needed
+                .clipShape(Rectangle()) // Optional, a rectangle isn't needed if square
+                .cornerRadius(20) // Rounded corners
+                .shadow(radius: 10)
+                .clipped() // Ensures no overflow from scaled content
+        }
+        .offset(x: offset.width, y: offset.height * 0.4)
+        .gesture(
+            DragGesture()
+                .onChanged { gesture in
+                    offset = gesture.translation
+                }
+                .onEnded { _ in
+                    withAnimation {
+                        if offset.width > 150 {
+                            onSwipe?(.left) // Swiped right (next Yap)
+                        } else if offset.width < -150 {
+                            onSwipe?(.right) // Swiped left (previous Yap)
+                        }
+                        offset = .zero // Reset position
+                    }
+                }
+        )
+    }
+}

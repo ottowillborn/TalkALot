@@ -16,6 +16,7 @@ struct AudioPlayerView: View {
     @ObservedObject var audioPlayer: AudioPlayer
     var audioURL: URL
     var isEditing: Bool = false
+    var isOnHomePage: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -24,7 +25,10 @@ struct AudioPlayerView: View {
       
                 // Layer waveform ontop of audio slider
                 ZStack{
-                    WaveformView(data: audioPlayer.waveformData)
+                    if !isOnHomePage {
+                        // make look nicer
+                        WaveformView(data: audioPlayer.waveformData)
+                    }
                     PlaybackSlider(
                         value: Binding(
                             get: {
@@ -36,7 +40,7 @@ struct AudioPlayerView: View {
                         ),
                         range: 0...self.audioPlayer.duration,
                         step: 0.01,
-                        thumbSize: 300
+                        thumbSize: isOnHomePage ? 100: 300
                     )
                     // if editing, add the edit select tabs as an overlay
                     if isEditing {
