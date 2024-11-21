@@ -10,6 +10,9 @@ import SwiftUI
 
 struct BirthdateView: View {
     @State private var birthdate = Date()
+    let email: String
+    let password: String
+    @Binding var name: String
 
     var body: some View {
         VStack {
@@ -24,7 +27,7 @@ struct BirthdateView: View {
                 .padding()
                 .frame(maxWidth: 300)
             
-            NavigationLink(destination: EnterUserNameScreen().onAppear(perform: saveBirthdate)) {
+            NavigationLink(destination: EnterUserNameScreen(email: email, password: password, name: $name, birthdate: $birthdate)) {
                 Text("Next")
                     .font(.title2)
                     .padding()
@@ -43,9 +46,9 @@ struct BirthdateView: View {
         UserDefaults.standard.set(birthdate, forKey: "userBirthdate")
     }
 }
-struct BirthdateView_Previews: PreviewProvider {
-    static var previews: some View {
-        BirthdateView()
-    }
-}
+//struct BirthdateView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        //BirthdateView()
+//    }
+//}
 

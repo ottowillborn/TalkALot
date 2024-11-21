@@ -9,7 +9,12 @@ import SwiftUI
 import FirebaseAuth
 
 struct EnterUserNameScreen: View {
+    let email: String
+    let password: String
+    @Binding var name: String
+    @Binding var birthdate: Date
     @State private var username: String = ""
+   
 
     var body: some View {
         VStack {
@@ -23,7 +28,7 @@ struct EnterUserNameScreen: View {
                 .padding()
                 .frame(maxWidth: 300)
             
-            NavigationLink(destination: EnterProfilePictureView().onAppear(perform: saveUsername)) {
+            NavigationLink(destination: EnterProfilePictureView(email: email, password: password, name: $name, birthdate: $birthdate, username: $username)) {
                 Text("Next")
                     .font(.title2)
                     .padding()
@@ -65,8 +70,8 @@ func updateDisplayName(newDisplayName: String) {
 
 
 
-struct EnterUserNameScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        EnterUserNameScreen()
-    }
-}
+//struct EnterUserNameScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        //EnterUserNameScreen()
+//    }
+//}

@@ -120,6 +120,7 @@ class UserYapList: ObservableObject {
                                 "isDraft": "false",
                                 "isShared": "true",
                                 "postedBy": publishingProfileUUID
+                                
                             ]
                         
                         // Update the file's metadata
@@ -196,6 +197,8 @@ class UserYapList: ObservableObject {
                         let dateString = metadata.customMetadata?["creationDate"] ?? "Unknown Date"
                         let date = dateFormatter.date(from: dateString)
                         let imageURL = metadata.customMetadata?["imageURL"] ?? "Unknown imageURL"
+                        let postedBy = metadata.customMetadata?["postedBy"] ?? "Unknown postedBy"
+                        let creatorUsername = metadata.customMetadata?["creatorUsername"] ?? "Unknown creator"
 
                         fetchYapImage(photoURL: URL(string: imageURL)!) { image in
                             if let image = image {
@@ -224,8 +227,8 @@ class UserYapList: ObservableObject {
                                 
                                 // Use the downloaded file and update the yap
                                 if let url = url {
-                                    print("Downloaded file to local URL: \(url)")
-                                    let yap = Yap(title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
+                                    //print("Downloaded file to local URL: \(url)")
+                                    let yap = Yap(postedBy: postedBy,creatorUsername: creatorUsername, title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
                                     self.yaps.append(yap)
                                 }
                                 
@@ -300,6 +303,8 @@ class UserYapList: ObservableObject {
                         let dateString = metadata.customMetadata?["creationDate"] ?? "Unknown Date"
                         let date = dateFormatter.date(from: dateString)
                         let imageURL = metadata.customMetadata?["imageURL"] ?? "Unknown imageURL"
+                        let postedBy = metadata.customMetadata?["postedBy"] ?? "Unknown postedBy"
+                        let creatorUsername = metadata.customMetadata?["creatorUsername"] ?? "Unknown creator"
 
                         fetchYapImage(photoURL: URL(string: imageURL)!) { image in
                             if let image = image {
@@ -328,8 +333,8 @@ class UserYapList: ObservableObject {
                                 
                                 // Use the downloaded file and update the yap
                                 if let url = url {
-                                    print("Downloaded file to local URL: \(url)")
-                                    let yap = Yap(title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
+                                    //print("Downloaded file to local URL: \(url)")
+                                    let yap = Yap(postedBy: postedBy,creatorUsername: creatorUsername, title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
                                     self.yaps.append(yap)
                                 }
                                 
@@ -376,11 +381,9 @@ class UserYapList: ObservableObject {
             // Iterate over items concurrently
             for item in result.items {
                 dispatchGroup.enter() // Start a new task in the group
-                
+
                 // Fetch metadata
                 item.getMetadata { metadata, error in
-                    var yapImage: UIImage = UIImage()
-
                     if let error = error {
                         print("Error fetching metadata for \(item.name): \(error.localizedDescription)")
                         dispatchGroup.leave() // Leave the group if error occurs
@@ -391,21 +394,20 @@ class UserYapList: ObservableObject {
                         dispatchGroup.leave() // Leave the group if no metadata
                         return
                     }
-                        
-                        // Localize metadata
-                        let title = metadata.customMetadata?["title"] ?? "Unknown Title"
-                        let dateString = metadata.customMetadata?["creationDate"] ?? "Unknown Date"
-                        let date = dateFormatter.date(from: dateString)
-                        let imageURL = metadata.customMetadata?["imageURL"] ?? "Unknown imageURL"
 
-                        fetchYapImage(photoURL: URL(string: imageURL)!) { image in
-                            if let image = image {
-                                DispatchQueue.main.async {
-                                    yapImage = image
-                                }
-                            }
-                        }
-                        
+                    // Extract metadata
+                    let title = metadata.customMetadata?["title"] ?? "Unknown Title"
+                    let dateString = metadata.customMetadata?["creationDate"] ?? "Unknown Date"
+                    let date = dateFormatter.date(from: dateString)
+                    let imageURL = metadata.customMetadata?["imageURL"] ?? ""
+                    let postedBy = metadata.customMetadata?["postedBy"] ?? "Unknown postedBy"
+                    let creatorUsername = metadata.customMetadata?["creatorUsername"] ?? "Unknown creator"
+
+
+                    // Fetch the image
+                    dispatchGroup.enter() // Account for the image fetch operation
+                    fetchYapImage(photoURL: URL(string: imageURL)!) { image in
+                        let yapImage = image ?? UIImage() // Use a default image if nil
                         
                         // Fetch download URL
                         item.downloadURL { url, error in
@@ -414,7 +416,7 @@ class UserYapList: ObservableObject {
                                 dispatchGroup.leave() // Leave the group if error occurs
                                 return
                             }
-                            
+
                             // Download the file to a local URL
                             let localURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(title).m4a")
                             item.write(toFile: localURL) { url, error in
@@ -423,21 +425,23 @@ class UserYapList: ObservableObject {
                                     dispatchGroup.leave() // Leave the group if error occurs
                                     return
                                 }
-                                
+
                                 // Use the downloaded file and update the yap
-                                if let url = url {
-                                    print("Downloaded file to local URL: \(url)")
-                                    let yap = Yap(title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
+                                if url != nil {
+                                    //print("Downloaded file to local URL: \(url)")
+                                    let yap = Yap(postedBy: postedBy,creatorUsername: creatorUsername, title: title, url: localURL, yapImage: yapImage, date: date ?? Date())
                                     self.yaps.append(yap)
                                 }
                                 
                                 dispatchGroup.leave() // Leave the group after completing the download
                             }
                         }
-                    
+                        
+                        dispatchGroup.leave() // Leave the group after fetching the image
+                    }
                 }
             }
-            
+
             // Once all tasks are completed, perform final operations
             dispatchGroup.notify(queue: .main) {
                 print("All Yaps fetched successfully")
@@ -445,6 +449,7 @@ class UserYapList: ObservableObject {
                 self.yaps.sort(by: { $0.date > $1.date })
                 completion()
             }
+            
         }
         
     }
