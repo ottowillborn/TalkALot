@@ -356,6 +356,7 @@ struct RecordView: View {
                    metadata.customMetadata = [
                        "imageURL": url.absoluteString,
                        "title": yapTitle,
+                       "creatorUsername": Auth.auth().currentUser?.displayName ?? "unknown creator",
                        "isDraft": "true",
                        "isShared": "false",
                        "creationDate": "\(Date())"

@@ -12,7 +12,8 @@ import SwiftUI
 
 struct Yap: Identifiable {
     var id: UUID = UUID()
-    
+    let postedBy: String? //UID of the sharer
+    let creatorUsername: String //Username of the sharer
     var title: String
     //var likeCount: Int
     let url: URL

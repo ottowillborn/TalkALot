@@ -178,7 +178,7 @@ struct ProfileView: View {
                                             .foregroundStyle(AppColors.textPrimary)
                                             .padding(.horizontal, 5)
                                             .frame(width: 100,alignment: .leading)
-                                        Text("Otto Willborn")
+                                        Text(currentUserProfile.name)
                                             .font(.system(size: 20, design: .rounded))
                                             .foregroundStyle(AppColors.textPrimary)
                                             .padding(.horizontal, 5)
@@ -198,6 +198,42 @@ struct ProfileView: View {
                                             .frame(width: 100,alignment: .leading)
                                         
                                         Text(currentUserProfile.username)
+                                            .font(.system(size: 20, design: .rounded))
+                                            .foregroundStyle(AppColors.textPrimary)
+                                            .padding(.horizontal, 5)
+                                    }
+                                }
+                                Rectangle()
+                                    .frame(height: 1)
+                                    .foregroundStyle(AppColors.textSecondary)
+                                HStack {
+                                    Button(action: {
+                                        
+                                    }) {
+                                        Text("Email")
+                                            .font(.system(size: 20, design: .rounded))
+                                            .foregroundStyle(AppColors.textPrimary)
+                                            .padding(.horizontal, 5)
+                                            .frame(width: 100,alignment: .leading)
+                                        Text(currentUserProfile.email)
+                                            .font(.system(size: 20, design: .rounded))
+                                            .foregroundStyle(AppColors.textPrimary)
+                                            .padding(.horizontal, 5)
+                                    }
+                                }
+                                Rectangle()
+                                    .frame(height: 1)
+                                    .foregroundStyle(AppColors.textSecondary)
+                                HStack {
+                                    Button(action: {
+                                        
+                                    }) {
+                                        Text("Birthdate")
+                                            .font(.system(size: 20, design: .rounded))
+                                            .foregroundStyle(AppColors.textPrimary)
+                                            .padding(.horizontal, 5)
+                                            .frame(width: 100,alignment: .leading)
+                                        Text(currentUserProfile.birthdate)
                                             .font(.system(size: 20, design: .rounded))
                                             .foregroundStyle(AppColors.textPrimary)
                                             .padding(.horizontal, 5)

@@ -10,7 +10,8 @@ import SwiftUI
 
 struct EnterNameView: View {
     @State private var name: String = ""
-
+    let email: String
+    let password: String
     var body: some View {
         VStack {
             Text("What is your name?")
@@ -22,7 +23,7 @@ struct EnterNameView: View {
                 .padding()
                 .frame(maxWidth: 300)
             
-            NavigationLink(destination: BirthdateView().onAppear(perform: saveName)) {
+            NavigationLink(destination: BirthdateView(email: email, password: password, name: $name)) {
                 Text("Next")
                     .font(.title2)
                     .padding()
@@ -35,15 +36,12 @@ struct EnterNameView: View {
         .padding()
     }
 
-    func saveName() {
-        UserDefaults.standard.set(name, forKey: "userName")
-    }
 }
 
 
 
-struct EnterNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        EnterNameView()
-    }
-}
+//struct EnterNameView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        //EnterNameView()
+//    }
+//}

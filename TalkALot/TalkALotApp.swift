@@ -28,6 +28,7 @@ struct TalkALotApp: App {
 
             if !isSignIn {
                 LoginView()
+                    .environmentObject(currentUserProfile)
             } else {
                 TabView (selection: $selectedTab) {
                     HomeView(showProfileMenuView: $showProfileMenuView)
@@ -57,7 +58,7 @@ struct TalkALotApp: App {
                         .tag("Profile")
                 }
                 .onAppear(){
-                    currentUserProfile.loadProfile()
+                    currentUserProfile.downloadProfile()
                 }
                 .opacity(showProfileMenuView ? 0.3 : 1)
                 .background(AppColors.background)

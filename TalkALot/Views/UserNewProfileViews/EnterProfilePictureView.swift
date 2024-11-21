@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct EnterProfilePictureView: View {
     @State private var profileImage: UIImage?
     @State private var isImagePickerPresented = false
+    @EnvironmentObject var currentUserProfile: UserProfile
+    var email: String
+    var password: String
+    @Binding var name: String
+    @Binding var birthdate: Date
+    @Binding var username: String
+
 
     var body: some View {
         VStack {
@@ -54,11 +62,54 @@ struct EnterProfilePictureView: View {
         }
     }
 
+    //Function ending the sign up flow
     func saveProfilePicture() {
-        if let profileImage = profileImage, let imageData = profileImage.jpegData(compressionQuality: 0.8) {
-            UserDefaults.standard.set(imageData, forKey: "profilePicture")
+        // Create a DateFormatter
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium // Choose a date style
+        formatter.timeStyle = .short // Choose a time style
+        // Convert the Date object to a string
+        let formattedDate = formatter.string(from: birthdate)
+        currentUserProfile.name = self.name
+        currentUserProfile.birthdate = formattedDate
+        currentUserProfile.username = self.username
+        currentUserProfile.profileImage = profileImage
+        
+        print(name)
+        print(username)
+        print(formattedDate)
+        //Proceed with further actions (e.g., sign up the user)
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            guard error == nil else {
+                print("Error during account creation: \(error!.localizedDescription)")
+                return
+            }
+            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                guard error == nil else {
+                    print("Error during login: \(error!.localizedDescription)")
+                    return
+                }
+                //If firebase authenticates, upload fresh profile and sign in
+                currentUserProfile.uploadProfile()
+                print("Current user: \(Auth.auth().currentUser?.uid ?? "No user")")
+                print("USer:")
+                print(currentUserProfile.currentUUID)
+                updateDisplayName(to: currentUserProfile.username) { error in
+                    if let error = error {
+                        print("Failed to update display name:", error)
+                    }
+                }
+                uploadProfileImage(currentUserProfile.profileImage ?? UIImage()) { url in
+                       if let url = url {
+                           updateProfilePicture(with: url)
+                       }
+                   }
+                UserDefaults.standard.set(true, forKey: "signIn")
+
+            }
         }
-        UserDefaults.standard.set(true, forKey: "signIn")
+       
+        
     }
 }
 
@@ -70,8 +121,8 @@ struct FinalView: View {
     }
 }
 
-struct EnterProfilePictureView_Previews: PreviewProvider {
-    static var previews: some View {
-        EnterProfilePictureView()
-    }
-}
+//struct EnterProfilePictureView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        //EnterProfilePictureView()
+//    }
+//}

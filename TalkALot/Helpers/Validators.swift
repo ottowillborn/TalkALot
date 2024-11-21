@@ -50,13 +50,7 @@ class SignUpValidator {
             // Show error message
             return (true, "Passwords do not match")
         } else {
-            //Proceed with further actions (e.g., sign up the user)
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                guard error == nil else {
-                    print("Error during account creation: \(error!.localizedDescription)")
-                    return
-                }
-            }
+            
             return (false, "Passwords match, proceed with sign up.")
         }
     }

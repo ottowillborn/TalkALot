@@ -74,8 +74,10 @@ struct SignUpView: View {
                     isShowingError = valid.isShowingError
                     errorMessage = valid.errorMessage
                     if !isShowingError {
-                                              isNavigationActive = true
-                                          }
+                        isNavigationActive = true
+                        
+                    }
+                    
                     
                 }) {
                     Text("Sign Up")
@@ -96,7 +98,7 @@ struct SignUpView: View {
                 Spacer()
                 Spacer()
                 
-                NavigationLink(destination: EnterNameView(), isActive: $isNavigationActive) {
+                NavigationLink(destination: EnterNameView(email: email, password: password), isActive: $isNavigationActive) {
                                        EmptyView()
                                    }
             }

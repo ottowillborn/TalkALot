@@ -28,20 +28,27 @@ struct HomeView: View {
                 
                 if currentIndex < publicYaps.yaps.count {
                     VStack {
-                        // Add a spacer for the safe area at the top
-                        //                        Spacer().frame(height: geometry.safeAreaInsets.top)
-                        
-                        // Title
-                        Text(publicYaps.yaps[currentIndex].title)
-                            .font(.title)
-                            .foregroundColor(AppColors.textPrimary)
-                            .padding(.top, 10)
                         
                         // Card Stack
                         CardView(yap: publicYaps.yaps[currentIndex]) { direction in
                             handleSwipe(direction: direction)
                         }
                         .padding(.bottom, 20)
+                        // Title
+                        Text(publicYaps.yaps[currentIndex].title)
+                            .font(.title)
+                            .foregroundColor(AppColors.textPrimary)
+                            .padding(.top, 10)
+                        
+                        NavigationLink(destination: ExploreProfileView(exploredProfileUID: publicYaps.yaps[currentIndex].postedBy ?? "")) {
+                            //get profile by UID
+                            Text(publicYaps.yaps[currentIndex].creatorUsername)
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .cornerRadius(8)
+                        }
                         
                         // Playback Slider
                         PlaybackSlider(
@@ -188,8 +195,11 @@ struct HomeView: View {
             loading = true
             publicYaps.fetchPublicYaps {
                 loading = false
-                playAudio(for: publicYaps.yaps[currentIndex])
+                if !publicYaps.yaps.isEmpty {
+                    playAudio(for: publicYaps.yaps[currentIndex])
+                }
             }
+            print("current: \(Auth.auth().currentUser?.uid ?? "UID")")
         }
         .onChange(of: currentIndex) { newIndex in
             if newIndex < publicYaps.yaps.count {
