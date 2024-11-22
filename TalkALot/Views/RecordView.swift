@@ -178,13 +178,13 @@ struct RecordView: View {
                             }
                             
                         }) {
-                            Text("Next")
+                            Text(isDoneEditing ? "Post" : "Next")
                                 .fontWeight(.bold)
                                 .foregroundStyle(AppColors.textSecondary)
                                 .padding(.horizontal)
 
                         }
-                        .opacity((hasRecording && !isEditing && !isDoneEditing) ? 1 : 0)
+                        .opacity((hasRecording && !isEditing) ? 1 : 0)
                     }
                     .opacity(hasRecording ? 1 : 0)
                     .padding(.bottom)

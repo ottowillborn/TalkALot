@@ -229,16 +229,16 @@ struct HomeView: View {
             
         }
         .onAppear {
-            loading = true
-            publicYaps.fetchPublicYaps {
-                
-                if !publicYaps.yaps.isEmpty {
+            //only load when publicYaps is empty
+            if publicYaps.yaps.isEmpty {
+                loading = true
+                publicYaps.fetchPublicYaps {
                     self.audioPlayer.initializePlayer(url: publicYaps.yaps[currentIndex].url)
                     loading = false
                     self.audioPlayer.startPlayback(url: publicYaps.yaps[currentIndex].url){}
                 }
             }
-            print("current: \(Auth.auth().currentUser?.uid ?? "UID")")
+            //print("current: \(Auth.auth().currentUser?.uid ?? "UID")")
         }
         .onDisappear(){
             self.audioPlayer.pausePlayback()
