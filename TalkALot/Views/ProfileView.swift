@@ -101,11 +101,11 @@ struct ProfileView: View {
                             if !isEditingProfile {
                                 VStack {
                                     Text(isExploringProfile ? exploredUserProfile.username : currentUserProfile.username)
-                                        .font(.system(size: 30, weight: .bold, design: .rounded))
+                                        .font(.system(size: 25, weight: .bold, design: .rounded))
                                         .multilineTextAlignment(.leading)
                                         .foregroundStyle(AppColors.textPrimary)
                                     HStack {
-                                        Text("0 followers")
+                                        Text("\(isExploringProfile ? exploredUserProfile.followers.count : currentUserProfile.followers.count) followers")
                                             .font(.system(size: 12, design: .rounded))
                                             .multilineTextAlignment(.leading)
                                             .foregroundStyle(AppColors.textSecondary)
@@ -113,11 +113,54 @@ struct ProfileView: View {
                                             .font(.system(size: 12, weight: .bold, design: .rounded))
                                             .multilineTextAlignment(.leading)
                                             .foregroundStyle(AppColors.highlightSecondary)
-                                        Text("0 following")
+                                        Text("\(isExploringProfile ? exploredUserProfile.following.count : currentUserProfile.following.count) following")
                                             .font(.system(size: 12, design: .rounded))
                                             .multilineTextAlignment(.leading)
                                             .foregroundStyle(AppColors.textSecondary)
                                     }
+                                    Text("\(isExploringProfile ? exploredUserYaps.yaps.count : currentUserYaps.yaps.count) Yaps")
+                                        .font(.system(size: 12, design: .rounded))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundStyle(AppColors.textSecondary)
+                                }
+                                if isExploringProfile {
+                                    Button(action: {
+                                        // follow the user
+                                        if !currentUserProfile.following.contains(exploredProfileUID) {
+                                            currentUserProfile.followUser(followedUID: exploredProfileUID) { success, error in
+                                                if success {
+                                                    currentUserProfile.following.append(exploredProfileUID)
+                                                    exploredUserProfile.followers.append(currentUserProfile.currentUUID ?? "")
+                                                    print("Successfully followed user!")
+                                                } else {
+                                                    print("Failed to follow user: \(error ?? "Unknown error")")
+                                                }
+                                            }
+                                        }else {
+                                            currentUserProfile.unfollowUser(unfollowedUID: exploredProfileUID) { success, error in
+                                                if success {
+                                                    currentUserProfile.following.removeAll{$0 == exploredProfileUID}
+                                                    exploredUserProfile.followers.removeAll{$0 == currentUserProfile.currentUUID ?? ""}
+                                                    print("Successfully unfollowed user!")
+                                                } else {
+                                                    print("Failed to unfollow user: \(error ?? "Unknown error")")
+                                                }
+                                            }
+                                        }
+                                    }) {
+                                        Text(currentUserProfile.following.contains(exploredProfileUID) ? "Unfollow" : "Follow")
+                                            .font(.system(size: 12, design: .rounded))
+                                            .padding()
+                                            .frame(width: 90, height: 30)
+                                        
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(currentUserProfile.following.contains(exploredProfileUID) ? AppColors.overlayBackground : AppColors.highlightSecondary) // Set background color for button
+                                                    .shadow(radius: 2) // Optional shadow for better visibility
+                                            )
+                                            .foregroundColor(AppColors.textPrimary)
+                                    }
+                                    .padding(.leading, 14)
                                 }
                                 Spacer()
                             }
@@ -446,7 +489,7 @@ struct ProfileView: View {
                         
                         Spacer()
                     }
-                    
+                    .padding(5)
                     .sheet(isPresented: $isImagePickerPresented) {
                         ImagePicker(image: $currentUserProfile.profileImage)
                             .onDisappear(){
@@ -470,6 +513,7 @@ struct ProfileView: View {
             }
         }
         .onAppear(){
+            print(currentUserProfile.username)
             if isExploringProfile {
                 
                 print(exploredUserYaps.yaps.count)
@@ -477,6 +521,7 @@ struct ProfileView: View {
                 print(exploredUserProfile.birthdate)
                 
             }else{
+                currentUserProfile.downloadProfileByUID(fetchFromUID: Auth.auth().currentUser?.uid ?? "")
                 currentUserYaps.fetchDraftYaps()
             }
             

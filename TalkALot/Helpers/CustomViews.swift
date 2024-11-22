@@ -235,26 +235,3 @@ struct EditCutSliders: View {
     }
 }
 
-struct ExploreProfileView: View {
-    @State var exploredProfileUID: String
-    @State var exploredUserProfile = UserProfile()
-
-    var body: some View {
-        VStack {
-            Text(exploredUserProfile.name)
-                .font(.largeTitle)
-                .padding()
-            Text(exploredUserProfile.birthdate)
-                .font(.largeTitle)
-                .padding()
-            Text(exploredUserProfile.username)
-                .font(.largeTitle)
-                .padding()
-        }
-        .onAppear(){
-            exploredUserProfile.downloadProfileByUID(exploredUserProfileUID: exploredProfileUID)
-        }
-        .navigationTitle("Profile")
-        .navigationBarTitleDisplayMode(.inline) // Optional: Compact title
-    }
-}

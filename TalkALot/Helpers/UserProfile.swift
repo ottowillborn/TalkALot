@@ -18,8 +18,8 @@ class UserProfile: ObservableObject {
     @Published var username: String
     @Published var profileImage: UIImage?
     @Published var bio: String?
-    @Published var followers: [String]?
-    @Published var following: [String]?
+    @Published var followers: [String]
+    @Published var following: [String]
 
 
     let db = Firestore.firestore()
@@ -30,6 +30,8 @@ class UserProfile: ObservableObject {
         self.email = Auth.auth().currentUser?.email ?? "email"
         self.username = Auth.auth().currentUser?.displayName ?? "username"
         self.birthdate = "birthdate"
+        self.followers = []
+        self.following = []
     }
     
     func uploadProfile(){
@@ -55,34 +57,9 @@ class UserProfile: ObservableObject {
 
         
     }
-    
-    func downloadProfile(){
-        let userRef = db.collection("users").document(currentUUID ?? "no user")
-
-            userRef.getDocument { document, error in
-                if let error = error {
-                    print("Error fetching user profile: \(error.localizedDescription)")
-                } else if let document = document, document.exists {
-                    if let userData = document.data() {
-                        //print("User profile fetched successfully: \(userData)")
-                    } else {
-                        print("User document is empty.")
-                    }
-                } else {
-                    print("User document does not exist.")
-                }
-            }
-        fetchProfilePicture { image in
-            if let image = image {
-                DispatchQueue.main.async {
-                    self.profileImage = image
-                }
-            }
-        }
-    }
-    
-    func downloadProfileByUID(exploredUserProfileUID: String){
-        let userRef = db.collection("users").document(exploredUserProfileUID)
+        
+    func downloadProfileByUID(fetchFromUID: String){
+        let userRef = db.collection("users").document(fetchFromUID)
 
             userRef.getDocument { document, error in
                 if let error = error {
@@ -95,8 +72,8 @@ class UserProfile: ObservableObject {
                         self.email = userData["email"] as? String ?? "No email provided"
                         self.username = userData["username"] as? String ?? "Unknown username"
                         self.bio = userData["bio"] as? String ?? "Unknown bio"
-                        self.followers = userData["username"] as? [String] ?? ["Unknown followers"]
-                        self.following = userData["username"] as? [String] ?? ["Unknown following"]
+                        self.followers = userData["followers"] as? [String] ?? ["Unknown followers"]
+                        self.following = userData["following"] as? [String] ?? ["Unknown following"]
                        
                     } else {
                         print("User document is empty.")
@@ -106,7 +83,7 @@ class UserProfile: ObservableObject {
                 }
             }
         // Get profile picture for explored user
-        fetchProfilePicture(fetchFromUID: exploredUserProfileUID) { image in
+        fetchProfilePicture(fetchFromUID: fetchFromUID) { image in
             if let image = image {
                 DispatchQueue.main.async {
                     self.profileImage = image
@@ -114,4 +91,67 @@ class UserProfile: ObservableObject {
             }
         }
     }
+    
+    func followUser(followedUID: String, completion: @escaping (Bool, String?) -> Void) {
+        guard let currentUID = Auth.auth().currentUser?.uid else {
+            completion(false, "No current user ID")
+            return
+        }
+        
+        let currentUserRef = db.collection("users").document(currentUID)
+        let followedUserRef = db.collection("users").document(followedUID)
+        
+        // Add `followedUID` to the current user's `following` array
+        currentUserRef.updateData([
+            "following": FieldValue.arrayUnion([followedUID])
+        ]) { error in
+            if let error = error {
+                completion(false, "Error updating following: \(error.localizedDescription)")
+                return
+            }
+            
+            // Add `currentUID` to the followed user's `followers` array
+            followedUserRef.updateData([
+                "followers": FieldValue.arrayUnion([currentUID])
+            ]) { error in
+                if let error = error {
+                    completion(false, "Error updating followers: \(error.localizedDescription)")
+                } else {
+                    completion(true, nil)
+                }
+            }
+        }
+    }
+    
+    func unfollowUser(unfollowedUID: String, completion: @escaping (Bool, String?) -> Void) {
+        guard let currentUID = Auth.auth().currentUser?.uid else {
+            completion(false, "No current user ID")
+            return
+        }
+        
+        let currentUserRef = db.collection("users").document(currentUID)
+        let unfollowedUserRef = db.collection("users").document(unfollowedUID)
+        
+        // Remove `unfollowedUID` from the current user's `following` array
+        currentUserRef.updateData([
+            "following": FieldValue.arrayRemove([unfollowedUID])
+        ]) { error in
+            if let error = error {
+                completion(false, "Error updating following: \(error.localizedDescription)")
+                return
+            }
+            
+            // Remove `currentUID` from the unfollowed user's `followers` array
+            unfollowedUserRef.updateData([
+                "followers": FieldValue.arrayRemove([currentUID])
+            ]) { error in
+                if let error = error {
+                    completion(false, "Error updating followers: \(error.localizedDescription)")
+                } else {
+                    completion(true, nil)
+                }
+            }
+        }
+    }
+
 }
