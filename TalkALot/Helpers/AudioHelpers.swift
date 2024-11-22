@@ -73,7 +73,7 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     private var timer: Timer?
     
-    func startPlayback(url: URL) {
+    func startPlayback(url: URL, completion: @escaping () -> Void) {
         do {
             // Configure the audio session, necessary for physical devices
             let audioSession = AVAudioSession.sharedInstance()
@@ -86,8 +86,10 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
             audioPlayer?.play()
             isPlaying = true
             startTimer()
+            completion()
         } catch {
             print("Failed to initialize playback: \(error.localizedDescription)")
+            completion()
         }
     }
     

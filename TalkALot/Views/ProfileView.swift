@@ -11,6 +11,9 @@ import Firebase
 import AVFoundation
 
 struct ProfileView: View {
+    //optional values for when viewing another persons profile
+    var isExploringProfile = false
+    var exploredProfileUID = ""
     @Binding var showProfileMenuView: Bool
     
     @ObservedObject var audioPlayer = AudioPlayer()
@@ -20,10 +23,14 @@ struct ProfileView: View {
     @State private var selectedItemID: UUID? = nil
     @State private var showSlider: Bool = false
     @State private var showAlert = false
-    @State private var selectedFilter: Filter = .draft
+    @State private var selectedFilter: Filter = .shared
     @State private var isEditingProfile = false
     @State private var isImagePickerPresented = false
     @State var showEditTextView: Bool = false  // Binding to control visibility
+    var exploredUserProfile = UserProfile()
+    var exploredUserYaps = UserYapList()
+    @State var loading = false
+
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -64,7 +71,7 @@ struct ProfileView: View {
                             }) {
                                 VStack {
                                     if currentUserProfile.profileImage != nil {
-                                        Image(uiImage: currentUserProfile.profileImage!)
+                                        Image(uiImage: isExploringProfile ? exploredUserProfile.profileImage! : currentUserProfile.profileImage!)
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 90, height: 90)
@@ -93,7 +100,7 @@ struct ProfileView: View {
                             isEditingProfile ? Spacer() : nil
                             if !isEditingProfile {
                                 VStack {
-                                    Text(currentUserProfile.username)
+                                    Text(isExploringProfile ? exploredUserProfile.username : currentUserProfile.username)
                                         .font(.system(size: 30, weight: .bold, design: .rounded))
                                         .multilineTextAlignment(.leading)
                                         .foregroundStyle(AppColors.textPrimary)
@@ -115,7 +122,7 @@ struct ProfileView: View {
                                 Spacer()
                             }
                         }
-                        if !isEditingProfile {
+                        if !isEditingProfile && !isExploringProfile{
                             HStack {
                                 Button(action: {
                                     // Toggle Edit Profile
@@ -164,7 +171,8 @@ struct ProfileView: View {
                                 
                             }
                             .padding(.vertical, 10)
-                        }else {
+                        }else if !isExploringProfile {
+                            //Edit profile attributes
                             VStack(alignment: .leading) {
                                 Rectangle()
                                     .frame(height: 1)
@@ -244,63 +252,65 @@ struct ProfileView: View {
                         }
                         
                         if !isEditingProfile {
-                            HStack (spacing: 20) {
-                                Spacer()
-                                Button(action: {
-                                    selectedFilter = .shared
-                                    currentUserYaps.fetchSharedYaps()
-                                }) {
-                                    VStack{
-                                        Image(systemName: "list.bullet")
-                                            .foregroundStyle(selectedFilter == .shared ? .blue : .gray)
-                                            .font(.system(size: 25))
-                                            .frame(width: 45)
-                                        //                                    Text("Private")
-                                        //                                        .font(.system(size: 12, design: .rounded))
-                                        //                                        .multilineTextAlignment(.leading)
-                                        //                                        .foregroundStyle(AppColors.textSecondary)
+                            if !isExploringProfile {
+                                HStack (spacing: 20) {
+                                    Spacer()
+                                    Button(action: {
+                                        selectedFilter = .shared
+                                        currentUserYaps.fetchSharedYaps(){}
+                                    }) {
+                                        VStack{
+                                            Image(systemName: "list.bullet")
+                                                .foregroundStyle(selectedFilter == .shared ? .blue : .gray)
+                                                .font(.system(size: 25))
+                                                .frame(width: 45)
+                                            //                                    Text("Private")
+                                            //                                        .font(.system(size: 12, design: .rounded))
+                                            //                                        .multilineTextAlignment(.leading)
+                                            //                                        .foregroundStyle(AppColors.textSecondary)
+                                        }
                                     }
-                                }
-                                Spacer()
-                                Button(action: {
-                                    selectedFilter = .draft
-                                    currentUserYaps.fetchDraftYaps()
-                                }) {
-                                    VStack{
-                                        Image(systemName: "lock.fill")
-                                            .foregroundStyle(selectedFilter == .draft ? .blue : .gray)
-                                            .font(.system(size: 25))
-                                            .frame(width: 45)
-                                        //                                    Text("Public")
-                                        //                                        .font(.system(size: 12, design: .rounded))
-                                        //                                        .multilineTextAlignment(.leading)
-                                        //                                        .foregroundStyle(AppColors.textSecondary)
+                                    Spacer()
+                                    Button(action: {
+                                        selectedFilter = .draft
+                                        currentUserYaps.fetchDraftYaps()
+                                    }) {
+                                        VStack{
+                                            Image(systemName: "lock.fill")
+                                                .foregroundStyle(selectedFilter == .draft ? .blue : .gray)
+                                                .font(.system(size: 25))
+                                                .frame(width: 45)
+                                            //                                    Text("Public")
+                                            //                                        .font(.system(size: 12, design: .rounded))
+                                            //                                        .multilineTextAlignment(.leading)
+                                            //                                        .foregroundStyle(AppColors.textSecondary)
+                                        }
                                     }
-                                }
-                                Spacer()
-                                Button(action: {
-                                    selectedFilter = .liked
-                                    currentUserYaps.fetchLikedYaps()
-                                }) {
-                                    VStack {
-                                        Image(systemName: "heart")
-                                            .foregroundStyle(selectedFilter == .liked ? .blue : .gray)
-                                            .font(.system(size: 25))
-                                            .frame(width: 45)
-                                        //                                    Text("Liked")
-                                        //                                        .font(.system(size: 12, design: .rounded))
-                                        //                                        .multilineTextAlignment(.leading)
-                                        //                                        .foregroundStyle(AppColors.textSecondary)
+                                    Spacer()
+                                    Button(action: {
+                                        selectedFilter = .liked
+                                        currentUserYaps.fetchLikedYaps()
+                                    }) {
+                                        VStack {
+                                            Image(systemName: "heart")
+                                                .foregroundStyle(selectedFilter == .liked ? .blue : .gray)
+                                                .font(.system(size: 25))
+                                                .frame(width: 45)
+                                            //                                    Text("Liked")
+                                            //                                        .font(.system(size: 12, design: .rounded))
+                                            //                                        .multilineTextAlignment(.leading)
+                                            //                                        .foregroundStyle(AppColors.textSecondary)
+                                        }
                                     }
+                                    
+                                    Spacer()
                                 }
-                                
-                                Spacer()
-                            }
-                            .padding(.top, 10)
-                            .padding(.bottom, 14)
+                                .padding(.top, 10)
+                                .padding(.bottom, 14)
+                        }
                             
                             ScrollView {
-                                ForEach(currentUserYaps.yaps) { yap in
+                                ForEach(isExploringProfile ? exploredUserYaps.yaps : currentUserYaps.yaps) { yap in
                                     VStack {
                                         Rectangle()
                                             .fill(Color.gray)
@@ -388,7 +398,7 @@ struct ProfileView: View {
                                                     if self.audioPlayer.isPlaying {
                                                         self.audioPlayer.pausePlayback()
                                                     } else {
-                                                        self.audioPlayer.startPlayback(url: yap.url)
+                                                        self.audioPlayer.startPlayback(url: yap.url){}
                                                     }
                                                 }) {
                                                     Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")
@@ -460,7 +470,16 @@ struct ProfileView: View {
             }
         }
         .onAppear(){
-            currentUserYaps.fetchDraftYaps()
+            if isExploringProfile {
+                
+                print(exploredUserYaps.yaps.count)
+                print(exploredUserProfile.name)
+                print(exploredUserProfile.birthdate)
+                
+            }else{
+                currentUserYaps.fetchDraftYaps()
+            }
+            
         }
         .onDisappear {
             self.selectedItemID = nil

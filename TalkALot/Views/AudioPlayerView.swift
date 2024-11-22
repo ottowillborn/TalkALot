@@ -102,7 +102,7 @@ struct AudioPlayerView: View {
                         if self.audioPlayer.isPlaying {
                             self.audioPlayer.pausePlayback()
                         } else {
-                            self.audioPlayer.startPlayback(url: audioURL)
+                            self.audioPlayer.startPlayback(url: audioURL){}
                         }
                     }) {
                         Image(systemName: self.audioPlayer.isPlaying && self.audioPlayer.currentTime != 0.0 ? "pause.circle.fill" : "play.circle.fill")

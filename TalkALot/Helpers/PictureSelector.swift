@@ -90,25 +90,25 @@ func updateProfilePicture(with url: URL) {
     }
 }
 
-func fetchProfilePicture(completion: @escaping (UIImage?) -> Void) {
-    if let photoURL = Auth.auth().currentUser?.photoURL {
-        // Download the image data from the URL
-        URLSession.shared.dataTask(with: photoURL) { data, response, error in
-            if let error = error {
-                print("Error fetching profile picture: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-            
-            if let data = data, let image = UIImage(data: data) {
-                completion(image)
-            } else {
-                completion(nil)
-            }
-        }.resume()
-    } else {
-        print("No profile picture found.")
-        completion(nil)
+//called without parameter returns the current user profile, given a uid will return that users profile picture
+func fetchProfilePicture(fetchFromUID: String = Auth.auth().currentUser?.uid ?? "defaultUID", completion: @escaping (UIImage?) -> Void) {
+    let storage = Storage.storage()
+    let profilePictureRef = storage.reference().child("profilePictures/\(fetchFromUID).jpg")
+    
+    // Download the image data
+    profilePictureRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+        if let error = error {
+            print("Error fetching profile picture for UID \(fetchFromUID): \(error.localizedDescription)")
+            completion(nil)
+            return
+        }
+        //on completion return the image
+        if let data = data, let image = UIImage(data: data) {
+            completion(image)
+        } else {
+            print("Failed to decode image data for UID \(fetchFromUID).")
+            completion(nil)
+        }
     }
 }
 

@@ -89,7 +89,7 @@ class UserProfile: ObservableObject {
                     print("Error fetching user profile: \(error.localizedDescription)")
                 } else if let document = document, document.exists {
                     if let userData = document.data() {
-                        print("User profile fetched successfully: \(userData)")
+                        //print("User profile fetched successfully: \(userData)")
                         self.birthdate = userData["birthdate"] as? String ?? "No birthdate provided"
                         self.name = userData["name"] as? String ?? "No name provided"
                         self.email = userData["email"] as? String ?? "No email provided"
@@ -105,7 +105,8 @@ class UserProfile: ObservableObject {
                     print("User document does not exist.")
                 }
             }
-        fetchProfilePicture { image in
+        // Get profile picture for explored user
+        fetchProfilePicture(fetchFromUID: exploredUserProfileUID) { image in
             if let image = image {
                 DispatchQueue.main.async {
                     self.profileImage = image
