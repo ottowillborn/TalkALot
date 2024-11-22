@@ -6,8 +6,6 @@
 	<array>
 		<dict/>
 	</array>
-    <key>NSDocumentType</key>
-    <string>This app requires access to documents for opening and editing files.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -19,5 +17,7 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSDocumentType</key>
+	<string>This app requires access to documents for opening and editing files.</string>
 </dict>
 </plist>

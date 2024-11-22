@@ -12,8 +12,8 @@ import AVFoundation
 
 struct ProfileView: View {
     //optional values for when viewing another persons profile
-    var isExploringProfile = false
-    var exploredProfileUID = ""
+    var isExploringProfile = false // true when viewing a profile of an account other than the authorized user
+    var exploredProfileUID = "" // UID of the profile being explored
     @Binding var showProfileMenuView: Bool
     
     @ObservedObject var audioPlayer = AudioPlayer()
@@ -26,7 +26,10 @@ struct ProfileView: View {
     @State private var selectedFilter: Filter = .shared
     @State private var isEditingProfile = false
     @State private var isImagePickerPresented = false
-    @State var showEditTextView: Bool = false  // Binding to control visibility
+    @State var showEditUsernameView: Bool = false
+    @State var showEditNameView: Bool = false
+
+    
     var exploredUserProfile = UserProfile()
     var exploredUserYaps = UserYapList()
     @State var loading = false
@@ -39,7 +42,7 @@ struct ProfileView: View {
                     VStack(alignment: .leading) {
                         // Profile content
                         if isEditingProfile {
-                            HStack{
+                            HStack{ // Title and done button for when editing profile
                                 Spacer()
                                 Text("Edit Profile")
                                     .font(.system(size: 15, weight: .bold, design: .rounded))
@@ -91,6 +94,12 @@ struct ProfileView: View {
                                         Text("Edit profile picture")
                                             .font(.system(size: 12, design: .rounded))
                                             .padding()
+                                    }else {
+                                        Text(isExploringProfile ? exploredUserProfile.name : currentUserProfile.name)
+                                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                                            .multilineTextAlignment(.leading)
+                                            .foregroundStyle(AppColors.textPrimary)
+                                            
                                     }
                                 }
                                 .padding(.leading, 20)
@@ -125,7 +134,7 @@ struct ProfileView: View {
                                 }
                                 if isExploringProfile {
                                     Button(action: {
-                                        // follow the user
+                                        // follow the user if not already
                                         if !currentUserProfile.following.contains(exploredProfileUID) {
                                             currentUserProfile.followUser(followedUID: exploredProfileUID) { success, error in
                                                 if success {
@@ -136,7 +145,7 @@ struct ProfileView: View {
                                                     print("Failed to follow user: \(error ?? "Unknown error")")
                                                 }
                                             }
-                                        }else {
+                                        }else { // already following user, so unfollow action
                                             currentUserProfile.unfollowUser(unfollowedUID: exploredProfileUID) { success, error in
                                                 if success {
                                                     currentUserProfile.following.removeAll{$0 == exploredProfileUID}
@@ -222,7 +231,7 @@ struct ProfileView: View {
                                     .foregroundStyle(AppColors.textSecondary)
                                 HStack {
                                     Button(action: {
-                                        
+                                        showEditNameView.toggle()
                                     }) {
                                         Text("Name")
                                             .font(.system(size: 20, design: .rounded))
@@ -240,7 +249,7 @@ struct ProfileView: View {
                                     .foregroundStyle(AppColors.textSecondary)
                                 HStack {
                                     Button(action: {
-                                        showEditTextView.toggle()
+                                        showEditUsernameView.toggle()
                                     }) {
                                         Text("Username")
                                             .font(.system(size: 20, design: .rounded))
@@ -253,6 +262,7 @@ struct ProfileView: View {
                                             .foregroundStyle(AppColors.textPrimary)
                                             .padding(.horizontal, 5)
                                     }
+                                    
                                 }
                                 Rectangle()
                                     .frame(height: 1)
@@ -500,10 +510,14 @@ struct ProfileView: View {
                                    }
                             }
                     }
-                    EditTextView(showEditTextView: $showEditTextView, text: $currentUserProfile.username, placeholder: "Enter new username")
-                        .offset(y: showEditTextView ? 0 : UIScreen.main.bounds.height)
+                    EditTextView(showEditTextView: $showEditUsernameView, text: $currentUserProfile.username, placeholder: "Enter new username")
+                        .offset(y: showEditUsernameView ? 0 : UIScreen.main.bounds.height)
                         .opacity(1)
-                        .animation(.linear(duration: 0.05), value: showEditTextView)
+                        .animation(.linear(duration: 0.05), value: showEditUsernameView)
+                    EditTextView(showEditTextView: $showEditNameView, text: $currentUserProfile.name, placeholder: "Enter new name")
+                        .offset(y: showEditNameView ? 0 : UIScreen.main.bounds.height)
+                        .opacity(1)
+                        .animation(.linear(duration: 0.05), value: showEditNameView)
                         
                     .padding()
                     .frame(width: geometry.size.width, height: geometry.size.height)
@@ -546,7 +560,7 @@ enum Filter: Int {
     case liked
 }
 
-
+// update current users display name in firebase auth
 func updateDisplayName(to newDisplayName: String, completion: @escaping (Error?) -> Void) {
     // Get the current user
     if let user = Auth.auth().currentUser {
