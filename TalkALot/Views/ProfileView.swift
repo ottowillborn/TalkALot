@@ -385,16 +385,24 @@ struct ProfileView: View {
                                                 .shadow(radius: 10)
                                                 
                                             
-                                            if (selectedItemID == yap.id) && showSlider {
-                                                Button(action: {
-                                                    // Add the action for the button here
-                                                    currentUserYaps.shareYap(by: selectedItemID)
-                                                }) {
+                                            if selectedItemID == yap.id && showSlider && !isExploringProfile {
+                                                Menu {
+                                                    Button("Share Yap") {
+                                                        currentUserYaps.shareYap(by: selectedItemID)
+                                                    }
+                                                    Button("Edit Yap") {
+                                                        // Add edit action here
+                                                    }
+                                                    Button("Delete Yap", role: .destructive) {
+                                                        // Add delete action here
+                                                    }
+                                                } label: {
                                                     Image(systemName: "ellipsis.circle")
                                                         .foregroundStyle(.blue) // Apply your desired color
                                                         .font(.system(size: 20)) // Set the size of the icon
                                                         .frame(width: 45)
                                                 }
+                                                .contentShape(Rectangle()) // Ensures the tap area is confined to the label
                                             }
                                         }
                                         .frame(maxWidth: .infinity)
@@ -402,7 +410,8 @@ struct ProfileView: View {
                                         .onTapGesture {
                                             // Toggle selected item and slider visibility
                                             if selectedItemID == yap.id {
-                                                showSlider.toggle()
+                                                // no need to unshow currently viewed yap
+                                                //showSlider.toggle()
                                             } else {
                                                 selectedItemID = yap.id
                                                 showSlider = true
@@ -482,6 +491,8 @@ struct ProfileView: View {
                                                         .foregroundStyle(.blue)
                                                         .font(.system(size: 24))
                                                 }
+                                                .disabled(isExploringProfile)
+                                                .opacity(isExploringProfile ? 0 : 1)
                                                 .frame(width: 50)
                                                 .frame(width: 50)
                                                 .deleteConfirmation(showAlert: $showAlert) {
@@ -489,6 +500,7 @@ struct ProfileView: View {
                                                     //TODO: delete from firebase
                                                     
                                                 }
+                                                
                                             }
                                         }
                                     }
