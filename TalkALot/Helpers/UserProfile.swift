@@ -10,7 +10,8 @@ import FirebaseFirestore
 import FirebaseAuth
 import SwiftUI
 
-class UserProfile: ObservableObject {
+class UserProfile: ObservableObject, Identifiable {
+    
     @Published var currentUUID: String?
     @Published var birthdate: String
     @Published var name: String
@@ -58,7 +59,7 @@ class UserProfile: ObservableObject {
         
     }
         
-    func downloadProfileByUID(fetchFromUID: String){
+    func downloadProfileByUID(fetchFromUID: String, completion: @escaping () -> Void){
         let userRef = db.collection("users").document(fetchFromUID)
 
             userRef.getDocument { document, error in
@@ -67,6 +68,7 @@ class UserProfile: ObservableObject {
                 } else if let document = document, document.exists {
                     if let userData = document.data() {
                         //print("User profile fetched successfully: \(userData)")
+                        self.currentUUID = fetchFromUID
                         self.birthdate = userData["birthdate"] as? String ?? "No birthdate provided"
                         self.name = userData["name"] as? String ?? "No name provided"
                         self.email = userData["email"] as? String ?? "No email provided"
@@ -74,6 +76,15 @@ class UserProfile: ObservableObject {
                         self.bio = userData["bio"] as? String ?? "Unknown bio"
                         self.followers = userData["followers"] as? [String] ?? ["Unknown followers"]
                         self.following = userData["following"] as? [String] ?? ["Unknown following"]
+                        // Get profile picture for explored user
+                        fetchProfilePicture(fetchFromUID: fetchFromUID) { image in
+                            if let image = image {
+                                DispatchQueue.main.async {
+                                    self.profileImage = image
+                                }
+                            }
+                            completion()
+                        }
                        
                     } else {
                         print("User document is empty.")
@@ -82,14 +93,7 @@ class UserProfile: ObservableObject {
                     print("User document does not exist.")
                 }
             }
-        // Get profile picture for explored user
-        fetchProfilePicture(fetchFromUID: fetchFromUID) { image in
-            if let image = image {
-                DispatchQueue.main.async {
-                    self.profileImage = image
-                }
-            }
-        }
+        
     }
     
     func followUser(followedUID: String, completion: @escaping (Bool, String?) -> Void) {

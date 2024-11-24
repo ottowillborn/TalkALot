@@ -57,8 +57,10 @@ struct HomeView: View {
                                 // Button to perform actions for navLink BEFORE navigation
                                 Button(action: {
                                     // Store explored User info
-                                    exploredUserProfile.downloadProfileByUID(fetchFromUID: publicYaps.yaps[currentIndex].postedBy ?? "")
-                                    loading = true
+                                    exploredUserProfile.downloadProfileByUID(fetchFromUID: publicYaps.yaps[currentIndex].postedBy ?? ""){
+                                        loading = true
+                                    }
+                                    
                                     // Get the shared yaps of the explored user
                                     exploredUserYaps.fetchSharedYaps(fetchFromUID: publicYaps.yaps[currentIndex].postedBy ?? ""){
                                         navigateToExploredProfile = true // Trigger navigation

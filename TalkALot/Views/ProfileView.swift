@@ -26,6 +26,12 @@ struct ProfileView: View {
     @State private var selectedFilter: Filter = .shared
     @State private var isEditingProfile = false
     @State private var isImagePickerPresented = false
+    @State var followerProfiles: [UserProfile] = []
+    @State var followingProfiles: [UserProfile] = []
+
+    @State private var isShowingFollowerList = false
+    @State private var isShowingFollowingList = false
+
     @State var showEditUsernameView: Bool = false
     @State var showEditNameView: Bool = false
 
@@ -114,18 +120,78 @@ struct ProfileView: View {
                                         .multilineTextAlignment(.leading)
                                         .foregroundStyle(AppColors.textPrimary)
                                     HStack {
-                                        Text("\(isExploringProfile ? exploredUserProfile.followers.count : currentUserProfile.followers.count) followers")
-                                            .font(.system(size: 12, design: .rounded))
-                                            .multilineTextAlignment(.leading)
-                                            .foregroundStyle(AppColors.textSecondary)
+                                        Button(action: {
+                                            let dispatchGroup = DispatchGroup()
+                                                followerProfiles = [] // Reset follower profiles before fetching
+
+                                                let profiles = isExploringProfile ? exploredUserProfile.followers : currentUserProfile.followers
+                                                for follower in profiles {
+                                                    dispatchGroup.enter() // Enter the dispatch group for each asynchronous operation
+                                                    let currentFollower = UserProfile()
+                                                    currentFollower.downloadProfileByUID(fetchFromUID: follower) {
+                                                        followerProfiles.append(currentFollower)
+                                                        dispatchGroup.leave() // Leave the dispatch group when the operation is complete
+                                                    }
+                                                }
+
+                                                // Notify when all operations in the group are complete
+                                                dispatchGroup.notify(queue: .main) {
+                                                    print("Successfully fetched followers")
+                                                    // Show the sheet only after profiles are loaded
+                                                    isShowingFollowerList = true
+                                                }
+                                            
+                                            
+                                            
+                                           }) {
+                                               Text("\(isExploringProfile ? exploredUserProfile.followers.count : currentUserProfile.followers.count) followers")
+                                                   .font(.system(size: 12, design: .rounded))
+                                                   .multilineTextAlignment(.leading)
+                                                   .foregroundStyle(AppColors.textSecondary)
+                                           }
+                                           .sheet(isPresented: $isShowingFollowerList) {
+                                               FollowersListView(
+                                                profiles: $followerProfiles
+                                               )
+                                           }
                                         Text("|")
                                             .font(.system(size: 12, weight: .bold, design: .rounded))
                                             .multilineTextAlignment(.leading)
                                             .foregroundStyle(AppColors.highlightSecondary)
-                                        Text("\(isExploringProfile ? exploredUserProfile.following.count : currentUserProfile.following.count) following")
-                                            .font(.system(size: 12, design: .rounded))
-                                            .multilineTextAlignment(.leading)
-                                            .foregroundStyle(AppColors.textSecondary)
+                                        Button(action: {
+                                            let dispatchGroup = DispatchGroup()
+                                                followingProfiles = [] // Reset followiing profiles before fetching
+
+                                                let profiles = isExploringProfile ? exploredUserProfile.following : currentUserProfile.following
+                                                for following in profiles {
+                                                    dispatchGroup.enter() // Enter the dispatch group for each asynchronous operation
+                                                    let currentFollowing = UserProfile()
+                                                    currentFollowing.downloadProfileByUID(fetchFromUID: following) {
+                                                        followingProfiles.append(currentFollowing)
+                                                        dispatchGroup.leave() // Leave the dispatch group when the operation is complete
+                                                    }
+                                                }
+
+                                                // Notify when all operations in the group are complete
+                                                dispatchGroup.notify(queue: .main) {
+                                                    print("Successfully fetched followings")
+                                                    // Show the sheet only after profiles are loaded
+                                                    isShowingFollowingList = true
+                                                }
+                                            
+                                            
+                                            
+                                           }) {
+                                               Text("\(isExploringProfile ? exploredUserProfile.following.count : currentUserProfile.following.count) following")
+                                                   .font(.system(size: 12, design: .rounded))
+                                                   .multilineTextAlignment(.leading)
+                                                   .foregroundStyle(AppColors.textSecondary)
+                                           }
+                                           .sheet(isPresented: $isShowingFollowingList) {
+                                               FollowingListView(
+                                                    profiles: $followingProfiles
+                                               )
+                                           }
                                     }
                                     Text("\(isExploringProfile ? exploredUserYaps.yaps.count : currentUserYaps.yaps.count) Yaps")
                                         .font(.system(size: 12, design: .rounded))
@@ -547,7 +613,7 @@ struct ProfileView: View {
                 print(exploredUserProfile.birthdate)
                 
             }else{
-                currentUserProfile.downloadProfileByUID(fetchFromUID: Auth.auth().currentUser?.uid ?? "")
+                currentUserProfile.downloadProfileByUID(fetchFromUID: Auth.auth().currentUser?.uid ?? ""){}
                 currentUserYaps.fetchDraftYaps()
             }
             
@@ -561,6 +627,100 @@ struct ProfileView: View {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+}
+
+struct FollowersListView: View {
+    @Binding var profiles: [UserProfile] // List of follower names or IDs
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                Text("Followers")
+                    .font(.system(size: 25, weight: .bold, design: .rounded))
+                    .foregroundStyle(AppColors.textPrimary)
+                ScrollView {
+                    ForEach(profiles) { follower in
+                        VStack(alignment: .leading) {
+                            Rectangle()
+                                .fill(Color.gray)
+                                .opacity(0.5)// Set the color of the line
+                                .frame(height: 0.75) // Set the thickness of the line
+                            HStack {
+                                Image(uiImage: follower.profileImage ?? UIImage())
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                    .shadow(radius: 10)
+                                VStack {
+                                    Text(follower.username)
+                                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundStyle(AppColors.textPrimary)
+                                    Text(follower.name)
+                                        .font(.system(size: 12, design: .rounded))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundStyle(AppColors.textSecondary)
+                                }
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+            }
+            .padding()
+            .background(AppColors.background)
+        }
+        
+    }
+}
+
+struct FollowingListView: View {
+    @Binding var profiles: [UserProfile] // List of follower names or IDs
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                Text("Following")
+                    .font(.system(size: 25, weight: .bold, design: .rounded))
+                    .foregroundStyle(AppColors.textPrimary)
+                ScrollView {
+                    ForEach(profiles) { follower in
+                        VStack(alignment: .leading) {
+                            Rectangle()
+                                .fill(Color.gray)
+                                .opacity(0.5)// Set the color of the line
+                                .frame(height: 0.75) // Set the thickness of the line
+                            HStack {
+                                Image(uiImage: follower.profileImage ?? UIImage())
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                    .shadow(radius: 10)
+                                VStack {
+                                    Text(follower.username)
+                                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundStyle(AppColors.textPrimary)
+                                    Text(follower.name)
+                                        .font(.system(size: 12, design: .rounded))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundStyle(AppColors.textSecondary)
+                                }
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+            }
+            .padding()
+            .background(AppColors.background)
+        }
+        
     }
 }
 
@@ -596,9 +756,9 @@ func updateDisplayName(to newDisplayName: String, completion: @escaping (Error?)
     }
 }
 
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView(showProfileMenuView: .constant(false))
-            .environmentObject(UserYapList())
-    }
-}
+//struct ProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProfileView(showProfileMenuView: .constant(false))
+//            .environmentObject(UserYapList())
+//    }
+//}

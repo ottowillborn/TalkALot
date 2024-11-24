@@ -58,7 +58,7 @@ struct TalkALotApp: App {
                         .tag("Profile")
                 }
                 .onAppear(){
-                    currentUserProfile.downloadProfileByUID(fetchFromUID: Auth.auth().currentUser?.uid ?? "")
+                    currentUserProfile.downloadProfileByUID(fetchFromUID: Auth.auth().currentUser?.uid ?? ""){}
                 }
                 .opacity(showProfileMenuView ? 0.3 : 1)
                 .background(AppColors.background)
