@@ -252,120 +252,108 @@ class UserYapList: ObservableObject {
     }
     
     //Fetch user specific shared yaps, no parameters is current user
-    func fetchSharedYaps(fetchFromUID: String = Auth.auth().currentUser?.uid ?? "defaultUserID", completion: @escaping () -> Void) {
+    func fetchSharedYaps(
+        fetchFromUID: String = Auth.auth().currentUser?.uid ?? "defaultUserID",
+        completion: @escaping () -> Void
+    ) {
         yaps = [] // Clear current yaps
         let storage = Storage.storage()
-        let storageRef = storage.reference()
-        let yapsFolderRef = storageRef.child("\(fetchFromUID)/Yaps")
-        let dispatchGroup = DispatchGroup() // Group to handle multiple async tasks
-        var fetchedYaps: [Yap] = [] // Temporary storage for fetched yaps
+        let yapsFolderRef = storage.reference().child("\(fetchFromUID)/Yaps")
+        let dispatchGroup = DispatchGroup()
+        var fetchedYaps: [Yap] = []
         
-        // Date formatter for conversions
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        // Date formatter is now static and reused
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            return formatter
+        }()
         
-        yapsFolderRef.listAll { (result, error) in
-            if let error = error {
-                print("Error listing items: \(error.localizedDescription)")
-                completion() // Call completion even if there's an error
-                return
-            }
-            
-            guard let result = result else {
-                print("No items found in the Yaps folder.")
+        yapsFolderRef.listAll { result, error in
+            guard let result = result, error == nil else {
+                print("Error listing items: \(error?.localizedDescription ?? "Unknown error")")
                 completion()
                 return
             }
             
             for item in result.items {
-                dispatchGroup.enter() // Start a new task in the group
+                dispatchGroup.enter()
                 
-                // Fetch metadata
+                // Fetch metadata in parallel
                 item.getMetadata { metadata, error in
-                    if let error = error {
-                        print("Error fetching metadata for \(item.name): \(error.localizedDescription)")
+                    guard let metadata = metadata, error == nil,
+                          metadata.customMetadata?["isShared"] == "true" else {
                         dispatchGroup.leave()
                         return
                     }
                     
-                    guard let metadata = metadata else {
+                    let title = metadata.customMetadata?["title"] ?? "Unknown Title"
+                    let dateString = metadata.customMetadata?["creationDate"] ?? ""
+                    let date = dateFormatter.date(from: dateString) ?? Date()
+                    let imageURLString = metadata.customMetadata?["imageURL"] ?? ""
+                    let postedBy = metadata.customMetadata?["postedBy"] ?? "Unknown"
+                    let creatorUsername = metadata.customMetadata?["creatorUsername"] ?? "Unknown"
+                    
+                    guard let imageURL = URL(string: imageURLString) else {
                         dispatchGroup.leave()
                         return
                     }
                     
-                    // Localize the metadata
-                    let isShared = metadata.customMetadata?["isShared"] == "true"
-                    if isShared {
-                        let title = metadata.customMetadata?["title"] ?? "Unknown Title"
-                        let dateString = metadata.customMetadata?["creationDate"] ?? ""
-                        let date = dateFormatter.date(from: dateString) ?? Date()
-                        let imageURLString = metadata.customMetadata?["imageURL"] ?? ""
-                        let postedBy = metadata.customMetadata?["postedBy"] ?? "Unknown"
-                        let creatorUsername = metadata.customMetadata?["creatorUsername"] ?? "Unknown"
-                        
-                        guard let imageURL = URL(string: imageURLString) else {
-                            print("Invalid image URL for \(title)")
-                            dispatchGroup.leave()
+                    // Fetch the image and download URL in parallel
+                    let downloadGroup = DispatchGroup()
+                    var yapImage: UIImage = UIImage()
+                    var localURL: URL?
+                    
+                    downloadGroup.enter()
+                    fetchYapImage(photoURL: imageURL) { image in
+                        yapImage = image ?? UIImage()
+                        downloadGroup.leave()
+                    }
+                    
+                    downloadGroup.enter()
+                    item.downloadURL { url, error in
+                        guard let url = url, error == nil else {
+                            downloadGroup.leave()
                             return
                         }
                         
-                        // Fetch Yap Image
-                        fetchYapImage(photoURL: imageURL) { image in
-                            let yapImage = image ?? UIImage()
-                            
-                            // Fetch download URL
-                            item.downloadURL { url, error in
-                                if let error = error {
-                                    print("Error fetching download URL for \(item.name): \(error.localizedDescription)")
-                                    dispatchGroup.leave()
-                                    return
-                                }
-                                
-                                guard url != nil else {
-                                    dispatchGroup.leave()
-                                    return
-                                }
-                                
-                                let localURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(title).m4a")
-                                item.write(toFile: localURL) { url, error in
-                                    if let error = error {
-                                        print("Error downloading file: \(error)")
-                                        dispatchGroup.leave()
-                                        return
-                                    }
-                                    
-                                    if url != nil {
-                                        let yap = Yap(
-                                            postedBy: postedBy,
-                                            creatorUsername: creatorUsername,
-                                            title: title,
-                                            url: localURL,
-                                            yapImage: yapImage,
-                                            date: date
-                                        )
-                                        fetchedYaps.append(yap) // Add to temporary array
-                                    }
-                                    
-                                    dispatchGroup.leave() // Mark this task as done
-                                }
+                        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(title).m4a")
+                        item.write(toFile: tempURL) { url, error in
+                            if error == nil {
+                                localURL = url
                             }
+                            downloadGroup.leave()
                         }
-                    } else {
-                        dispatchGroup.leave() // Skip unshared Yaps
+                    }
+                    
+                    // Once both image and file are fetched
+                    downloadGroup.notify(queue: .global()) {
+                        if let localURL = localURL {
+                            let yap = Yap(
+                                postedBy: postedBy,
+                                creatorUsername: creatorUsername,
+                                title: title,
+                                url: localURL,
+                                yapImage: yapImage,
+                                date: date
+                            )
+                            fetchedYaps.append(yap)
+                        }
+                        dispatchGroup.leave()
                     }
                 }
             }
             
-            // Once all tasks are complete
+            // Notify when all tasks are complete
             dispatchGroup.notify(queue: .main) {
-                // Sort and update main array
                 self.yaps = fetchedYaps.sorted(by: { $0.date > $1.date })
                 print("All Yaps fetched successfully: \(self.yaps.count)")
-                completion() // Call completion
+                completion()
             }
         }
     }
+
 
     func fetchPublicYaps(completion: @escaping () -> Void){
         yaps = []

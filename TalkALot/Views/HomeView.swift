@@ -47,53 +47,74 @@ struct HomeView: View {
                                 handleSwipe(direction: direction)
                             }
                             .padding(.bottom, 20)
-                            VStack (alignment: .leading) {
-                                // Title
-                                Text(publicYaps.yaps[currentIndex].title)
-                                    .font(.title)
-                                    .foregroundColor(AppColors.textPrimary)
-                                    .padding(.top, 10)
-                                
-                                // Button to perform actions for navLink BEFORE navigation
-                                Button(action: {
-                                    // Store explored User info
-                                    exploredUserProfile.downloadProfileByUID(fetchFromUID: publicYaps.yaps[currentIndex].postedBy ?? ""){
-                                        loading = true
-                                    }
+                            HStack  {
+                                VStack (alignment: .leading){
+                                    // Title
+                                    Text(publicYaps.yaps[currentIndex].title)
+                                        .font(.title)
+                                        .foregroundColor(AppColors.textPrimary)
+                                        .padding(.top, 10)
                                     
-                                    // Get the shared yaps of the explored user
-                                    exploredUserYaps.fetchSharedYaps(fetchFromUID: publicYaps.yaps[currentIndex].postedBy ?? ""){
-                                        navigateToExploredProfile = true // Trigger navigation
-                                        loading = false
+                                    // Button to perform actions for navLink BEFORE navigation
+                                    Button(action: {
+                                        // Store explored User info
+                                        exploredUserProfile.downloadProfileByUID(fetchFromUID: publicYaps.yaps[currentIndex].postedBy ?? ""){
+                                            
+                                        }
+                                        
+                                        // Get the shared yaps of the explored user
+                                        exploredUserYaps.fetchSharedYaps(fetchFromUID: publicYaps.yaps[currentIndex].postedBy ?? ""){
+                                            navigateToExploredProfile = true // Trigger navigation
+                                            //loading = false
+                                        }
+                                    }) {
+                                        Text(publicYaps.yaps[currentIndex].creatorUsername)
+                                            .font(.system(size: 14, design: .rounded))
+                                            .multilineTextAlignment(.leading)
+                                            .foregroundStyle(AppColors.textSecondary)
                                     }
-                                }) {
-                                    Text(publicYaps.yaps[currentIndex].creatorUsername)
-                                        .font(.system(size: 14, design: .rounded))
-                                        .multilineTextAlignment(.leading)
-                                        .foregroundStyle(AppColors.textSecondary)
-                                }
-                                .padding(.leading, 3)
+                                    .sheet(isPresented: $navigateToExploredProfile) {
+                                        NavigationView {
+                                            
+                                            ProfileView(
+                                                isExploringProfile: true,
+                                                exploredProfileUID: publicYaps.yaps[currentIndex].postedBy ?? "",
+                                                showProfileMenuView: $showProfileMenuView,
+                                                exploredUserProfile: exploredUserProfile,
+                                                exploredUserYaps: exploredUserYaps
+                                            )
+                                            .toolbar {
+                                                ToolbarItem(placement: .navigationBarLeading) {
+                                                    Button(action: {
+                                                        navigateToExploredProfile.toggle() // Close the sheet
+                                                    }) {
+                                                        HStack {
+                                                            Image(systemName: "chevron.left") // Back icon
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .padding(.leading, 3)
+                                    
                                 
-                                NavigationLink(
-                                    // Navigate to profile view with flags for exploring a user other than themselves
-                                    destination: ProfileView(
-                                        isExploringProfile: true,
-                                        exploredProfileUID: publicYaps.yaps[currentIndex].postedBy ?? "",
-                                        showProfileMenuView: $showProfileMenuView,
-                                        exploredUserProfile: exploredUserProfile,
-                                        exploredUserYaps: exploredUserYaps
-                                    ),
-                                    isActive: $navigateToExploredProfile
-                                ) {
-                                    EmptyView() // Invisible NavigationLink
-                                }
-                                .padding(.leading, 3)
-
                             }
                             .frame(maxWidth: .infinity, alignment: .leading) // Ensure the VStack aligns to the left
                             .padding(.leading, 12)
                             .padding(.bottom, 10)
-
+                                Spacer()
+                                VStack {
+                                    LikeButton()
+                                        .padding(.trailing)
+                                    //Like count
+                                    Text("0")
+                                        .font(.system(size: 14, design: .rounded))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundStyle(AppColors.textSecondary)
+                                        .padding(.trailing)
+                                }
+                        }
                               
                             
                             // Playback Slider
@@ -254,7 +275,20 @@ struct HomeView: View {
     }
     }
     
-    
+    struct LikeButton: View {
+        @State private var isFilled = false // Track if the heart is filled
+        
+        var body: some View {
+            Button(action: {
+                isFilled.toggle() // Toggle the heart state when clicked
+            }) {
+                Image(systemName: isFilled ? "heart.fill" : "heart") // Switch between filled and outlined heart
+                    .resizable()
+                    .frame(width: 30, height: 30) // Set the size of the heart icon
+                    .foregroundColor(isFilled ? .red : .gray) // Set color based on state
+            }
+        }
+    }
     
     
     
